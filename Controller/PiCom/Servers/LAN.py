@@ -129,6 +129,7 @@ class Client(threading.Thread, Responder):
                     # ------------------HARDWARE HANDLING------------------------
         if is_hard or is_soft:
             domain = EventDomain.SYSTEM if is_soft else (EventDomain.GPIO if is_hard else None)
+            print("\t%s Instruction <%s --> %s>" % (domain.value, payload.data, payload.event))
             res_payload = self.handler.instruction(self, payload.data, payload.event, domain)
             return res_payload
         return PayloadEventMessages.SERVER_ERROR

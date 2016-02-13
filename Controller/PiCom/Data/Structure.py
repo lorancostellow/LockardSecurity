@@ -62,8 +62,8 @@ class PayloadType(Enum):
 
 
 class EventDomain(Enum):
-    GPIO = "System IO pins"
-    SYSTEM = "System Events"
+    GPIO = "System IO Pin"
+    SYSTEM = "System Event"
 
 
 class EventTypes(Enum):
