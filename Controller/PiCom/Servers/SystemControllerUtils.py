@@ -3,6 +3,8 @@
  Here's all of the helpers, classes and handlers for translation of the payloads
  instructions to physical events on the hardware
 """
+from PiCom.Data.Structure import EventDomain
+
 __version__ = '0.1'
 __author__ = 'Dylan Coss <dylancoss1@gmail.com>'
 
@@ -18,26 +20,20 @@ The responder is used to callback to the server.
     2. Signal_Failed    -       When the instruction was unsuccessful, the server will
                                 then tell the client.
 
-    3. Respond          -       When data other than simple signals are to be responded
-                                to, these may include temperatures, arguments etc..
-
-    4. respond_with_payload     In some cases, a entire payload may need to be constructed
+    3. respond                  In some cases, a entire payload may need to be constructed
                                 or mutated
 
 """
 
 
-class GPIO_Responder:
+class Responder:
     def signal_success(self):
         print("Not Implemented!")
 
     def signal_failed(self):
         print("Not Implemented!")
 
-    def respond(self, data, event: PayloadEvent):
-        print("Not Implemented!")
-
-    def respond_with_payload(self, payload: Payload):
+    def respond(self, payload: Payload):
         print("Not Implemented!")
 
 
@@ -47,6 +43,7 @@ information sent by the clients.
 """
 
 
-class GPIO_Handler(GPIO_Responder):
-    def instruction(self, data, event: PayloadEvent):
+class SYS_Handler(Responder):
+    def instruction(self, data, event: PayloadEvent, domain: EventDomain):
         pass
+

@@ -35,6 +35,8 @@ class PayloadEvent(Enum):
     SERVER_ERROR = "Server Error"
     CLIENT_ERROR = "Client Error"
     UNKNOWN_ERROR = "Unknown Error"
+    SUCCESS_SIG = "Event was successful"
+    FAILED_SIG = "Event was unsuccessful"
 
     # System feature set
     PANIC = "Panic Button"
@@ -57,6 +59,11 @@ class PayloadType(Enum):
     RSP = "Response"
     END = "Close Connection"
     ACK = "Acknowledged"
+
+
+class EventDomain(Enum):
+    GPIO = "System IO pins"
+    SYSTEM = "System Events"
 
 
 class EventTypes(Enum):

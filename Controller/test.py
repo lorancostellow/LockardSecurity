@@ -1,13 +1,12 @@
 import PiCom.Servers as Servers
-from PiCom.Data import PayloadType, Payload
 
-from PiCom.Servers.SystemControllerUtils import GPIO_Handler
+from PiCom.Servers.SystemControllerUtils import SYS_Handler
 
 
-class Handler (GPIO_Handler):
-    def instruction(self, data, event):
-        print("\tInstruction: %s --> %s" % (event, data))
-        self.respond_with_payload(Payload(data, event, PayloadType.RSP))
+class Handler (SYS_Handler):
+    def instruction(self, data, event, domain):
+        self.signal_success()
+        return
 
 lan = Servers.LANServer(Handler, delegator=False)
 lan.start()

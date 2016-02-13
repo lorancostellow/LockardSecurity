@@ -20,6 +20,6 @@ L = LANClient("0.0.0.0", 8000, Handler)
 #
 #         ]))
 
-print(L.send(Payload("Please Mutate", PayloadEvent.S_PROBE, PayloadType.REQ, role=None)))
+print(L.send(Payload("Please Mutate", PayloadEvent.PANIC, PayloadType.REQ, role=None)))
 
 L.close_connection()

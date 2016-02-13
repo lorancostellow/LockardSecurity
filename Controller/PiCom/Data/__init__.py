@@ -45,6 +45,16 @@ class PayloadEventMessages(Enum):
                            PayloadEvent.SERVER_ERROR, PayloadType.RSP)
     ERROR = Payload({'message': "There was a unexpected error..."},
                     PayloadEvent.UNKNOWN_ERROR, PayloadType.RSP)
+    SUCCESS_SIGNAL = Payload(BLANK_FIELD, PayloadEvent.SUCCESS_SIG, PayloadType.RSP)
+    FAILED_SIGNAL = Payload(BLANK_FIELD, PayloadEvent.FAILED_SIG, PayloadType.RSP)
+
+
+def get_event_message(event_message: PayloadEventMessages, message: str = None):
+    assert isinstance(PayloadEventMessages, event_message)
+    payload = event_message.value
+    if message is not None:
+        payload.data = {'message': message}
+    return payload
 
 
 def build_payload(data):
@@ -77,7 +87,6 @@ def load(filename):
 
 
 def send_payload(sock: socket, payload: PayloadEncoder or PayloadEventMessages, address=None):
-
     if isinstance(payload, PayloadEventMessages):
         payload = payload.value
 

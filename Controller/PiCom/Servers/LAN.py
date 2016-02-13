@@ -3,10 +3,11 @@ import sys
 import threading
 
 from PiCom.Clients.LANClient import LANClient
-from PiCom.Data import print_payload, Payload, build_payload, send_payload, PayloadEventMessages
-from PiCom.Data.Structure import PayloadType, PayloadEvent, BLANK_FIELD, WILDCARD, EventTypes
+from PiCom.Data import print_payload, Payload, build_payload, send_payload, \
+    PayloadEventMessages
+from PiCom.Data.Structure import PayloadType, PayloadEvent, BLANK_FIELD, WILDCARD, EventTypes, EventDomain
 from PiCom.Delegation import PiDiscovery
-from PiCom.Servers.SystemControllerUtils import GPIO_Handler, GPIO_Responder
+from PiCom.Servers.SystemControllerUtils import Responder, SYS_Handler
 
 """
     :SERVER
@@ -46,13 +47,17 @@ NAME = None
 RESPONSE_TYPES = EventTypes.RESPONSE_TYPES.value
 HARDWARE_TYPES = EventTypes.HARDWARE_TYPES.value
 SOFTWARE_TYPES = EventTypes.SOFTWARE_TYPES.value
+SYSTEM_TYPES = EventTypes.SYSTEM_TYPES.value
 
-class Client(threading.Thread, GPIO_Responder):
-    def __init__(self, ip: str, port: int, client_soc: socket, handler: GPIO_Handler,
+
+class Client(threading.Thread, Responder):
+    def __init__(self, ip: str, port: int, client_soc: socket, handler: SYS_Handler,
                  delegation_event_whitelist=None):
+        assert handler is not None
         threading.Thread.__init__(self)
         if delegation_event_whitelist is None:
             delegation_event_whitelist = []
+
         self.client_address = ip
         self.port = port
         self.request = client_soc
@@ -95,40 +100,50 @@ class Client(threading.Thread, GPIO_Responder):
 
         return self.process_payload(payload)
 
-    """
-
-    """
-
     def process_payload(self, payload: Payload):
         is_resp = payload.type in RESPONSE_TYPES
-        is_soft = payload.type in SOFTWARE_TYPES
-        is_hard = payload.type in HARDWARE_TYPES
+        is_soft = payload.event in SOFTWARE_TYPES
+        is_hard = payload.event in HARDWARE_TYPES
+        is_sys = payload.event in SYSTEM_TYPES
         print("\nProcessing %s %s (%s)" %
               ("Hardware" if is_hard else ("Software" if is_soft else "System"),
                "Response" if is_resp else "Request",
                print_payload(payload)))
 
-        if is_resp:
-            # Response handling
-            # -----------------------------------------------
-            # Handles Probe Response
-            if payload.event is PayloadEvent.S_PROBE and payload.type is PayloadType.RSP:
-                return payload
+        # --------------------SYSTEM HANDLING--------------------
+        if is_sys:
+            if is_resp:
+                # Response handling
+                # Handles Probe Response
+                if payload.event is PayloadEvent.S_PROBE and payload.type is PayloadType.RSP:
+                    return payload
 
-        else:
-            # Request handling
-            # -----------------------------------------------
-            # Handles Probe Request
-            if payload.type is PayloadType.REQ and payload.event is PayloadEvent.S_PROBE:
-                payload.data = {'name': NAME, 'role': ROLE, 'isDelegator': IS_DELEGATOR}
-                payload.type = PayloadType.RSP
-                return payload
+            else:
+                # Request handling
+                # Handles Probe Request
+                if payload.type is PayloadType.REQ and payload.event is PayloadEvent.S_PROBE:
+                    payload.data = {'name': NAME, 'role': ROLE, 'isDelegator': IS_DELEGATOR}
+                    payload.type = PayloadType.RSP
+                    return payload
 
-        # ------------------HARDWARE HANDLING------------------------
-        if payload.event in HARDWARE_TYPES:
-            res_payload = self.handler.instruction(self, payload.data, payload.event)
+                    # ------------------HARDWARE HANDLING------------------------
+        if is_hard or is_soft:
+            domain = EventDomain.SYSTEM if is_soft else (EventDomain.GPIO if is_hard else None)
+            res_payload = self.handler.instruction(self, payload.data, payload.event, domain)
             return res_payload
         return PayloadEventMessages.SERVER_ERROR
+
+    def respond(self, payload: Payload):
+        send_payload(self.request, payload)
+
+    def signal_failed(self):
+        send_payload(self.request, PayloadEventMessages.FAILED_SIGNAL)
+
+    def signal_success(self):
+        send_payload(self.request, PayloadEventMessages.SUCCESS_SIGNAL)
+
+    def send_event_message(self, E: PayloadEventMessages, message: str = None):
+        send_payload(self.request, E)
 
     def run(self):
         res_data = None
@@ -137,23 +152,31 @@ class Client(threading.Thread, GPIO_Responder):
         while run:
             # Receives a tcp stream and builds the payload from it.
             req_data = self.request.recv(1024)
-            req_data = build_payload(req_data.decode("utf8"))
+            try:
+                req_data = build_payload(req_data.decode("utf8"))
+                if isinstance(req_data, Payload):
+                    run = req_data.type is not PayloadType.END
+                    # Sends the received data to be manage by a helper function
+                    res_data = self.data_handler(req_data, self.del_whitelist)
 
-            if isinstance(req_data, Payload):
-                run = req_data.type is not PayloadType.END
-                # Sends the received data to be manage by a helper function
-                res_data = self.data_handler(req_data, self.del_whitelist)
+                    # Only sends the response if the connection hasn't
+                    # been requested to close
+                    if run:
+                        self.respond(res_data)
+                else:
+                    print("[!] Raw data retrieved: {}".format(res_data))
 
-                # Only sends the response if the connection hasn't
-                # been requested to close
-                if run:
-                    send_payload(self.request, res_data)
-            else:
-                print("[!] Raw data retrieved: {}".format(res_data))
+            except Exception:
+                err_payload = PayloadEventMessages.ERROR.value
+                who = PayloadEvent.SERVER_ERROR if res_data is None \
+                    else PayloadEvent.CLIENT_ERROR
+                err_payload.event = who
+                send_payload(self.request, err_payload)
+
         print("\n[-] Connection to {} Closed \n".format(self.client_address))
 
 
-def start_lan_server(handler: GPIO_Handler, ip_address="0.0.0.0", port=8000, execution_role="NoRole",
+def start_lan_server(handler: SYS_Handler, ip_address="0.0.0.0", port=8000, execution_role="NoRole",
                      name="Unknown", delegation_event_whitelist: list = None, delegator=True):
     global ROLE, NAME, IS_DELEGATOR
     ROLE = execution_role
