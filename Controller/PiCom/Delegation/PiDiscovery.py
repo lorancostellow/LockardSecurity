@@ -2,7 +2,7 @@ import re
 import subprocess
 
 from PiCom.Clients.LANClient import LANClientHandler, LANClient
-from PiCom.Payload import Payload, save, PayloadEvent, PayloadType, PayloadFields
+from PiCom.Data import Payload, save, PayloadEvent, PayloadType, PayloadFields
 
 DEVICES_FILE = '/tmp/devices.json'
 devices = []

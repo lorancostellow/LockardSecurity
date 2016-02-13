@@ -1,6 +1,6 @@
 from enum import Enum
 
-__version__ = '0.2'
+__version__ = '1.2'
 __author__ = 'Dylan Coss <dylancoss1@gmail.com>'
 
 """
@@ -27,7 +27,7 @@ Describes the "Action" of the request being made.
 
 class PayloadEvent(Enum):
     # System management set
-    UNK = "Unknown Scheme"
+    UNK = ["Unknown Scheme", ]
     S_PROBE = "Pi Server Probe"
     D_PROBE = "User Device Probe"
     REGSTN = "Device Registration"
@@ -59,3 +59,27 @@ class PayloadType(Enum):
     ACK = "Acknowledged"
 
 
+class EventTypes(Enum):
+    HARDWARE_TYPES = [
+        PayloadEvent.PANIC,
+        PayloadEvent.H_ALARM,
+        PayloadEvent.F_ALARM,
+        PayloadEvent.C_ALARM,
+        PayloadEvent.LOCK_STAT
+    ]
+
+    SOFTWARE_TYPES = [
+        PayloadEvent.TEXT_ALERT,
+        PayloadEvent.RSS_ALERT,
+    ]
+
+    SYSTEM_TYPES = [
+        PayloadEvent.S_PROBE,
+        PayloadEvent.D_PROBE,
+        PayloadEvent.REGSTN
+    ]
+
+    RESPONSE_TYPES = [
+        PayloadType.RSP,
+        PayloadType.ACK
+    ]

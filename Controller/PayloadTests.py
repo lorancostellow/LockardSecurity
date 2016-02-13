@@ -1,7 +1,7 @@
 import json
 import unittest
 
-from PiCom.Payload import PayloadType, PayloadEvent, Payload, build_payload, BLANK_FIELD
+from PiCom.Data import PayloadType, PayloadEvent, Payload, build_payload, BLANK_FIELD
 
 
 class BuildTests(unittest.TestCase):

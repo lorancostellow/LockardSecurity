@@ -6,7 +6,7 @@
 __version__ = '0.1'
 __author__ = 'Dylan Coss <dylancoss1@gmail.com>'
 
-from PiCom.Payload import PayloadEvent, Payload
+from PiCom.Data import PayloadEvent, Payload
 
 """
 The responder is used to callback to the server.

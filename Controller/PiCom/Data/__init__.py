@@ -3,7 +3,7 @@ import os
 import socket
 from enum import Enum
 
-from PiCom.Payload.Structure import PayloadType, PayloadEvent, PayloadFields, BLANK_FIELD
+from PiCom.Data.Structure import PayloadType, PayloadEvent, PayloadFields, BLANK_FIELD
 
 __version__ = '0.1'
 __author__ = 'Dylan Coss <dylancoss1@gmail.com>'
@@ -38,7 +38,7 @@ class Payload(PayloadEncoder):
 
 
 class PayloadEventMessages(Enum):
-    END_CONNECTION = Payload("Goodbye", PayloadEvent.SYSTEM, PayloadType.REQ)
+    END_CONNECTION = Payload("Goodbye", PayloadEvent.SYSTEM, PayloadType.END)
     WRONG_NODE = Payload({'message': "Request was not intended for the unit"},
                          PayloadEvent.CLIENT_ERROR, PayloadType.RSP)
     SERVER_ERROR = Payload({'message': "There was a unexpected server side error!"},
@@ -48,6 +48,10 @@ class PayloadEventMessages(Enum):
 
 
 def build_payload(data):
+    if data is None:
+        raise TypeError("The data needed for building the payload is Strings or Dicts.."
+                        "\nInputted: %s" % type(data))
+
     if isinstance(data, str):
         data = decode_from_json(data)
 
@@ -72,8 +76,13 @@ def load(filename):
     raise FileNotFoundError
 
 
-def send_payload(sock: socket, payload: PayloadEncoder, address=None):
+def send_payload(sock: socket, payload: PayloadEncoder or PayloadEventMessages, address=None):
+
+    if isinstance(payload, PayloadEventMessages):
+        payload = payload.value
+
     assert payload is not None
+
     if address is None:
         sock.sendall(encode_to_json(payload.content()).encode("utf-8"))
     else:

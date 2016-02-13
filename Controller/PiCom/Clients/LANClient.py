@@ -4,7 +4,7 @@ Example Client to be implemented by android and the pi
 
 import socket
 
-from PiCom.Payload import Payload, send_payload, receive_payload, PayloadEventMessages
+from PiCom.Data import Payload, send_payload, receive_payload, PayloadEventMessages
 
 TIMEOUT = None
 
@@ -25,7 +25,8 @@ class LANClient:
     def transfer(self, payload: Payload):
         send_payload(self.sock, payload)
         res_payload = receive_payload(self.sock)
-        self.handler.received(self, payload, res_payload)
+        if self.handler is not None:
+            self.handler.received(self, payload, res_payload)
         return res_payload
 
     def close_connection(self):
@@ -56,7 +57,7 @@ class LANClient:
                 raise SyntaxError("When sending multiple payloads, the handler must be specified.")
 
             for payload in payloads:
-                return self.transfer(payload)
+                self.transfer(payload)
 
         elif isinstance(payloads, Payload):
             return self.transfer(payloads)

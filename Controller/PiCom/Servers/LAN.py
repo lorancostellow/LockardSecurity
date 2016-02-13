@@ -3,9 +3,9 @@ import sys
 import threading
 
 from PiCom.Clients.LANClient import LANClient
+from PiCom.Data import print_payload, Payload, build_payload, send_payload, PayloadEventMessages
+from PiCom.Data.Structure import PayloadType, PayloadEvent, BLANK_FIELD, WILDCARD, EventTypes
 from PiCom.Delegation import PiDiscovery
-from PiCom.Payload import print_payload, Payload, build_payload, send_payload, PayloadEventMessages
-from PiCom.Payload.Structure import PayloadType, PayloadEvent, BLANK_FIELD, WILDCARD
 from PiCom.Servers.SystemControllerUtils import GPIO_Handler, GPIO_Responder
 
 """
@@ -42,8 +42,10 @@ __author__ = "Dylan Coss <dylancoss1@gmail.com>"
 IS_DELEGATOR = True
 ROLE = None
 NAME = None
-RESPONSE_TYPES = [PayloadType.RSP]
 
+RESPONSE_TYPES = EventTypes.RESPONSE_TYPES.value
+HARDWARE_TYPES = EventTypes.HARDWARE_TYPES.value
+SOFTWARE_TYPES = EventTypes.SOFTWARE_TYPES.value
 
 class Client(threading.Thread, GPIO_Responder):
     def __init__(self, ip: str, port: int, client_soc: socket, handler: GPIO_Handler,
@@ -89,7 +91,7 @@ class Client(threading.Thread, GPIO_Responder):
                 # 2.2 If delegation is disabled, and the role can't be handled, then
                 #  a error response will be sent telling the client 'Wrong Node'.
 
-                return PayloadEventMessages.WRONG_NODE.value
+                return PayloadEventMessages.WRONG_NODE
 
         return self.process_payload(payload)
 
@@ -98,17 +100,19 @@ class Client(threading.Thread, GPIO_Responder):
     """
 
     def process_payload(self, payload: Payload):
-        is_response = payload.type in RESPONSE_TYPES
-        print("\n| **> Processing %s (%s)" %
-              ("Request" if is_response else "Response",
+        is_resp = payload.type in RESPONSE_TYPES
+        is_soft = payload.type in SOFTWARE_TYPES
+        is_hard = payload.type in HARDWARE_TYPES
+        print("\nProcessing %s %s (%s)" %
+              ("Hardware" if is_hard else ("Software" if is_soft else "System"),
+               "Response" if is_resp else "Request",
                print_payload(payload)))
 
-        if is_response:
+        if is_resp:
             # Response handling
             # -----------------------------------------------
             # Handles Probe Response
             if payload.event is PayloadEvent.S_PROBE and payload.type is PayloadType.RSP:
-                print("Probe Found!" + payload.data)
                 return payload
 
         else:
@@ -121,9 +125,10 @@ class Client(threading.Thread, GPIO_Responder):
                 return payload
 
         # ------------------HARDWARE HANDLING------------------------
-        res_payload = self.handler.instruction(self, payload.data, payload.event)
-        print("| <** %s\n" % print_payload(payload))
-        return PayloadEventMessages.SERVER_ERROR.value if res_payload is None else res_payload
+        if payload.event in HARDWARE_TYPES:
+            res_payload = self.handler.instruction(self, payload.data, payload.event)
+            return res_payload
+        return PayloadEventMessages.SERVER_ERROR
 
     def run(self):
         res_data = None
@@ -138,9 +143,6 @@ class Client(threading.Thread, GPIO_Responder):
                 run = req_data.type is not PayloadType.END
                 # Sends the received data to be manage by a helper function
                 res_data = self.data_handler(req_data, self.del_whitelist)
-
-                print("Data after processing\n Sending %s -> %s" %
-                      (print_payload(res_data), self.client_address))
 
                 # Only sends the response if the connection hasn't
                 # been requested to close

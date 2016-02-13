@@ -1,5 +1,5 @@
+from PiCom.Data import load
 from PiCom.Delegation.PiDiscovery import DEVICES_FILE, set_devices, update_devices
-from PiCom.Payload import load
 
 __version__ = '0.1'
 __author__ = 'Dylan Coss <dylancoss1@gmail.com>'
