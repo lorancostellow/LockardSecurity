@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="50266ce6-e46a-4df1-a459-1514df78785c" name="Default" comment="Fixed Sending payloads in a list, added better event handling">
+    <list default="true" id="50266ce6-e46a-4df1-a459-1514df78785c" name="Default" comment="Fixed Sending payloads in a list, added better event handling&#10;Added System Event Handling">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/PiCom/Data/Structure.py" afterPath="$PROJECT_DIR$/PiCom/Data/Structure.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/PiCom/Servers/LAN.py" afterPath="$PROJECT_DIR$/PiCom/Servers/LAN.py" />
     </list>
     <ignored path="Controller.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -129,10 +127,9 @@
       <file leaf-file-name="LAN.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/PiCom/Servers/LAN.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.32300884">
-              <caret line="131" column="47" selection-start-line="131" selection-start-column="47" selection-end-line="131" selection-end-column="47" />
+            <state vertical-scroll-proportion="0.5022124">
+              <caret line="140" column="50" selection-start-line="140" selection-start-column="50" selection-end-line="140" selection-end-column="50" />
               <folding>
-                <element signature="e#0#13#0" expanded="true" />
                 <element signature="e#2730#4327#0" expanded="false" />
               </folding>
             </state>
@@ -786,7 +783,13 @@
       <option name="project" value="LOCAL" />
       <updated>1455373658309</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Fixed Sending payloads in a list, added better event handling&#10;Added System Event Handling">
+      <created>1455374073298</created>
+      <option name="number" value="00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1455374073298</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -832,16 +835,16 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1280" y="25" width="1920" height="1055" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3279743" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39539748" sideWeight="0.50312823" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32890365" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.42872456" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="true" show_stripe_button="true" weight="0.2719486" sideWeight="0.4978701" order="3" side_tool="false" content_ui="tabs" x="1" y="0" width="1279" height="1018" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="true" show_stripe_button="true" weight="0.2719486" sideWeight="0.4978701" order="3" side_tool="false" content_ui="tabs" x="1" y="0" width="1279" height="1018" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32890365" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1881663" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1881663" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32690248" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -874,7 +877,8 @@
     <MESSAGE value="Fixed errors with building payload, add unit tests for the Payload package" />
     <MESSAGE value="Added error responding and re-structured the payload scheme" />
     <MESSAGE value="Fixed Sending payloads in a list, added better event handling" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed Sending payloads in a list, added better event handling" />
+    <MESSAGE value="Fixed Sending payloads in a list, added better event handling&#10;Added System Event Handling" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed Sending payloads in a list, added better event handling&#10;Added System Event Handling" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -899,7 +903,6 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="85" column="29" selection-start-line="85" selection-start-column="29" selection-end-line="85" selection-end-column="29" />
           <folding>
-            <element signature="e#0#13#0" expanded="true" />
             <element signature="e#2730#4327#0" expanded="false" />
           </folding>
         </state>
@@ -946,7 +949,6 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#13#0" expanded="true" />
             <element signature="e#2730#4327#0" expanded="false" />
           </folding>
         </state>
@@ -993,7 +995,6 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#13#0" expanded="true" />
             <element signature="e#2730#4327#0" expanded="false" />
           </folding>
         </state>
@@ -1027,7 +1028,6 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#13#0" expanded="true" />
             <element signature="e#2730#4327#0" expanded="false" />
           </folding>
         </state>
@@ -1045,7 +1045,6 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#13#0" expanded="true" />
             <element signature="e#2730#4327#0" expanded="false" />
           </folding>
         </state>
@@ -1448,10 +1447,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/PiCom/Servers/LAN.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.32300884">
-          <caret line="131" column="47" selection-start-line="131" selection-start-column="47" selection-end-line="131" selection-end-column="47" />
+        <state vertical-scroll-proportion="0.5022124">
+          <caret line="140" column="50" selection-start-line="140" selection-start-column="50" selection-end-line="140" selection-end-column="50" />
           <folding>
-            <element signature="e#0#13#0" expanded="true" />
             <element signature="e#2730#4327#0" expanded="false" />
           </folding>
         </state>
