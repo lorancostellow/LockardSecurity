@@ -46,18 +46,13 @@ class LANClient:
         if not self.is_open():
             self.open_connection()
 
-        if isinstance(payloads, list) and self.is_open():
+        if isinstance(payloads, list):
+
             for payload in payloads:
                 send_payload(self.sock, payload)
                 if self.HANDLER is None:
                     raise SyntaxError("When sending multiple payloads, the handler must be specified.")
                 self.HANDLER.received(self, payload, receive_payload(self.sock))
-        elif isinstance(payloads, Payload):
-            send_payload(self.sock, payloads)
-            res_payload = receive_payload(self.sock)
-            # self.HANDLER.received(self, payloads, res_payload)
-            self.close_connection()
-            return res_payload
 
     def is_open(self):
         if self.sock is None:

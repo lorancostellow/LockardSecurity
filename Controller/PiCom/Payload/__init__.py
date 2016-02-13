@@ -1,5 +1,6 @@
 import json
 import os
+import socket
 
 from PiCom.Payload.Fields import PayloadType, PayloadEvent, PayloadFields
 
@@ -40,10 +41,10 @@ def build_payload(data):
 
     assert isinstance(data, dict)
 
-    return Payload(data[PayloadFields.PAYLOAD_DATA.value],
-                   data[PayloadFields.PAYLOAD_ROLE.value],
-                   PayloadEvent[data[PayloadFields.PAYLOAD_EVENT.value]],
-                   PayloadType[data[PayloadFields.PAYLOAD_TYPE.value]])
+    return Payload(data=data[PayloadFields.PAYLOAD_DATA.value],
+                   event=PayloadEvent[data[PayloadFields.PAYLOAD_EVENT.value]],
+                   requestype=PayloadType[data[PayloadFields.PAYLOAD_TYPE.value]],
+                   role=data[PayloadFields.PAYLOAD_ROLE.value])
 
 
 def save(filename: str, obj: dict or list):
@@ -59,7 +60,7 @@ def load(filename):
     raise FileNotFoundError
 
 
-def send_payload(sock, payload: PayloadEncoder, address=None):
+def send_payload(sock: socket, payload: PayloadEncoder, address=None):
     assert payload is not None
     if address is None:
         sock.sendall(encode_to_json(payload.content()).encode("utf-8"))
@@ -67,7 +68,7 @@ def send_payload(sock, payload: PayloadEncoder, address=None):
         sock.sendto(encode_to_json(payload.content()).encode("utf-8"), address)
 
 
-def receive_payload(sock):
+def receive_payload(sock: socket):
     received = decode_from_json(str(sock.recv(1024), "utf-8"))
     return build_payload(received)
 

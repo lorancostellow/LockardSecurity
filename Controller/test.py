@@ -11,6 +11,5 @@ class Handler (GPIO_Handler):
 
 l = [PayloadEvent.RSS_ALERT]
 
-lan = Servers.LANServer(Handler, delegation_event_whitelist=l)
+lan = Servers.LANServer(Handler, delegation_event_whitelist=l, delegator=True)
 lan.start()
-

@@ -3,11 +3,10 @@ import sys
 import threading
 
 from PiCom.Clients.LANClient import LANClient
+from PiCom.Delegation import PiDiscovery
 from PiCom.Payload import print_payload, Payload, build_payload, send_payload
 from PiCom.Payload.Fields import PayloadType, PayloadEvent
 from PiCom.Servers.SystemControllerUtils import GPIO_Handler, GPIO_Responder
-
-from PiCom.Delegation import PiDiscovery
 
 """
     :SERVER
@@ -135,7 +134,7 @@ class Client(threading.Thread, GPIO_Responder):
         print("\n[-] Connection to {} Closed \n".format(self.client_address))
 
 
-def start_lan_server(handler: GPIO_Handler, ip_address="0.0.0.0", port=8000, execution_role="Test Server",
+def start_lan_server(handler: GPIO_Handler, ip_address="0.0.0.0", port=8000, execution_role="NoRole",
                      name="Unknown", delegation_event_whitelist: list = None, delegator=True):
     global ROLE, NAME, IS_DELEGATOR
     ROLE = execution_role
@@ -146,14 +145,14 @@ def start_lan_server(handler: GPIO_Handler, ip_address="0.0.0.0", port=8000, exe
     tcp_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     tcp_socket.bind((ip_address, port))
 
-    print("[!] Server Running {0}:{1}\n".format(ip_address, port))
+    print("\n[!] %s %s (%s)\n\tListening on %s:%d\n" %
+          (NAME, ("Delegator" if IS_DELEGATOR else "Node"), ROLE, ip_address, port))
 
     client_threads = []
 
     while True:
         tcp_socket.listen(5)
         (client_socket, (ip, port)) = tcp_socket.accept()
-        print("New Connection")
         spawned_thread = Client(ip, port, client_socket, handler, delegation_event_whitelist)
         spawned_thread.start()
         client_threads.append(spawned_thread)

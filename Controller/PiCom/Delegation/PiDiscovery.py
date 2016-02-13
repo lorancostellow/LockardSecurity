@@ -1,9 +1,8 @@
 import re
 import subprocess
 
-from PiCom.Payload import Payload, save, PayloadEvent, PayloadType
-
 from PiCom.Clients.LANClient import LANClientHandler, LANClient
+from PiCom.Payload import Payload, save, PayloadEvent, PayloadType, PayloadFields
 
 DEVICES_FILE = '/tmp/devices.json'
 devices = []
@@ -45,7 +44,7 @@ def probe(units: list):
             print("Probing: {0}".format(unit))
             l = LANClient(unit[0], 8000, Connection_Handler)
             if l.is_open():
-                l.send([Payload("Probing Scan", "Scan", PayloadEvent.PROBE, PayloadType.REQ)])
+                l.send([Payload("Probing Scan", PayloadEvent.S_PROBE, PayloadType.REQ)])
                 l.close_connection()
 
     return save(DEVICES_FILE, devices)
@@ -61,7 +60,7 @@ def get_ip_addresses(filter_by_role: str = None, ):
     for device in devices:
         if filter_by_role is None:
             addresses.append(get_ip_address(device['mac']))
-        elif filter_by_role == device['role']:
+        elif filter_by_role == device[PayloadFields.PAYLOAD_ROLE]:
             addresses.append(get_ip_address(device['mac']))
     return addresses
 
