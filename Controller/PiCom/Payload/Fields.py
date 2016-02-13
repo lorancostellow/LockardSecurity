@@ -1,6 +1,6 @@
 from enum import Enum
 
-__version__ = '0.1'
+__version__ = '0.2'
 __author__ = 'Dylan Coss <dylancoss1@gmail.com>'
 
 """
