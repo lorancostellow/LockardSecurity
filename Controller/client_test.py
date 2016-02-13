@@ -10,6 +10,7 @@ class Handler (LANClientHandler):
 
 L = LANClient("0.0.0.0", 8000, Handler)
 
-L.send([Payload("Please Mutate", PayloadEvent.RSS_ALERT, PayloadType.REQ)])
+print(L.send(Payload("Please Mutate", PayloadEvent.RSS_ALERT, PayloadType.REQ,
+                     role=None)))
 
 L.close_connection()

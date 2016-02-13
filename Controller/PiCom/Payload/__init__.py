@@ -1,8 +1,9 @@
 import json
 import os
 import socket
+from enum import Enum
 
-from PiCom.Payload.Fields import PayloadType, PayloadEvent, PayloadFields
+from PiCom.Payload.Structure import PayloadType, PayloadEvent, PayloadFields, BLANK_FIELD
 
 __version__ = '0.1'
 __author__ = 'Dylan Coss <dylancoss1@gmail.com>'
@@ -25,7 +26,8 @@ class Payload(PayloadEncoder):
         self.type = requestype
 
         if role is None:
-            role = "<ALL>"
+            role = BLANK_FIELD
+
         self.role = role
 
     def content(self):
@@ -33,6 +35,16 @@ class Payload(PayloadEncoder):
                 PayloadFields.PAYLOAD_ROLE.value: self.role,
                 PayloadFields.PAYLOAD_EVENT.value: self.event.name,
                 PayloadFields.PAYLOAD_TYPE.value: self.type.name}
+
+
+class PayloadEventMessages(Enum):
+    END_CONNECTION = Payload("Goodbye", PayloadEvent.SYSTEM, PayloadType.REQ)
+    WRONG_NODE = Payload({'message': "Request was not intended for the unit"},
+                         PayloadEvent.CLIENT_ERROR, PayloadType.RSP)
+    SERVER_ERROR = Payload({'message': "There was a unexpected server side error!"},
+                           PayloadEvent.SERVER_ERROR, PayloadType.RSP)
+    ERROR = Payload({'message': "There was a unexpected error..."},
+                    PayloadEvent.UNKNOWN_ERROR, PayloadType.RSP)
 
 
 def build_payload(data):

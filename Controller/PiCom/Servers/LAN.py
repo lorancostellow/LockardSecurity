@@ -4,8 +4,8 @@ import threading
 
 from PiCom.Clients.LANClient import LANClient
 from PiCom.Delegation import PiDiscovery
-from PiCom.Payload import print_payload, Payload, build_payload, send_payload
-from PiCom.Payload.Fields import PayloadType, PayloadEvent
+from PiCom.Payload import print_payload, Payload, build_payload, send_payload, PayloadEventMessages
+from PiCom.Payload.Structure import PayloadType, PayloadEvent, BLANK_FIELD, WILDCARD
 from PiCom.Servers.SystemControllerUtils import GPIO_Handler, GPIO_Responder
 
 """
@@ -42,6 +42,7 @@ __author__ = "Dylan Coss <dylancoss1@gmail.com>"
 IS_DELEGATOR = True
 ROLE = None
 NAME = None
+RESPONSE_TYPES = [PayloadType.RSP]
 
 
 class Client(threading.Thread, GPIO_Responder):
@@ -57,63 +58,79 @@ class Client(threading.Thread, GPIO_Responder):
         self.del_whitelist = delegation_event_whitelist
         print("[+] Connection to {} Established: ".format(self.client_address))
 
-    """
-    Handles all data received and returns the response
-    """
     def data_handler(self, payload: Payload, delegation_event_whitelist=None):
-
-        # 1. Determines if the payload is intended for the current unit
-
         if delegation_event_whitelist is None:
             delegation_event_whitelist = []
 
-        if payload.role != ROLE and payload.type == PayloadType.REQ \
-                and (payload.event not in delegation_event_whitelist):
+        is_notify_all = payload.role == WILDCARD
+        correct_payload = payload.role == ROLE
+        is_request = payload.type in RESPONSE_TYPES
+        white_listed = payload.event in delegation_event_whitelist
 
-            # 2.1 If the current payload is NOT intended for the current unit
-            #     it will be delegated, and hopfully send it to the appropriate
-            #     unit.
-            if IS_DELEGATOR:
-                # 2.2 If delegation is enabled, it then gets the ip address of the intended
-                #     unit and sends the payload
-                for address in PiDiscovery.get_ip_addresses(payload.role):
+        # 1. Determines if the payload is intended for the current unit
+
+        if (not correct_payload and is_request and not white_listed) or is_notify_all:
+
+            # 2 If the current payload is NOT intended for the current unit
+            #   it will be delegated, and hopefully send it to the appropriate
+            #   unit.
+
+            if (IS_DELEGATOR and payload.role is not BLANK_FIELD) or is_notify_all:
+                print("Delegating..")
+                # 2.1 If delegation is enabled, it then gets the ip address of the intended
+                #     unit and sends the payload, if the wildcard has been specified then all
+                #     the units will be notified
+
+                for address in PiDiscovery.get_ip_addresses(payload.role if not is_notify_all else None):
                     client = LANClient(address, self.port)
                     print("\n\t| **> %s\n\t|\t\tRelaying -> %s" % (print_payload(payload), address))
                     return client.send(payload)
             else:
-                # 2.3 If delegation is disabled, then a response will be sent saying that the request
-                #     failed.
-                return Payload("Sorry...Wrong Pi im afraid")
+                # 2.2 If delegation is disabled, and the role can't be handled, then
+                #  a error response will be sent telling the client 'Wrong Node'.
 
-        print("| <** %s\n" % print_payload(payload))
-        return payload
+                return PayloadEventMessages.WRONG_NODE.value
+
+        return self.process_payload(payload)
+
+    """
 
     """
 
-    """
     def process_payload(self, payload: Payload):
+        is_response = payload.type in RESPONSE_TYPES
+        print("\n| **> Processing %s (%s)" %
+              ("Request" if is_response else "Response",
+               print_payload(payload)))
 
-        print("\n**> Processing {0}".format(print_payload(payload)))
+        if is_response:
+            # Response handling
+            # -----------------------------------------------
+            # Handles Probe Response
+            if payload.event is PayloadEvent.S_PROBE and payload.type is PayloadType.RSP:
+                print("Probe Found!" + payload.data)
+                return payload
 
-        # Handles Probe Request
-        if payload.type is PayloadType.REQ and payload.event is PayloadEvent.PROBE:
-            payload.data = {'name': NAME, 'role': ROLE, 'isDelegator': IS_DELEGATOR}
-            payload.type = PayloadType.RSP
-            return payload
-        # Handles Probe Response
-        if payload.event is PayloadEvent.PROBE and payload.type is PayloadType.RSP:
-            print("Probe Found!" + payload.data)
-            return payload
+        else:
+            # Request handling
+            # -----------------------------------------------
+            # Handles Probe Request
+            if payload.type is PayloadType.REQ and payload.event is PayloadEvent.S_PROBE:
+                payload.data = {'name': NAME, 'role': ROLE, 'isDelegator': IS_DELEGATOR}
+                payload.type = PayloadType.RSP
+                return payload
 
         # ------------------HARDWARE HANDLING------------------------
-        return self.handler.instruction(payload.data, payload.event)
+        res_payload = self.handler.instruction(self, payload.data, payload.event)
+        print("| <** %s\n" % print_payload(payload))
+        return PayloadEventMessages.SERVER_ERROR.value if res_payload is None else res_payload
 
     def run(self):
         res_data = None
         run = True
 
         while run:
-
+            # Receives a tcp stream and builds the payload from it.
             req_data = self.request.recv(1024)
             req_data = build_payload(req_data.decode("utf8"))
 

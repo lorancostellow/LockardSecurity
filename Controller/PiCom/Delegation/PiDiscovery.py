@@ -28,7 +28,7 @@ def probe(units: list):
     global devices
     devices = []
 
-    class Connection_Handler(LANClientHandler):
+    class ConnectionHandler(LANClientHandler):
 
         def received(self, req_payload: Payload, res_payload: Payload):
             print("[i] Unit Found! ({0})\n".format(res_payload.data['role']))
@@ -42,7 +42,7 @@ def probe(units: list):
     for unit in units:
         if not str(unit[1]).__contains__('<'):
             print("Probing: {0}".format(unit))
-            l = LANClient(unit[0], 8000, Connection_Handler)
+            l = LANClient(unit[0], 8000, ConnectionHandler)
             if l.is_open():
                 l.send([Payload("Probing Scan", PayloadEvent.S_PROBE, PayloadType.REQ)])
                 l.close_connection()
@@ -54,7 +54,7 @@ def update_devices():
     probe(get_units())
 
 
-def get_ip_addresses(filter_by_role: str = None, ):
+def get_ip_addresses(filter_by_role: str = None):
     global devices
     addresses = []
     for device in devices:

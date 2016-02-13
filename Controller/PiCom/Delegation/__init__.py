@@ -31,6 +31,7 @@ is Websockets.
 
 print("\n[i] Loaded Delegation (Version %s)\n" % __version__)
 
+
 try:
     set_devices(load(DEVICES_FILE))
 except FileNotFoundError:

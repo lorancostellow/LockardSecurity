@@ -29,16 +29,16 @@ The responder is used to callback to the server.
 
 class GPIO_Responder:
     def signal_success(self):
-        raise NotImplemented("Not Implemented!")
+        print("Not Implemented!")
 
     def signal_failed(self):
-        raise NotImplemented("Not Implemented!")
+        print("Not Implemented!")
 
     def respond(self, data, event: PayloadEvent):
-        raise NotImplemented("Not Implemented!")
+        print("Not Implemented!")
 
     def respond_with_payload(self, payload: Payload):
-        raise NotImplemented("Not Implemented!")
+        print("Not Implemented!")
 
 
 """

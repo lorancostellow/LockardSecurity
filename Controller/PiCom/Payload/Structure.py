@@ -9,6 +9,9 @@ need to implement the following fields to interpret the payloads
 
 """
 
+WILDCARD = '<ALL>'
+BLANK_FIELD = '<BLANK>'
+
 
 class PayloadFields(Enum):
     PAYLOAD_ROLE = "role"
@@ -29,6 +32,9 @@ class PayloadEvent(Enum):
     D_PROBE = "User Device Probe"
     REGSTN = "Device Registration"
     SYSTEM = "System Message"
+    SERVER_ERROR = "Server Error"
+    CLIENT_ERROR = "Client Error"
+    UNKNOWN_ERROR = "Unknown Error"
 
     # System feature set
     PANIC = "Panic Button"
@@ -50,5 +56,6 @@ class PayloadType(Enum):
     REQ = "Request"
     RSP = "Response"
     END = "Close Connection"
-    STA = "Send To All"
-    ERR = "Error"
+    ACK = "Acknowledged"
+
+
