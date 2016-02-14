@@ -1,4 +1,4 @@
-from PiCom.Servers.LAN import start_lan_server
+from PiCom.Servers.LAN_Server import start_lan_server
 
 __version__ = '1.6'
 __author__ = "Dylan Coss <dylancoss1@gmail.com>"

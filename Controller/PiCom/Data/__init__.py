@@ -1,6 +1,7 @@
 import json
 import os
 import socket
+import threading
 from enum import Enum
 
 from PiCom.Data.Structure import PayloadType, PayloadEvent, PayloadFields, BLANK_FIELD
@@ -11,6 +12,8 @@ __author__ = 'Dylan Coss <dylancoss1@gmail.com>'
 """
      Represents the payload that is sent through a Websocket/Sockets connection.
 """
+
+lock = threading.Lock()
 
 
 class PayloadEncoder(object):
@@ -38,7 +41,6 @@ class Payload(PayloadEncoder):
 
 
 class PayloadEventMessages(Enum):
-    END_CONNECTION = Payload("Goodbye", PayloadEvent.SYSTEM, PayloadType.END)
     WRONG_NODE = Payload({'message': "Request was not intended for the unit"},
                          PayloadEvent.CLIENT_ERROR, PayloadType.RSP)
     SERVER_ERROR = Payload({'message': "There was a unexpected server side error!"},
@@ -46,11 +48,15 @@ class PayloadEventMessages(Enum):
     ERROR = Payload({'message': "There was a unexpected error..."},
                     PayloadEvent.UNKNOWN_ERROR, PayloadType.RSP)
     SUCCESS_SIGNAL = Payload(BLANK_FIELD, PayloadEvent.SUCCESS_SIG, PayloadType.RSP)
+
     FAILED_SIGNAL = Payload(BLANK_FIELD, PayloadEvent.FAILED_SIG, PayloadType.RSP)
+
+    ADDRESS_NOT_FOUND = Payload({'message': "Unable to connect to client"},
+                                PayloadEvent.CLIENT_ERROR, PayloadType.RSP)
 
 
 def get_event_message(event_message: PayloadEventMessages, message: str = None):
-    assert isinstance(PayloadEventMessages, event_message)
+    assert isinstance(event_message, PayloadEventMessages)
     payload = event_message.value
     if message is not None:
         payload.data = {'message': message}
@@ -87,10 +93,11 @@ def load(filename):
 
 
 def send_payload(sock: socket, payload: PayloadEncoder or PayloadEventMessages, address=None):
+    if sock is None or sock._closed:
+        print("Unable to send payload!!!")
+        return
     if isinstance(payload, PayloadEventMessages):
         payload = payload.value
-
-    assert payload is not None
 
     if address is None:
         sock.sendall(encode_to_json(payload.content()).encode("utf-8"))
@@ -99,8 +106,10 @@ def send_payload(sock: socket, payload: PayloadEncoder or PayloadEventMessages, 
 
 
 def receive_payload(sock: socket):
-    received = decode_from_json(str(sock.recv(1024), "utf-8"))
-    return build_payload(received)
+    data = str(sock.recv(1024), "utf-8")
+    if data is not None and len(data) > 0:
+        received = decode_from_json(data)
+        return build_payload(received)
 
 
 def encode_to_json(data):

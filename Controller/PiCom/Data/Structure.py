@@ -27,7 +27,7 @@ Describes the "Action" of the request being made.
 
 class PayloadEvent(Enum):
     # System management set
-    UNK = ["Unknown Scheme", ]
+    UNK = "Unknown Scheme"
     S_PROBE = "Pi Server Probe"
     D_PROBE = "User Device Probe"
     REGSTN = "Device Registration"
@@ -57,17 +57,16 @@ class PayloadType(Enum):
     UNK = "Unknown Type"
     REQ = "Request"
     RSP = "Response"
-    END = "Close Connection"
     ACK = "Acknowledged"
 
 
 class EventDomain(Enum):
     GPIO = "System IO Pin"
-    SYSTEM = "System Event"
+    SOFT = "Software Event"
 
 
 class EventTypes(Enum):
-    HARDWARE_TYPES = [
+    HARDWARE_EVENTS = [
         PayloadEvent.PANIC,
         PayloadEvent.H_ALARM,
         PayloadEvent.F_ALARM,
@@ -75,18 +74,17 @@ class EventTypes(Enum):
         PayloadEvent.LOCK_STAT
     ]
 
-    SOFTWARE_TYPES = [
+    SOFTWARE_EVENT = [
         PayloadEvent.TEXT_ALERT,
         PayloadEvent.RSS_ALERT,
     ]
 
-    SYSTEM_TYPES = [
+    SYSTEM_EVENTS = [
         PayloadEvent.S_PROBE,
         PayloadEvent.D_PROBE,
         PayloadEvent.REGSTN
     ]
 
-    RESPONSE_TYPES = [
-        PayloadType.RSP,
-        PayloadType.ACK
+    REQUEST_TYPES = [
+        PayloadType.REQ,
     ]

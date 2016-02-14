@@ -8,7 +8,7 @@ from PiCom.Data.Structure import EventDomain
 __version__ = '0.1'
 __author__ = 'Dylan Coss <dylancoss1@gmail.com>'
 
-from PiCom.Data import PayloadEvent, Payload
+from PiCom.Data import PayloadEvent, Payload, PayloadEventMessages
 
 """
 The responder is used to callback to the server.
@@ -27,14 +27,14 @@ The responder is used to callback to the server.
 
 
 class Responder:
-    def signal_success(self):
-        print("Not Implemented!")
+    def respond(self, payload: Payload):
+        return payload
 
     def signal_failed(self):
-        print("Not Implemented!")
+        return PayloadEventMessages.FAILED_SIGNAL
 
-    def respond(self, payload: Payload):
-        print("Not Implemented!")
+    def signal_success(self):
+        return PayloadEventMessages.SUCCESS_SIGNAL
 
 
 """
@@ -44,6 +44,5 @@ information sent by the clients.
 
 
 class SYS_Handler(Responder):
-    def instruction(self, data, event: PayloadEvent, domain: EventDomain):
+    def instruction(self, data, event: PayloadEvent, domain: EventDomain, payload: Payload):
         pass
-
