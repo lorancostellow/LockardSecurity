@@ -89,7 +89,7 @@ class Client(threading.Thread, Responder):
                     client = LANClient(address, self.port, timeout=5, ignore_errors=True)
                     print("\t%s\n\t|\t\tRelaying -> %s:%s" % (print_payload(payload), address, self.port))
                     res_payload = client.send(payload)
-                    transactions.append((res_payload.data, res_payload.event))
+                    transactions.append((res_payload.data, res_payload.event.name))
 
                 if len(transactions) > 1:
                     payload.data = transactions

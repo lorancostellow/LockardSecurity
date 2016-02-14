@@ -14,10 +14,10 @@ L = LANClient("0.0.0.0", 8000, Handler, ignore_errors=False)
 #
 L.send([
 
-        # Payload("Please Mutate", PayloadEvent.RSS_ALERT, PayloadType.REQ, role='C'),
-        # Payload("Please Mutate", PayloadEvent.S_PROBE, PayloadType.REQ, role="A"),
-        #  Payload("Please Mutate", PayloadEvent.S_PROBE, PayloadType.REQ, role="B"),
-        # Payload("Please Mutate", PayloadEvent.S_PROBE, PayloadType.REQ, role="C"),
+        Payload("Please Mutate", PayloadEvent.RSS_ALERT, PayloadType.REQ, role='C'),
+        Payload("Please Mutate", PayloadEvent.S_PROBE, PayloadType.REQ, role="A"),
+         Payload("Please Mutate", PayloadEvent.S_PROBE, PayloadType.REQ, role="B"),
+        Payload("Please Mutate", PayloadEvent.S_PROBE, PayloadType.REQ, role="C"),
         Payload("Please Mutate", PayloadEvent.S_PROBE, PayloadType.REQ, role=WILDCARD)
 
         ])
