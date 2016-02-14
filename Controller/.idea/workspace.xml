@@ -1,18 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="50266ce6-e46a-4df1-a459-1514df78785c" name="Default" comment="Fixed Sending payloads in a list, added better event handling&#10;Added System Event Handling">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/PiCom/Clients/LANClient.py" afterPath="$PROJECT_DIR$/PiCom/Clients/LAN_Client.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/PiCom/Servers/LAN.py" afterPath="$PROJECT_DIR$/PiCom/Servers/LAN_Server.py" />
+    <list default="true" id="50266ce6-e46a-4df1-a459-1514df78785c" name="Default" comment="Re-designed how connections are made. General fixes">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/PiCom/Clients/__init__.py" afterPath="$PROJECT_DIR$/PiCom/Clients/__init__.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/PiCom/Data/Structure.py" afterPath="$PROJECT_DIR$/PiCom/Data/Structure.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/PiCom/Data/__init__.py" afterPath="$PROJECT_DIR$/PiCom/Data/__init__.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/PiCom/Delegation/PiDiscovery.py" afterPath="$PROJECT_DIR$/PiCom/Delegation/PiDiscovery.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/PiCom/Servers/SystemControllerUtils.py" afterPath="$PROJECT_DIR$/PiCom/Servers/SystemControllerUtils.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/PiCom/Servers/__init__.py" afterPath="$PROJECT_DIR$/PiCom/Servers/__init__.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client_test.py" afterPath="$PROJECT_DIR$/client_test.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test.py" afterPath="$PROJECT_DIR$/test.py" />
     </list>
     <ignored path="Controller.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -82,8 +72,8 @@
       <file leaf-file-name="client_test.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/client_test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.43756905">
-              <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.059668507">
+              <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
               <folding>
                 <element signature="e#0#53#0" expanded="true" />
               </folding>
@@ -105,10 +95,8 @@
         <entry file="file://$PROJECT_DIR$/PiCom/Clients/LAN_Client.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="59" column="39" selection-start-line="59" selection-start-column="39" selection-end-line="59" selection-end-column="39" />
-              <folding>
-                <element signature="e#64#77#0" expanded="true" />
-              </folding>
+              <caret line="60" column="39" selection-start-line="60" selection-start-column="39" selection-end-line="60" selection-end-column="39" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -129,13 +117,13 @@
             <state vertical-scroll-proportion="0.0">
               <caret line="135" column="62" selection-start-line="135" selection-start-column="62" selection-end-line="135" selection-end-column="62" />
               <folding>
-                <element signature="e#410#1725#1" expanded="false" />
-                <element signature="e#2222#2676#0" expanded="false" />
-                <element signature="e#4587#5958#0" expanded="false" />
-                <element signature="e#6048#6121#0" expanded="false" />
-                <element signature="e#6172#6207#0" expanded="false" />
-                <element signature="e#6236#7329#0" expanded="false" />
-                <element signature="e#7532#8415#0" expanded="false" />
+                <element signature="e#391#1706#1" expanded="false" />
+                <element signature="e#2203#2657#0" expanded="false" />
+                <element signature="e#4568#5939#0" expanded="false" />
+                <element signature="e#6029#6102#0" expanded="false" />
+                <element signature="e#6153#6188#0" expanded="false" />
+                <element signature="e#6217#7310#0" expanded="false" />
+                <element signature="e#7513#8396#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -404,7 +392,7 @@
     <property name="editor.config.accepted" value="true" />
     <property name="SearchEverywhereHistoryKey" value="pack&#9;ACTION&#9;NewPythonPackage&#10;python&#9;ACTION&#9;NewPythonFile&#10;s&#9;FILE&#9;file:///home/dylan/PycharmProjects/Controller/PiCom/Servers/Sender.py&#10;re&#9;FILE&#9;file:///home/dylan/PycharmProjects/Controller/PiCom/Servers/Reciever.py" />
     <property name="last.edited.regexp" value="Sample Text" />
-    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="settings.editor.selected.configurable" value="settings.github" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
@@ -806,7 +794,13 @@
       <option name="project" value="LOCAL" />
       <updated>1455374200475</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Re-designed how connections are made. General fixes">
+      <created>1455457564314</created>
+      <option name="number" value="00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1455457564314</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -856,17 +850,17 @@
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19116081" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3279743" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39539748" sideWeight="0.50312823" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32890365" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.42872456" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="true" show_stripe_button="true" weight="0.2719486" sideWeight="0.4978701" order="3" side_tool="false" content_ui="tabs" x="3" y="0" width="1277" height="869" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="true" show_stripe_button="true" weight="0.2719486" sideWeight="0.4978701" order="3" side_tool="false" content_ui="tabs" x="1562" y="130" width="1277" height="869" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32890365" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4051447" sideWeight="0.49687174" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" x="99" y="125" width="1722" height="856" />
@@ -895,7 +889,8 @@
     <MESSAGE value="Added error responding and re-structured the payload scheme" />
     <MESSAGE value="Fixed Sending payloads in a list, added better event handling" />
     <MESSAGE value="Fixed Sending payloads in a list, added better event handling&#10;Added System Event Handling" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed Sending payloads in a list, added better event handling&#10;Added System Event Handling" />
+    <MESSAGE value="Re-designed how connections are made. General fixes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Re-designed how connections are made. General fixes" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -920,13 +915,13 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="85" column="29" selection-start-line="85" selection-start-column="29" selection-end-line="85" selection-end-column="29" />
           <folding>
-            <element signature="e#410#1725#1" expanded="false" />
-            <element signature="e#2222#2676#0" expanded="false" />
-            <element signature="e#4587#5958#0" expanded="false" />
-            <element signature="e#6048#6121#0" expanded="false" />
-            <element signature="e#6172#6207#0" expanded="false" />
-            <element signature="e#6236#7329#0" expanded="false" />
-            <element signature="e#7532#8415#0" expanded="false" />
+            <element signature="e#391#1706#1" expanded="false" />
+            <element signature="e#2203#2657#0" expanded="false" />
+            <element signature="e#4568#5939#0" expanded="false" />
+            <element signature="e#6029#6102#0" expanded="false" />
+            <element signature="e#6153#6188#0" expanded="false" />
+            <element signature="e#6217#7310#0" expanded="false" />
+            <element signature="e#7513#8396#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -955,9 +950,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="29" column="41" selection-start-line="29" selection-start-column="41" selection-end-line="29" selection-end-column="41" />
-          <folding>
-            <element signature="e#64#77#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -976,13 +969,13 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#410#1725#1" expanded="false" />
-            <element signature="e#2222#2676#0" expanded="false" />
-            <element signature="e#4587#5958#0" expanded="false" />
-            <element signature="e#6048#6121#0" expanded="false" />
-            <element signature="e#6172#6207#0" expanded="false" />
-            <element signature="e#6236#7329#0" expanded="false" />
-            <element signature="e#7532#8415#0" expanded="false" />
+            <element signature="e#391#1706#1" expanded="false" />
+            <element signature="e#2203#2657#0" expanded="false" />
+            <element signature="e#4568#5939#0" expanded="false" />
+            <element signature="e#6029#6102#0" expanded="false" />
+            <element signature="e#6153#6188#0" expanded="false" />
+            <element signature="e#6217#7310#0" expanded="false" />
+            <element signature="e#7513#8396#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1011,9 +1004,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="29" column="41" selection-start-line="29" selection-start-column="41" selection-end-line="29" selection-end-column="41" />
-          <folding>
-            <element signature="e#64#77#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1032,13 +1023,13 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#410#1725#1" expanded="false" />
-            <element signature="e#2222#2676#0" expanded="false" />
-            <element signature="e#4587#5958#0" expanded="false" />
-            <element signature="e#6048#6121#0" expanded="false" />
-            <element signature="e#6172#6207#0" expanded="false" />
-            <element signature="e#6236#7329#0" expanded="false" />
-            <element signature="e#7532#8415#0" expanded="false" />
+            <element signature="e#391#1706#1" expanded="false" />
+            <element signature="e#2203#2657#0" expanded="false" />
+            <element signature="e#4568#5939#0" expanded="false" />
+            <element signature="e#6029#6102#0" expanded="false" />
+            <element signature="e#6153#6188#0" expanded="false" />
+            <element signature="e#6217#7310#0" expanded="false" />
+            <element signature="e#7513#8396#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1048,10 +1039,9 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="21" column="51" selection-start-line="21" selection-start-column="51" selection-end-line="21" selection-end-column="51" />
           <folding>
-            <element signature="e#0#9#0" expanded="true" />
-            <element signature="e#403#679#0" expanded="false" />
-            <element signature="e#1651#1669#0" expanded="false" />
-            <element signature="e#2195#2313#0" expanded="false" />
+            <element signature="e#377#653#0" expanded="false" />
+            <element signature="e#1625#1643#0" expanded="false" />
+            <element signature="e#2169#2287#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1067,9 +1057,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
-          <folding>
-            <element signature="e#64#77#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1078,13 +1066,13 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#410#1725#1" expanded="false" />
-            <element signature="e#2222#2676#0" expanded="false" />
-            <element signature="e#4587#5958#0" expanded="false" />
-            <element signature="e#6048#6121#0" expanded="false" />
-            <element signature="e#6172#6207#0" expanded="false" />
-            <element signature="e#6236#7329#0" expanded="false" />
-            <element signature="e#7532#8415#0" expanded="false" />
+            <element signature="e#391#1706#1" expanded="false" />
+            <element signature="e#2203#2657#0" expanded="false" />
+            <element signature="e#4568#5939#0" expanded="false" />
+            <element signature="e#6029#6102#0" expanded="false" />
+            <element signature="e#6153#6188#0" expanded="false" />
+            <element signature="e#6217#7310#0" expanded="false" />
+            <element signature="e#7513#8396#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1101,13 +1089,13 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#410#1725#1" expanded="false" />
-            <element signature="e#2222#2676#0" expanded="false" />
-            <element signature="e#4587#5958#0" expanded="false" />
-            <element signature="e#6048#6121#0" expanded="false" />
-            <element signature="e#6172#6207#0" expanded="false" />
-            <element signature="e#6236#7329#0" expanded="false" />
-            <element signature="e#7532#8415#0" expanded="false" />
+            <element signature="e#391#1706#1" expanded="false" />
+            <element signature="e#2203#2657#0" expanded="false" />
+            <element signature="e#4568#5939#0" expanded="false" />
+            <element signature="e#6029#6102#0" expanded="false" />
+            <element signature="e#6153#6188#0" expanded="false" />
+            <element signature="e#6217#7310#0" expanded="false" />
+            <element signature="e#7513#8396#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1415,10 +1403,9 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="47" column="0" selection-start-line="47" selection-start-column="0" selection-end-line="47" selection-end-column="0" />
           <folding>
-            <element signature="e#0#9#0" expanded="true" />
-            <element signature="e#403#679#0" expanded="false" />
-            <element signature="e#1651#1669#0" expanded="false" />
-            <element signature="e#2195#2313#0" expanded="false" />
+            <element signature="e#377#653#0" expanded="false" />
+            <element signature="e#1625#1643#0" expanded="false" />
+            <element signature="e#2169#2287#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1462,7 +1449,6 @@
         <state vertical-scroll-proportion="1.9093922">
           <caret line="98" column="32" selection-start-line="98" selection-start-column="32" selection-end-line="98" selection-end-column="32" />
           <folding>
-            <element signature="e#0#11#0" expanded="true" />
             <element signature="e#384#415#0" expanded="false" />
             <element signature="e#3952#4335#0" expanded="false" />
           </folding>
@@ -1482,13 +1468,13 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="135" column="62" selection-start-line="135" selection-start-column="62" selection-end-line="135" selection-end-column="62" />
           <folding>
-            <element signature="e#410#1725#1" expanded="false" />
-            <element signature="e#2222#2676#0" expanded="false" />
-            <element signature="e#4587#5958#0" expanded="false" />
-            <element signature="e#6048#6121#0" expanded="false" />
-            <element signature="e#6172#6207#0" expanded="false" />
-            <element signature="e#6236#7329#0" expanded="false" />
-            <element signature="e#7532#8415#0" expanded="false" />
+            <element signature="e#391#1706#1" expanded="false" />
+            <element signature="e#2203#2657#0" expanded="false" />
+            <element signature="e#4568#5939#0" expanded="false" />
+            <element signature="e#6029#6102#0" expanded="false" />
+            <element signature="e#6153#6188#0" expanded="false" />
+            <element signature="e#6217#7310#0" expanded="false" />
+            <element signature="e#7513#8396#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1514,17 +1500,15 @@
     <entry file="file://$PROJECT_DIR$/PiCom/Clients/LAN_Client.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="59" column="39" selection-start-line="59" selection-start-column="39" selection-end-line="59" selection-end-column="39" />
-          <folding>
-            <element signature="e#64#77#0" expanded="true" />
-          </folding>
+          <caret line="60" column="39" selection-start-line="60" selection-start-column="39" selection-end-line="60" selection-end-column="39" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/client_test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.43756905">
-          <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.059668507">
+          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
           <folding>
             <element signature="e#0#53#0" expanded="true" />
           </folding>
