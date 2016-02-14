@@ -1,8 +1,9 @@
 import re
 import subprocess
 
-from PiCom.Clients.LAN_Client import LANClientHandler, Client
-from PiCom.Data import Payload, save, PayloadEvent, PayloadType, PayloadFields, BLANK_FIELD, print_payload
+from PiCom.Clients.LAN_Client import Client
+from PiCom.Data import Payload, save, PayloadEvent, PayloadType, BLANK_FIELD
+from PiCom.Data.Structure import WILDCARD
 
 DEVICES_FILE = '/tmp/devices.json'
 devices = []
@@ -28,30 +29,16 @@ def probe(units: list):
     global devices
     devices = []
 
-    class ConnectionHandler(LANClientHandler):
-
-        def received(self, req_payload: Payload, res_payload: Payload):
-            print("[i] Unit Found! ({0})\n".format(res_payload.data['role']))
-
-            # Adds mac address to the record
-            res_payload.data['mac'] = unit[1]
-
-            # Adds it to the list
-            devices.append(res_payload.data)
-
     for unit in units:
+        # sudo arp-scan --interface=eth0 --localnet
         if not str(unit[1]).__contains__('<'):
-            print("Probing: {0}".format(unit))
+            l = Client(unit[0], 8000, timeout=.5, ignore_error=True)
+            response = l.send(Payload(BLANK_FIELD, PayloadEvent.S_PROBE, PayloadType.REQ))
+            if isinstance(response, Payload) and response.event is PayloadEvent.S_PROBE:
+                response.data['mac'] = unit[1]
+                devices.append(response.data)
 
-            l = Client(unit[0], 8000, ConnectionHandler, timeout=2)
-
-
-            print(print_payload(l.send(Payload(BLANK_FIELD, PayloadEvent.S_PROBE, PayloadType.REQ))))
-            l.close_connection()
-            # l.send(Payload("Probing Scan", PayloadEvent.S_PROBE, PayloadType.REQ))
-            # print(unit)
-            # l.close_connection()
-
+    print("[i] Found %d nodes" % len(devices))
     return save(DEVICES_FILE, devices)
 
 
@@ -59,23 +46,19 @@ def update_devices():
     probe(get_units())
 
 
-def get_ip_addresses(filter_by_role: str = None):
-    print('Address Lookup %s' % filter_by_role)
-    update_devices()
+def get_ip_addresses(filter_by_role: str = WILDCARD):
     global devices
     addresses = []
     for device in devices:
-        if filter_by_role is None:
-            addresses.append(get_ip_address(device['mac']))
-            print(device)
-        elif filter_by_role == device[PayloadFields.PAYLOAD_ROLE]:
-            print(device['role'])
+        mac, role = device['mac'], device['role']
+        if filter_by_role is WILDCARD:
+            addresses.append(get_ip_address(mac))
+        elif filter_by_role is role:
             addresses.append(get_ip_address(device['mac']))
     return addresses
 
 
 def get_ip_address(mac: str):
-    print(mac)
     units = get_units()
     for u in units:
         if u[1] == mac:

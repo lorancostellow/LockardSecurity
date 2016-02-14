@@ -7,6 +7,7 @@ __author__ = "Dylan Coss <dylancoss1@gmail.com>"
 class LANServer:
     def __init__(self, handler, ip_address="0.0.0.0", port=8000, execution_role="NoRole",
                  name="Unknown", delegation_event_whitelist: list = None, delegator: bool = True):
+
         self.handler = handler
         self.ip = ip_address
         self.port = port

@@ -93,8 +93,8 @@ def load(filename):
 
 
 def send_payload(sock: socket, payload: PayloadEncoder or PayloadEventMessages, address=None):
-    if sock is None or sock._closed:
-        print("Unable to send payload!!!")
+    if sock is None or sock._closed or payload is None:
+        print("[x] Unable to send payload [Payload %s, Socket %s]" % (payload, socket))
         return
     if isinstance(payload, PayloadEventMessages):
         payload = payload.value

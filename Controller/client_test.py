@@ -1,5 +1,6 @@
 from PiCom.Clients import LANClientHandler, LANClient
 from PiCom.Data import Payload, print_payload, PayloadType, PayloadEvent
+from PiCom.Data.Structure import WILDCARD
 
 
 class Handler(LANClientHandler):
@@ -13,20 +14,20 @@ L = LANClient("0.0.0.0", 8000, Handler, ignore_errors=False)
 #
 L.send([
 
-        Payload("Please Mutate", PayloadEvent.RSS_ALERT, PayloadType.REQ, role='C'),
-        Payload("Please Mutate", PayloadEvent.RSS_ALERT, PayloadType.REQ, role="A"),
-        Payload("Please Mutate", PayloadEvent.RSS_ALERT, PayloadType.REQ, role="B"),
-        Payload("Please Mutate", PayloadEvent.S_PROBE, PayloadType.REQ, role="B"),
-        # Payload("Please Mutate", PayloadEvent.RSS_ALERT, PayloadType.REQ, role=None)
+        # Payload("Please Mutate", PayloadEvent.RSS_ALERT, PayloadType.REQ, role='C'),
+        # Payload("Please Mutate", PayloadEvent.S_PROBE, PayloadType.REQ, role="A"),
+        #  Payload("Please Mutate", PayloadEvent.S_PROBE, PayloadType.REQ, role="B"),
+        # Payload("Please Mutate", PayloadEvent.S_PROBE, PayloadType.REQ, role="C"),
+        Payload("Please Mutate", PayloadEvent.S_PROBE, PayloadType.REQ, role=WILDCARD)
 
         ])
-
-# i = 0
+#
+# # i = 0
 # while True:
 #     time.sleep(.05)
 #     print(L.send(Payload(i, PayloadEvent.PANIC, PayloadType.REQ, role="A")))
 #     L.close_connection()
 #
-# #
-# print((L.send(Payload("ON", PayloadEvent.S_PROBE, PayloadType.REQ, role="B"))))
+
+# print((L.send(Payload("ON", PayloadEvent.S_PROBE, PayloadType.REQ, role="A"))))
 

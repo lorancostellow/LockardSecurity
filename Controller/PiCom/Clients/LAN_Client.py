@@ -15,6 +15,9 @@ class LANClientHandler:
 class Client:
     def __init__(self, host: str, port: int, handler: LANClientHandler = None, timeout=None,
                  ignore_error: bool = False):
+        print("[i] LAN Client %s:%s [timeout=%s] %s" %
+              (host, port, (timeout if timeout is not None else "Infinite"),
+              ("Ignoring Errors" if ignore_error else "")))
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.sock.settimeout(timeout)
         self.is_connected = False
@@ -44,7 +47,8 @@ class Client:
         except socket.error as err:
             if err.errno is 111:
                 print("[!] No Server")
-            else:
+            elif err is socket.socket.timeout:
+                print("[!] Timeout")
                 raise
             self.is_connected = False
 
@@ -63,9 +67,11 @@ class Client:
                 return res_list
             elif isinstance(payloads, Payload):
                 res = self.transfer(payloads)
-                self.handler.received(self, res[0], res[1])
+                if self.handler is not None:
+                    self.handler.received(self, res[0], res[1])
                 return res[1]
         else:
             if not self.ignore_errors:
                 raise ConnectionError("\n[x] Lan Client was unable to connected to the server.\n"
                                       "\tClient: TCP on: %s:%s" % (self.host, self.port))
+

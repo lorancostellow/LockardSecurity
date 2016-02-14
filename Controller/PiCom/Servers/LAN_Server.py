@@ -42,7 +42,6 @@ __author__ = "Dylan Coss <dylancoss1@gmail.com>"
 IS_DELEGATOR = True
 ROLE = None
 NAME = None
-
 REQUEST_TYPES = EventTypes.REQUEST_TYPES.value
 HARDWARE_TYPES = EventTypes.HARDWARE_EVENTS.value
 SOFTWARE_TYPES = EventTypes.SOFTWARE_EVENT.value
@@ -57,7 +56,6 @@ class Client(threading.Thread, Responder):
         self.lock = threading.Lock()
         if delegation_event_whitelist is None:
             delegation_event_whitelist = []
-
         self.client_address = ip
         self.port = port
         self.request = client_soc
@@ -66,37 +64,45 @@ class Client(threading.Thread, Responder):
         print("[+] Connection to {} Established: ".format(self.client_address))
 
     def data_handler(self, payload: Payload, delegation_event_whitelist=None):
-
         if delegation_event_whitelist is None:
             delegation_event_whitelist = []
-
-        is_notify_all = payload.role == WILDCARD
+        notify_all = payload.role == WILDCARD
         correct_payload = payload.role == ROLE
         is_request = payload.type in REQUEST_TYPES
         white_listed = payload.event in delegation_event_whitelist
 
         # 1. Determines if the payload is intended for the current unit
-        if (not correct_payload and is_request and not white_listed) or is_notify_all:
+        if not correct_payload and is_request and not white_listed:
 
             # 2 If the current payload is NOT intended for the current unit
             #   it will be delegated, and hopefully send it to the appropriate
             #   unit.
-            if (IS_DELEGATOR and payload.role is not BLANK_FIELD) or is_notify_all:
-                print("Delegating..")
+            if IS_DELEGATOR and payload.role is not BLANK_FIELD:
                 # 2.1 If delegation is enabled, it then gets the ip address of the intended
                 #     unit and sends the payload, if the wildcard has been specified then all
                 #     the units will be notified
-                print(print_payload(payload))
-                addresses = PiDiscovery.get_ip_addresses(payload.role if not is_notify_all else None)
-                print(addresses)
+
+                addresses = PiDiscovery.get_ip_addresses(payload.role)
+                transactions = []
+                res_payload = PayloadEventMessages.ADDRESS_NOT_FOUND.value
                 for address in addresses:
-                    print("\n\t| **> %s\n\t|\t\tRelaying -> %s" % (print_payload(payload), address))
-                    client = LANClient(address, self.port)
-                    return client.send(payload)
-                return self.process_payload(payload)
+                    client = LANClient(address, self.port, timeout=5, ignore_errors=True)
+                    print("\t%s\n\t|\t\tRelaying -> %s:%s" % (print_payload(payload), address, self.port))
+                    res_payload = client.send(payload)
+                    transactions.append((res_payload.data, res_payload.event))
+
+                if len(transactions) > 1:
+                    payload.data = transactions
+                    payload.type = PayloadType.RSP
+                    return payload
+                return res_payload
+
+                # return self.process_payload(payload)
             else:
                 # 2.2 If delegation is disabled, and the role can't be handled, then
-                #  a error response will be sent telling the client 'Wrong Node'.
+                #     a error response will be sent telling the client 'Wrong Node'.
+                if notify_all:
+                    return self.process_payload(payload)
                 return PayloadEventMessages.WRONG_NODE
 
         return self.process_payload(payload)
@@ -108,7 +114,7 @@ class Client(threading.Thread, Responder):
         is_hard = payload.event in HARDWARE_TYPES
         is_sys = payload.event in SYSTEM_TYPES
 
-        print("\nProcessing %s %s (%s)" %
+        print("[i] Processing %s %s (%s)" %
               ("Hardware" if is_hard else ("Software" if is_soft else ("System" if is_sys else "Unknown")),
                "Response" if is_resp else "Request",
                print_payload(payload)))
@@ -117,6 +123,7 @@ class Client(threading.Thread, Responder):
         if is_sys:
             if is_resp:
                 # Response handling
+                # TODO: Handle response
                 pass
 
             else:
@@ -125,6 +132,7 @@ class Client(threading.Thread, Responder):
                 if payload.event is PayloadEvent.S_PROBE:
                     res_payload.data = {'name': NAME, 'role': ROLE, 'isDelegator': IS_DELEGATOR}
                     res_payload.type = PayloadType.RSP
+                # TODO: Handle requests
 
                     # ------------------HARDWARE/SOFTWARE HANDLING------------------------
         if is_hard or is_soft:
@@ -138,7 +146,11 @@ class Client(threading.Thread, Responder):
         send_payload(self.request, E)
 
     def respond(self, payload: Payload):
-        send_payload(self.request, payload)
+        if payload is None:
+            send_payload(self.request, PayloadEventMessages.ADDRESS_NOT_FOUND)
+
+        else:
+            send_payload(self.request, payload)
 
     def run(self):
         res_data = None
@@ -166,7 +178,7 @@ class Client(threading.Thread, Responder):
         print("[-] Connection to {} Closed \n".format(self.client_address))
 
 
-def start_lan_server(handler: SYS_Handler, ip_address="0.0.0.0", port=8000, execution_role="NoRole",
+def start_lan_server(handler: SYS_Handler, ip_address="0.0.0.0", port=8000, execution_role="No Role",
                      name="Unknown", delegation_event_whitelist: list = None, delegator=True):
     global ROLE, NAME, IS_DELEGATOR
     ROLE = execution_role
@@ -184,8 +196,8 @@ def start_lan_server(handler: SYS_Handler, ip_address="0.0.0.0", port=8000, exec
 
     while True:
         tcp_socket.listen(10)
-        (client_socket, (ip, port)) = tcp_socket.accept()
-        spawned_thread = Client(ip, port, client_socket, handler, delegation_event_whitelist)
+        (client_socket, client_ip) = tcp_socket.accept()
+        spawned_thread = Client(client_ip, port, client_socket, handler, delegation_event_whitelist)
         spawned_thread.start()
         client_threads.append(spawned_thread)
         client_threads = [t for t in client_threads if not t.isAlive()]
