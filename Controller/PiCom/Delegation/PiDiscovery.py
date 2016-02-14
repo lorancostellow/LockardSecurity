@@ -47,14 +47,15 @@ def update_devices():
 
 
 def get_ip_addresses(filter_by_role: str = WILDCARD):
+
     global devices
     addresses = []
     for device in devices:
         mac, role = device['mac'], device['role']
-        if filter_by_role is WILDCARD:
+        if filter_by_role == WILDCARD:
             addresses.append(get_ip_address(mac))
-        elif filter_by_role is role:
-            addresses.append(get_ip_address(device['mac']))
+        elif filter_by_role == role:
+            addresses.append(get_ip_address(mac))
     return addresses
 
 
