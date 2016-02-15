@@ -1,5 +1,12 @@
 package PiComAPI.Payload;
-
+/**
+ * Author Dylan Coss <dylancoss1@gmail.com>
+ *
+ *    Outlines the structure and feature set of the payload
+ *    shared between the server and the client
+ *
+ *    *NOTE: Will expand as the features develop..
+ */
 public enum PayloadEvent {
 
     // ------System management ------

@@ -6,7 +6,12 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.List;
 
-
+/**
+ * Author Dylan Coss <dylancoss1@gmail.com>
+ *
+ *     TCP Client to be used to control (talk) to the raspberry pi's
+ *     to the raspberry pi using the common data structures between the two.
+ */
 
 public class LANClient {
 
@@ -21,6 +26,11 @@ public class LANClient {
         openConnection();
     }
 
+    /**
+     * Send a list of payloads, with a handler
+     * @param payloads list of {@link Payload}s to send
+     * @param handler {@link LANClientHandler} for handling the responses as they arrive
+     */
     public void send(List<PayloadIntr> payloads, LANClientHandler handler){
         if (socket.isClosed())
             openConnection();
@@ -31,7 +41,12 @@ public class LANClient {
         }
     }
 
-
+    /**
+     * Sends a single {@link Payload} with a handler
+     * @param payload {@link Payload} to send
+     * @param handler for handling the responses as they arrive
+     * @return Returns the received Payload that was handled by the handler
+     */
     public Payload send(Payload payload, LANClientHandler handler){
         if (socket.isClosed())
             openConnection();
@@ -43,10 +58,18 @@ public class LANClient {
 
     }
 
+    /**
+     * Sends a single {@link Payload} without a handler
+     * @param payload {@link Payload} to send
+     * @return Returns the received {@link Payload}
+     */
     public Payload send(Payload payload){
         return send(payload, null);
     }
 
+    /**
+     * Opens a connection TCP Connection
+     */
     public void openConnection(){
         if (socket.isConnected())
             return;
@@ -59,6 +82,9 @@ public class LANClient {
         }
     }
 
+    /**
+     * Closes the TCP Connection
+     */
     public void closeConnection(){
 
         try {
@@ -70,6 +96,10 @@ public class LANClient {
         }
     }
 
+    /**
+     * Checks if the connection is open
+     * @return If the connection is connected
+     */
     public boolean isOpen(){
         return socket.isConnected();
     }

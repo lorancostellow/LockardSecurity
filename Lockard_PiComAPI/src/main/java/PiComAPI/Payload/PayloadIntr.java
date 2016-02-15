@@ -1,4 +1,9 @@
 package PiComAPI.Payload;
+/**
+ * Author Dylan Coss <dylancoss1@gmail.com>
+ *
+ *    Payload interface..
+ */
 
 public interface PayloadIntr {
     String PAYLOAD_TYPE = "type";
