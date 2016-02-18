@@ -200,7 +200,7 @@ def start_lan_server(handler: SYS_Handler, ip_address="0.0.0.0", port=8000, exec
         spawned_thread = Client(client_ip, port, client_socket, handler, delegation_event_whitelist)
         spawned_thread.start()
         client_threads.append(spawned_thread)
-        client_threads = [t for t in client_threads if not t.isAlive()]
+        client_threads = [client_threads.remove(t) for t in client_threads if not t.isAlive()]
         # Adds to the thread pool
     for thread in client_threads:
         thread.join()

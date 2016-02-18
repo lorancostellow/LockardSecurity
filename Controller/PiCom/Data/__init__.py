@@ -40,6 +40,8 @@ class Payload(PayloadEncoder):
                 PayloadFields.PAYLOAD_TYPE.value: self.type.name}
 
 
+
+
 class PayloadEventMessages(Enum):
     WRONG_NODE = Payload({'message': "Request was not intended for the unit"},
                          PayloadEvent.CLIENT_ERROR, PayloadType.RSP)
