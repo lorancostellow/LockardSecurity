@@ -1,9 +1,3 @@
-import time
-from datetime import timedelta
-
-from PiCom.Data import PayloadEvent
-from PiCom.Jobs.JOB import JobHandler, JobPool, Job
-
 __version__ = '0.1'
 __author__ = "Dylan Coss <dylancoss1@gmail.com>"
 
@@ -56,21 +50,3 @@ __author__ = "Dylan Coss <dylancoss1@gmail.com>"
             2.1  Client is sent a ACK of cancellation
 
 """
-
-
-class h(JobHandler):
-    def handle(self, job: Job):
-        print("\t Triggering: %s" % job.event)
-
-
-# TEST
-P = JobPool(h, interval=1)
-# P.start()
-t = time.time()
-P.add_job(Job("id1", "data1", PayloadEvent.C_ALARM, t, timedelta(seconds=2), stop_timestamp=timedelta(seconds=15),
-                  max_cycles=2))
-
-P.add_job(Job("id2", "data2", PayloadEvent.PANIC, t, timedelta(seconds=5), run_once=True))
-P.add_job(Job("id3", "data3", PayloadEvent.D_PROBE, t, timedelta(seconds=2), stop_timestamp=timedelta(seconds=10)))
-time.sleep(15)
-P.add_job(Job("id4", "data3", PayloadEvent.D_PROBE, time.time(), timedelta(seconds=2), stop_timestamp=timedelta(seconds=5)))

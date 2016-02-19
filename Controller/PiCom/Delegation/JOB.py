@@ -4,6 +4,14 @@ from datetime import timedelta
 
 from PiCom.Data import PayloadEvent
 
+__version__ = '0.1'
+__author__ = "Dylan Coss <dylancoss1@gmail.com>"
+
+"""
+ This Package is responsible for scheduling, management and the protocol of
+ Jobs on the Delegator & Nodes
+"""
+
 """
 This class determines when a job is to be run.
 Unit of time: seconds
@@ -93,7 +101,7 @@ class JobPool(threading.Thread):
 
     def __init__(self, handler: JobHandler, interval=1.0):
         super().__init__()
-        print("Job Pool running [interval=%d]" % interval)
+        print("[i] Started Jobs [interval=%d second(s)]" % interval)
         assert handler
         self.interval = interval
         self.handler = handler
@@ -119,3 +127,8 @@ class JobPool(threading.Thread):
 
     def get_job_count(self):
         return self.job_count
+
+    def remove_job(self, id):
+        for i in self.JOBS:
+            if i.id == id:
+                self.JOBS.remove(i)
