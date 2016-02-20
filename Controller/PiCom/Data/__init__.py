@@ -4,7 +4,7 @@ import socket
 import threading
 from enum import Enum
 
-from PiCom.Data.Structure import PayloadType, PayloadEvent, PayloadFields, BLANK_FIELD
+from PiCom.Data.Structure import PayloadType, PayloadEvent, PayloadFields, BLANK_FIELD, EventDomain, EventTypes
 
 __version__ = '0.1'
 __author__ = 'Dylan Coss <dylancoss1@gmail.com>'
@@ -17,7 +17,11 @@ lock = threading.Lock()
 
 
 class PayloadEncoder(object):
-    def content(self):
+    def to_dict(self):
+        pass
+
+    @staticmethod
+    def from_dict(data):
         pass
 
 
@@ -33,13 +37,24 @@ class Payload(PayloadEncoder):
 
         self.role = role
 
-    def content(self):
+    def to_dict(self):
         return {PayloadFields.PAYLOAD_DATA.value: self.data,
                 PayloadFields.PAYLOAD_ROLE.value: self.role,
                 PayloadFields.PAYLOAD_EVENT.value: self.event.name,
                 PayloadFields.PAYLOAD_TYPE.value: self.type.name}
 
-
+    @staticmethod
+    def from_dict(data):
+        if data is None:
+            raise TypeError("The data needed for building the payload is Strings or Dicts.."
+                        "\nInputted: %s" % type(data))
+        if isinstance(data, str):
+            data = decode_from_json(data)
+        assert isinstance(data, dict)
+        return Payload(data=data[PayloadFields.PAYLOAD_DATA.value],
+                       event=PayloadEvent[data[PayloadFields.PAYLOAD_EVENT.value]],
+                       requestype=PayloadType[data[PayloadFields.PAYLOAD_TYPE.value]],
+                       role=data[PayloadFields.PAYLOAD_ROLE.value])
 
 
 class PayloadEventMessages(Enum):
@@ -65,20 +80,25 @@ def get_event_message(event_message: PayloadEventMessages, message: str = None):
     return payload
 
 
-def build_payload(data):
-    if data is None:
-        raise TypeError("The data needed for building the payload is Strings or Dicts.."
-                        "\nInputted: %s" % type(data))
+"""
+Method has depreciated.
 
-    if isinstance(data, str):
-        data = decode_from_json(data)
-
-    assert isinstance(data, dict)
-
-    return Payload(data=data[PayloadFields.PAYLOAD_DATA.value],
-                   event=PayloadEvent[data[PayloadFields.PAYLOAD_EVENT.value]],
-                   requestype=PayloadType[data[PayloadFields.PAYLOAD_TYPE.value]],
-                   role=data[PayloadFields.PAYLOAD_ROLE.value])
+:Use Payload.from_dict()
+"""
+# def build_payload(data):
+#     if data is None:
+#         raise TypeError("The data needed for building the payload is Strings or Dicts.."
+#                         "\nInputted: %s" % type(data))
+#
+#     if isinstance(data, str):
+#         data = decode_from_json(data)
+#
+#     assert isinstance(data, dict)
+#
+#     return Payload(data=data[PayloadFields.PAYLOAD_DATA.value],
+#                    event=PayloadEvent[data[PayloadFields.PAYLOAD_EVENT.value]],
+#                    requestype=PayloadType[data[PayloadFields.PAYLOAD_TYPE.value]],
+#                    role=data[PayloadFields.PAYLOAD_ROLE.value])
 
 
 def save(filename: str, obj: dict or list):
@@ -102,16 +122,22 @@ def send_payload(sock: socket, payload: PayloadEncoder or PayloadEventMessages, 
         payload = payload.value
 
     if address is None:
-        sock.sendall(encode_to_json(payload.content()).encode("utf-8"))
+        sock.sendall(encode_to_json(payload.to_dict()).encode("utf-8"))
     else:
-        sock.sendto(encode_to_json(payload.content()).encode("utf-8"), address)
+        sock.sendto(encode_to_json(payload.to_dict()).encode("utf-8"), address)
+
+
+def get_event_domain(event: PayloadEvent):
+    is_soft = event in EventTypes.SOFTWARE_EVENT.value
+    is_hard = event in EventTypes.HARDWARE_EVENTS.value
+    return EventDomain.SOFT if is_soft else (EventDomain.GPIO if is_hard else None)
 
 
 def receive_payload(sock: socket):
     data = str(sock.recv(1024), "utf-8")
     if data is not None and len(data) > 0:
         received = decode_from_json(data)
-        return build_payload(received)
+        return Payload.from_dict(received)
 
 
 def encode_to_json(data):
@@ -128,9 +154,10 @@ def decode_from_json(json_str: str):
 
 
 def print_payload(payload_data):
-    if isinstance(payload_data, Payload):
-        return ("Payload: [ {0} | {1} | {2} | {3} ] ".format(payload_data.data,
-                                                             payload_data.role,
-                                                             payload_data.event,
-                                                             payload_data.type))
+    if isinstance(payload_data, PayloadEncoder):
+        payload_data = payload_data.to_dict()
+        return ("Payload: [ {0} | {1} | {2} | {3} ] ".format(payload_data[PayloadFields.PAYLOAD_DATA.value],
+                                                             payload_data[PayloadFields.PAYLOAD_ROLE.value],
+                                                             payload_data[PayloadFields.PAYLOAD_EVENT.value],
+                                                             payload_data[PayloadFields.PAYLOAD_TYPE.value]))
     return payload_data

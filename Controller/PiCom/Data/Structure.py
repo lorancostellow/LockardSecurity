@@ -57,6 +57,7 @@ class PayloadType(Enum):
     UNK = "Unknown Type"
     REQ = "Request"
     RSP = "Response"
+    JOB = "Job request"
     ACK = "Acknowledged"
 
 
@@ -87,4 +88,5 @@ class EventTypes(Enum):
 
     REQUEST_TYPES = [
         PayloadType.REQ,
+        PayloadType.JOB
     ]

@@ -2,7 +2,7 @@ import socket
 import threading
 
 from PiCom.Clients import LANClient
-from PiCom.Data import print_payload, Payload, build_payload, send_payload, \
+from PiCom.Data import print_payload, Payload, send_payload, \
     PayloadEventMessages
 from PiCom.Data.Structure import PayloadType, PayloadEvent, BLANK_FIELD, WILDCARD, EventTypes, EventDomain
 from PiCom.Delegation import PiDiscovery
@@ -40,6 +40,7 @@ __version__ = '1.5'
 __author__ = "Dylan Coss <dylancoss1@gmail.com>"
 
 IS_DELEGATOR = True
+JOBS = None
 ROLE = None
 NAME = None
 REQUEST_TYPES = EventTypes.REQUEST_TYPES.value
@@ -64,16 +65,15 @@ class Client(threading.Thread, Responder):
         print("[+] Connection to {} Established: ".format(self.client_address))
 
     def data_handler(self, payload: Payload, delegation_event_whitelist=None):
+
         if delegation_event_whitelist is None:
             delegation_event_whitelist = []
         notify_all = payload.role == WILDCARD
         correct_payload = payload.role == ROLE
         is_request = payload.type in REQUEST_TYPES
         white_listed = payload.event in delegation_event_whitelist
-
         # 1. Determines if the payload is intended for the current unit
         if not correct_payload and is_request and not white_listed:
-
             # 2 If the current payload is NOT intended for the current unit
             #   it will be delegated, and hopefully send it to the appropriate
             #   unit.
@@ -81,7 +81,6 @@ class Client(threading.Thread, Responder):
                 # 2.1 If delegation is enabled, it then gets the ip address of the intended
                 #     unit and sends the payload, if the wildcard has been specified then all
                 #     the units will be notified
-
                 addresses = PiDiscovery.get_ip_addresses(payload.role)
                 transactions = []
                 res_payload = PayloadEventMessages.ADDRESS_NOT_FOUND.value
@@ -107,12 +106,23 @@ class Client(threading.Thread, Responder):
 
         return self.process_payload(payload)
 
-    def process_payload(self, payload: Payload):
+    def process_payload(self, payload):
         res_payload = payload
+
+        # -----------------SYSTEM JOB HANDLING------------------
+        if payload.type is PayloadType.JOB:
+            JOBS.add_job(payload)
+            res_payload.type = PayloadType.ACK
+            print("[i] Processing job request")
+            return res_payload
+
+        assert isinstance(payload, Payload)
         is_resp = payload.type not in REQUEST_TYPES
         is_soft = payload.event in SOFTWARE_TYPES
         is_hard = payload.event in HARDWARE_TYPES
         is_sys = payload.event in SYSTEM_TYPES
+
+
 
         print("[i] Processing %s %s (%s)" %
               ("Hardware" if is_hard else ("Software" if is_soft else ("System" if is_sys else "Unknown")),
@@ -132,6 +142,7 @@ class Client(threading.Thread, Responder):
                 if payload.event is PayloadEvent.S_PROBE:
                     res_payload.data = {'name': NAME, 'role': ROLE, 'isDelegator': IS_DELEGATOR}
                     res_payload.type = PayloadType.RSP
+
                 # TODO: Handle requests
 
                     # ------------------HARDWARE/SOFTWARE HANDLING------------------------
@@ -153,17 +164,23 @@ class Client(threading.Thread, Responder):
             send_payload(self.request, payload)
 
     def run(self):
-        res_data = None
+        res_data = PayloadEventMessages.SERVER_ERROR.value
         running = True
         self.lock.acquire()
         while running:
             try:
                 req_data = self.request.recv(1024)
                 if req_data is not None and (len(req_data) > 0):
-                    req_data = build_payload(req_data.decode("utf8"))
-                    if isinstance(req_data, Payload):
-                        # Sends the received data to be manage by a helper function
-                        res_data = self.data_handler(req_data, self.del_whitelist)
+                    req_data = req_data.decode("utf8")
+                    req_payload = Payload.from_dict(req_data)
+                    if isinstance(req_payload, Payload):
+                        if req_payload.type is PayloadType.JOB:
+                            from PiCom.Delegation.JOBS import JobPayload
+                            req_payload = JobPayload.from_dict(req_data)
+
+                        # Sends the received data to be manage by the data_handler
+                        res_data = self.data_handler(req_payload, self.del_whitelist)
+
                         if running:
                             self.respond(res_data)
                     else:
@@ -179,11 +196,15 @@ class Client(threading.Thread, Responder):
 
 
 def start_lan_server(handler: SYS_Handler, ip_address="0.0.0.0", port=8000, execution_role="No Role",
-                     name="Unknown", delegation_event_whitelist: list = None, delegator=True):
-    global ROLE, NAME, IS_DELEGATOR
+                     name="Unknown", delegation_event_whitelist: list = None, delegator=True, job_poll_interval=1):
+    global ROLE, NAME, IS_DELEGATOR, JOBS
     ROLE = execution_role
     NAME = name
     IS_DELEGATOR = delegator
+    if IS_DELEGATOR:
+        from PiCom.Delegation.JOBS import JobPool
+        JOBS = JobPool(handler, job_poll_interval)
+        JOBS.start()
 
     tcp_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     tcp_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
