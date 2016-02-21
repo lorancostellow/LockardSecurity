@@ -2,20 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="50266ce6-e46a-4df1-a459-1514df78785c" name="Default" comment="Job scheduling fixes and integration to the server">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Lockard_PiComAPI/target/classes/PiComAPI/ComUtils.class" afterPath="$PROJECT_DIR$/../Lockard_PiComAPI/target/classes/PiComAPI/ComUtils.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Lockard_PiComAPI/target/classes/PiComAPI/LANClient.class" afterPath="$PROJECT_DIR$/../Lockard_PiComAPI/target/classes/PiComAPI/LANClient.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Lockard_PiComAPI/target/classes/PiComAPI/Payload/Payload.class" afterPath="$PROJECT_DIR$/../Lockard_PiComAPI/target/classes/PiComAPI/Payload/Payload.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Lockard_PiComAPI/target/classes/PiComAPI/Payload/PayloadEvent.class" afterPath="$PROJECT_DIR$/../Lockard_PiComAPI/target/classes/PiComAPI/Payload/PayloadEvent.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Lockard_PiComAPI/target/classes/PiComAPI/Payload/PayloadType.class" afterPath="$PROJECT_DIR$/../Lockard_PiComAPI/target/classes/PiComAPI/Payload/PayloadType.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Lockard_PiComAPI/target/classes/PiComAPI/TCPTestClient$1.class" afterPath="$PROJECT_DIR$/../Lockard_PiComAPI/target/classes/PiComAPI/TCPTestClient$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Lockard_PiComAPI/target/classes/PiComAPI/TCPTestClient.class" afterPath="$PROJECT_DIR$/../Lockard_PiComAPI/target/classes/PiComAPI/TCPTestClient.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/Controller.iml" afterPath="$PROJECT_DIR$/.idea/Controller.iml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/PiCom/electronic_Test.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/PiCom/Data/__init__.py" afterPath="$PROJECT_DIR$/PiCom/Data/__init__.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/PiCom/Servers/__init__.py" afterPath="$PROJECT_DIR$/PiCom/Servers/__init__.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Lockard_PiComAPI/.idea/misc.xml" afterPath="$PROJECT_DIR$/../Lockard_PiComAPI/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Lockard_PiComAPI/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../Lockard_PiComAPI/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Lockard_PiComAPI/src/main/java/PiComAPI/TCPTestClient.java" afterPath="$PROJECT_DIR$/../Lockard_PiComAPI/src/main/java/PiComAPI/TCPTestClient.java" />
     </list>
     <ignored path="Controller.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -135,8 +123,8 @@
       <file leaf-file-name="electronic_Test.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/PiCom/electronic_Test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.46341464">
-              <caret line="19" column="37" selection-start-line="19" selection-start-column="37" selection-end-line="19" selection-end-column="37" />
+            <state vertical-scroll-proportion="0.34146342">
+              <caret line="14" column="7" selection-start-line="14" selection-start-column="7" selection-end-line="14" selection-end-column="7" />
               <folding>
                 <element signature="e#0#37#0" expanded="true" />
               </folding>
@@ -198,6 +186,7 @@
   <component name="Git.Settings">
     <option name="PREVIOUS_COMMIT_AUTHORS">
       <list>
+        <option value="WilliamBarrett &lt;william.barrett@mycit.ie&gt;" />
         <option value="4hairypalms &lt;dylancoss1@gmail.com&gt;" />
       </list>
     </option>
@@ -353,60 +342,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="PiCom" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Controller" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Controller" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PiCom" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Servers" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Controller" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Controller" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PiCom" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Delegation" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Controller" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Controller" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PiCom" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Data" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -876,7 +811,13 @@
       <option name="project" value="LOCAL" />
       <updated>1455987023230</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Job scheduling fixes and integration to the server">
+      <created>1456071208944</created>
+      <option name="number" value="00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1456071208944</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -924,6 +865,7 @@
     <frame x="65" y="24" width="1301" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32832617" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32725322" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -940,7 +882,6 @@
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3254818" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.41862956" sideWeight="0.49687174" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" show_stripe_button="true" weight="0.2719486" sideWeight="0.4978701" order="3" side_tool="false" content_ui="tabs" x="473" y="79" width="870" height="658" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3993576" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1377,6 +1318,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.17900552">
           <caret line="9" column="114" selection-start-line="9" selection-start-column="114" selection-end-line="9" selection-end-column="114" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1413,6 +1355,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.5712707">
           <caret line="85" column="24" selection-start-line="85" selection-start-column="24" selection-end-line="85" selection-end-column="24" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1500,18 +1443,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client_test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/PiCom/Servers/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client_test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1526,8 +1469,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/PiCom/electronic_Test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.46341464">
-          <caret line="19" column="37" selection-start-line="19" selection-start-column="37" selection-end-line="19" selection-end-column="37" />
+        <state vertical-scroll-proportion="0.34146342">
+          <caret line="14" column="7" selection-start-line="14" selection-start-column="7" selection-end-line="14" selection-end-column="7" />
           <folding>
             <element signature="e#0#37#0" expanded="true" />
           </folding>
