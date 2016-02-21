@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="50266ce6-e46a-4df1-a459-1514df78785c" name="Default" comment="Job scheduling fixes and integration to the server">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/PiCom/electronic_Test.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Controller.iws" />
@@ -124,9 +123,9 @@
         <entry file="file://$PROJECT_DIR$/PiCom/electronic_Test.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.34146342">
-              <caret line="14" column="7" selection-start-line="14" selection-start-column="7" selection-end-line="14" selection-end-column="7" />
+              <caret line="16" column="7" selection-start-line="16" selection-start-column="7" selection-end-line="16" selection-end-column="7" />
               <folding>
-                <element signature="e#0#37#0" expanded="true" />
+                <element signature="e#0#30#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -817,7 +816,13 @@
       <option name="project" value="LOCAL" />
       <updated>1456071208944</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Job scheduling fixes and integration to the server">
+      <created>1456071547606</created>
+      <option name="number" value="00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1456071547606</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1470,9 +1475,9 @@
     <entry file="file://$PROJECT_DIR$/PiCom/electronic_Test.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.34146342">
-          <caret line="14" column="7" selection-start-line="14" selection-start-column="7" selection-end-line="14" selection-end-column="7" />
+          <caret line="16" column="7" selection-start-line="16" selection-start-column="7" selection-end-line="16" selection-end-column="7" />
           <folding>
-            <element signature="e#0#37#0" expanded="true" />
+            <element signature="e#0#30#0" expanded="true" />
           </folding>
         </state>
       </provider>
