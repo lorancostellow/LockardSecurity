@@ -1,7 +1,7 @@
 from enum import Enum
 
-__version__ = '1.2'
-__author__ = 'Dylan Coss <dylancoss1@gmail.com>'
+__version__ = '1.3'
+__author__ = 'Dylan Coss <dylancoss1@gmail.com>, William Barrett <william.barrett@mycit.ie>'
 
 """
 Represents the feature set of the payloads. Both clients and servers
@@ -45,6 +45,8 @@ class PayloadEvent(Enum):
     H_ALARM = "House Alarm"
     F_ALARM = "Fire Alarm"
     C_ALARM = "Carbon Monoxide"
+    HEATING = "Heating"
+
     TEXT_ALERT = "Twitter Text Alert"
     RSS_ALERT = "RSS Feed Entry"
     LOCK_STAT = "Lock Status"

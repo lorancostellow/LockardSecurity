@@ -17,5 +17,5 @@ L1.send([
     #         event=PayloadEvent.F_ALARM, start_timestamp=time.time(), interval=timedelta(seconds=2)),
 
     Payload({'id': "my_id2"}, PayloadEvent.REMOVE, PayloadType.JOB, role="C"),
-
+    Payload({"value": True}, PayloadEvent.C_ALARM, PayloadType.REQ, "C")
 ])
