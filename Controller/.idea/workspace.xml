@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="50266ce6-e46a-4df1-a459-1514df78785c" name="Default" comment="Added  Gui template for testing GPIO and electronics">
+    <list default="true" id="50266ce6-e46a-4df1-a459-1514df78785c" name="Default" comment="Added System Features">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/PiCom/Data/Structure.py" afterPath="$PROJECT_DIR$/PiCom/Data/Structure.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client_test.py" afterPath="$PROJECT_DIR$/client_test.py" />
     </list>
     <ignored path="Controller.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -806,7 +804,13 @@
       <option name="project" value="LOCAL" />
       <updated>1456071634185</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Added System Features">
+      <created>1456088237776</created>
+      <option name="number" value="00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1456088237776</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -902,7 +906,8 @@
     <MESSAGE value="implementation of job scheduling" />
     <MESSAGE value="Job scheduling fixes and integration to the server" />
     <MESSAGE value="Added  Gui template for testing GPIO and electronics" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added  Gui template for testing GPIO and electronics" />
+    <MESSAGE value="Added System Features" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added System Features" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
