@@ -37,6 +37,8 @@ class PayloadEvent(Enum):
     UNKNOWN_ERROR = "Unknown Error"
     SUCCESS_SIG = "Event was successful"
     FAILED_SIG = "Event was unsuccessful"
+    LIST = "List instruction"
+    REMOVE = "Remove Instruction"
 
     # System feature set
     PANIC = "Panic Button"
@@ -83,7 +85,9 @@ class EventTypes(Enum):
     SYSTEM_EVENTS = [
         PayloadEvent.S_PROBE,
         PayloadEvent.D_PROBE,
-        PayloadEvent.REGSTN
+        PayloadEvent.REGSTN,
+        PayloadEvent.REMOVE,
+        PayloadEvent.LIST
     ]
 
     REQUEST_TYPES = [

@@ -103,8 +103,8 @@ class JobConstraint:
 
 
 class JobPayload(JobConstraint, Payload):
-    def __init__(self, identifier, name, role, data, event: PayloadEvent,
-                 start_timestamp, interval: timedelta = None,
+    def __init__(self, identifier, data, role, event: PayloadEvent,
+                 start_timestamp, name=None, interval: timedelta = None,
                  stop_timestamp: timedelta = None, run_once=False,
                  ask=False, max_cycles=None):
         super().__init__(start_timestamp=start_timestamp,
@@ -139,7 +139,7 @@ class JobPayload(JobConstraint, Payload):
     def from_dict(data):
         if data is None:
             raise TypeError("The data needed for building the payload is Strings or Dicts.."
-                        "\nInputted: %s" % type(data))
+                            "\nInputted: %s" % type(data))
         if isinstance(data, str):
             data = decode_from_json(data)
         assert isinstance(data, dict)
@@ -153,6 +153,7 @@ class JobPayload(JobConstraint, Payload):
                           ask=data[ASK_FIELD],
                           max_cycles=data[MAX_CYCLES_FIELD],
                           interval=data[INTERVAL_FIELD])
+
 
 class JobPool(threading.Thread, Responder):
     global JOBS
@@ -194,3 +195,5 @@ class JobPool(threading.Thread, Responder):
             if i.id == id:
                 self.JOBS.remove(i)
 
+    def list_jobs(self):
+        return self.JOBS

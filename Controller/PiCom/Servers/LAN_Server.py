@@ -36,7 +36,7 @@ from PiCom.Servers.SystemControllerUtils import Responder, SYS_Handler
 
 
 """
-__version__ = '1.5'
+__version__ = '2.5'
 __author__ = "Dylan Coss <dylancoss1@gmail.com>"
 
 IS_DELEGATOR = True
@@ -111,7 +111,25 @@ class Client(threading.Thread, Responder):
 
         # -----------------SYSTEM JOB HANDLING------------------
         if payload.type is PayloadType.JOB:
-            JOBS.add_job(payload)
+            print(payload)
+            #try:
+
+            if payload.event is PayloadEvent.REMOVE:
+                    jid = res_payload.data['id']
+                    JOBS.remove_job(jid)
+                    res_payload.data = {'message': 'removed job [%s]' % jid}
+            elif payload.event is PayloadEvent.LIST:
+                    j_list = []
+
+                    for j in JOBS.list_jobs():
+                        j_list.append(j.to_dict())
+                    res_payload.data = j_list
+            else:
+                    JOBS.add_job(payload)
+
+            #except Exception:
+            #    return PayloadEventMessages.SERVER_ERROR.value
+
             res_payload.type = PayloadType.ACK
             print("[i] Processing job request")
             return res_payload
@@ -122,8 +140,6 @@ class Client(threading.Thread, Responder):
         is_hard = payload.event in HARDWARE_TYPES
         is_sys = payload.event in SYSTEM_TYPES
 
-
-
         print("[i] Processing %s %s (%s)" %
               ("Hardware" if is_hard else ("Software" if is_soft else ("System" if is_sys else "Unknown")),
                "Response" if is_resp else "Request",
@@ -131,19 +147,14 @@ class Client(threading.Thread, Responder):
 
         # --------------------SYSTEM HANDLING--------------------
         if is_sys:
-            if is_resp:
-                # Response handling
-                # TODO: Handle response
-                pass
-
-            else:
+            if not is_resp:
                 # Request handling
                 # Handles Probe Request
                 if payload.event is PayloadEvent.S_PROBE:
                     res_payload.data = {'name': NAME, 'role': ROLE, 'isDelegator': IS_DELEGATOR}
                     res_payload.type = PayloadType.RSP
 
-                # TODO: Handle requests
+                    # TODO: Handle requests
 
                     # ------------------HARDWARE/SOFTWARE HANDLING------------------------
         if is_hard or is_soft:
@@ -174,7 +185,7 @@ class Client(threading.Thread, Responder):
                     req_data = req_data.decode("utf8")
                     req_payload = Payload.from_dict(req_data)
                     if isinstance(req_payload, Payload):
-                        if req_payload.type is PayloadType.JOB:
+                        if req_payload.type is PayloadType.JOB and req_payload.event not in SYSTEM_TYPES:
                             from PiCom.Delegation.JOBS import JobPayload
                             req_payload = JobPayload.from_dict(req_data)
 
