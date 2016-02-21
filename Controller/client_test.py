@@ -12,10 +12,13 @@ class Handler(LANClientHandler):
 L1 = LANClient("192.168.1.10", 8000, Handler, ignore_errors=False)
 #
 L1.send([
+    #Payload({"id": "alarm"}, PayloadEvent.REMOVE, PayloadType.JOB, role="C"),
+    # JobPayload("alarm", role="C", data={'value': True}, name="Turn on",
+    #         event=PayloadEvent.PANIC, start_timestamp=time.time(), interval=timedelta(seconds=2)),
+    #
+    # JobPayload("alarm", role="C", data={'value': False}, name="Turn off",
+    #         event=PayloadEvent.PANIC, start_timestamp=time.time(), interval=timedelta(seconds=4)),
 
-    # JobPayload("my_id2", role="C", data={'hi': "yolo"},
-    #         event=PayloadEvent.F_ALARM, start_timestamp=time.time(), interval=timedelta(seconds=2)),
+    Payload({'value': False}, PayloadEvent.C_ALARM, PayloadType.REQ, role="C"),
 
-    Payload({'id': "my_id2"}, PayloadEvent.REMOVE, PayloadType.JOB, role="C"),
-    Payload({"value": True}, PayloadEvent.C_ALARM, PayloadType.REQ, "C")
 ])
