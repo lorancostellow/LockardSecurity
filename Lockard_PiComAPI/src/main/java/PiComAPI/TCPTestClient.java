@@ -19,7 +19,7 @@ class TCPTestClient
             }
         };
 
-        LANClient LANTCPClient = new LANClient("0.0.0.0", 8000);
+        LANClient LANTCPClient = new LANClient("192.168.1.41", 8000);
 
         LANTCPClient.send(new Payload("hi", "C", PayloadEvent.S_PROBE, PayloadType.REQ), handler);
 

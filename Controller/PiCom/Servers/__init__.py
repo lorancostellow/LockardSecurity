@@ -19,6 +19,10 @@ class LANServer:
     def start(self):
         start_lan_server(self.handler, self.ip, self.port,
                          self.role, self.name, self.dwl, self.is_delegator)
+        #
+
+
+        #
 
     def set_name(self, name: str):
         self.name = name

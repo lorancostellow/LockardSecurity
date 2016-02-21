@@ -9,10 +9,10 @@ from PiCom.Data.Structure import PayloadType, PayloadEvent, PayloadFields, BLANK
 __version__ = '0.1'
 __author__ = 'Dylan Coss <dylancoss1@gmail.com>'
 
+
 """
      Represents the payload that is sent through a Websocket/Sockets connection.
 """
-
 lock = threading.Lock()
 
 
@@ -26,6 +26,7 @@ class PayloadEncoder(object):
 
 
 class Payload(PayloadEncoder):
+
     def __init__(self, data, event: PayloadEvent, requestype: PayloadType, role: str = None):
         assert isinstance(event, PayloadEvent) and isinstance(requestype, PayloadType)
         self.data = data
