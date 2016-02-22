@@ -24,9 +24,11 @@ interval            -   The time interval the job must run at. (optional)
 run_once            -   If the job is to run once and expire. (optional)
 run_daily           -   Prevents expiry and adds 24 hours. (optional)
 max_cycles          -   How many time the job is allowed to run (optional)
+cycle_iteration     -   The time (seconds) the job should be shifted (optional , default: 24hrs)
 
-   ...........................# Cycle...........................
-current                                                        :
+                              # Cycles
+   >...............................>............................>
+current :          :          :          :          :          :
  time  run        run        run        run        run        run
   >>>>>>|>>>>>>>>>>|>>>>>>>>>>|>>>>>>>>>>|>>>>>>>>>>|>>>>>>>>>>|...|.....EXPIRE
    |  start        :          :          :          :         stop |
@@ -35,17 +37,19 @@ current                                                        :
    |    |      interval   interval   interval   interval       |   |
    |    ^          ^          ^          ^          ^          ^   |
    |    0....05....10...15....20...25....30...35....40...45....50  |
-   |--------------->---------->---------->---------->---------->---|:START += 24 hrs
-   |                            Daily                              |
-   |---------------<----------<----------<----------<----------<---|:STOP  += 24 hrs
+   |--------------->---------->---------->---------->---------->---|:START += cycle iteration
+   |                            Daily                              |          (default: 24hrs)
+   |---------------<----------<----------<----------<----------<---|:STOP  += cycle iteration
+                                                                              (default: 24hrs)
 """
 
 START_FIELD = 'start'
 STOP_FIELD = 'stop'
 INTERVAL_FIELD = 'interval'
-RUN_DAILY = 'run_daily'
-RUN_ONCE_FIELD = 'run_once'
+RUN_CYCLE = 'run_cycle'
+CYCLE_ITERATION = 'cycle_itr'
 MAX_CYCLES_FIELD = 'max_cycles'
+RUN_ONCE_FIELD = 'run_once'
 ID_FIELD = 'id'
 NAME_FIELD = 'name'
 STOP_DATA_FIELD = 'on_stop'
@@ -53,9 +57,10 @@ STOP_DATA_FIELD = 'on_stop'
 
 class JobConstraint:
     def __init__(self, start_timestamp, interval: timedelta = None, stop_timestamp=None, run_once=False,
-                 max_cycles=None, run_daily=False):
+                 max_cycles=None, run_cycles=False, cycle_iteration=86400):
 
-        self.run_daily = run_daily
+        self.cycle_iteration = cycle_iteration
+        self.run_cycles = run_cycles
         self.interval = interval
         if interval is None:
             self.interval = 0
@@ -69,7 +74,7 @@ class JobConstraint:
         self.cycles = 0
         self.maxed_cycles = False
         self.has_stop = stop_timestamp is not None
-        self.run_once = run_once and not run_daily
+        self.run_once = run_once and not run_cycles
         self.has_run = False
         self.has_expired = False
         self.has_cycles = max_cycles is not None
@@ -87,7 +92,7 @@ class JobConstraint:
         self.iteration_time = self.start
         # Will on allow run daily if the stop time is within 24 hours for the start time
         if self.has_stop:
-            self.run_daily = run_daily if self.stop < self.start + 86400 else False
+            self.run_cycles = run_cycles if self.stop < self.start + 86400 else False
         else:
             self.run_once = True
 
@@ -97,11 +102,11 @@ class JobConstraint:
         in_next = current_t >= next_t
 
         # if the end time is reached
-        if self.reached_end and self.run_daily:
-            self.cycles = 0
-            self.start += 86400
+        if self.reached_end and self.run_cycles:
+            self.cycles += 1
+            self.start += self.cycle_iteration
             if self.has_stop:
-                self.stop += 86400
+                self.stop += self.cycle_iteration
 
             self.iteration_time = self.start
             self.maxed_cycles = False
@@ -112,17 +117,16 @@ class JobConstraint:
         self.maxed_cycles = self.has_cycles and self.cycles >= self.max_cycles
 
         if self.has_expired or self.maxed_cycles or self.reached_end:
-            self.has_expired = not self.run_daily
+            self.has_expired = not self.run_cycles or self.maxed_cycles
             return False
 
         if self.run_once and in_next:
             self.reached_end = True
-            self.has_expired = not self.run_daily
+            self.has_expired = not self.run_cycles
             return True
 
         if in_next:
             self.iteration_time = current_t + self.interval
-            self.cycles += 1
             return self.has_interval or self.iteration_time == self.start
         return False
 
@@ -134,7 +138,8 @@ class JobConstraint:
                              stop_timestamp=json[STOP_FIELD],
                              run_once=json[RUN_ONCE_FIELD],
                              max_cycles=json[MAX_CYCLES_FIELD],
-                             run_daily=json[RUN_DAILY])
+                             run_cycles=json[RUN_CYCLE],
+                             cycle_iteration=json[CYCLE_ITERATION])
 
     def constraints_to_json(self):
         return {START_FIELD: self.start,
@@ -142,7 +147,8 @@ class JobConstraint:
                 RUN_ONCE_FIELD: self.run_once,
                 STOP_FIELD: self.stop,
                 MAX_CYCLES_FIELD: self.max_cycles,
-                RUN_DAILY: self.run_daily}
+                RUN_CYCLE: self.run_cycles,
+                CYCLE_ITERATION: self.cycle_iteration}
 
 
 """
@@ -154,6 +160,7 @@ interval            -   The time interval the job must run at. (optional)
 run_once            -   If the job is to run once and expire (optional)
 run_daily           -   Prevents expiry and adds 24 hours (optional)
 max_cycles          -   How many time the job is allowed to run (optional)
+cycle_iteration     -   The time (seconds) the job should be shifted (optional , default: 24hrs
 
 identifier          -   Jobs id, used in the database, and when removing
                         the job
@@ -170,14 +177,15 @@ name                -   The name of the job (optional)
 class JobPayload(JobConstraint, Payload):
     def __init__(self, identifier, data, role, event: PayloadEvent,
                  start_timestamp, on_stop_data=None, name=None, interval=None,
-                 stop_timestamp=None, run_once=False, run_daily=False,
+                 stop_timestamp=None, run_once=False, run_cycles=False, cycle_iteration=86400,
                  max_cycles=None):
         super().__init__(start_timestamp=start_timestamp,
                          interval=interval,
                          stop_timestamp=stop_timestamp,
                          run_once=run_once,
                          max_cycles=max_cycles,
-                         run_daily=run_daily)
+                         run_cycles=run_cycles,
+                         cycle_iteration=cycle_iteration)
         self.on_stop_data = on_stop_data
         self.has_stop_job = self.on_stop_data is not None
         assert isinstance(event, PayloadEvent)
@@ -221,7 +229,8 @@ class JobPayload(JobConstraint, Payload):
                           max_cycles=data[MAX_CYCLES_FIELD],
                           interval=data[INTERVAL_FIELD],
                           on_stop_data=data[STOP_DATA_FIELD],
-                          run_daily=data[RUN_DAILY])
+                          run_cycles=data[RUN_CYCLE],
+                          cycle_iteration=data[CYCLE_ITERATION])
 
 
 """
@@ -263,7 +272,6 @@ class JobPool(threading.Thread, Responder):
             time.sleep(self.interval)
 
     def add_job(self, job: JobPayload):
-        print(job.to_dict())
         print("[+] New job added (%s) %s [%s]" % (job.id, job.name, job.event))
         self.JOBS.append(job)
 

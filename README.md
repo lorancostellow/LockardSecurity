@@ -1,4 +1,4 @@
-#Larkard-Home-Automation
+#Lockard-Home-Automation
 
 CIT 3rd year project:
 

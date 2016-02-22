@@ -14,19 +14,18 @@ class h(SYS_Handler):
 start = time.time()
 end = time.time() + 10
 
-jb = JobPayload("my_id", "data", "C", PayloadEvent.PANIC,
+jb = JobPayload("my_id", {"value": True}, "C", PayloadEvent.PANIC,
                 start_timestamp=start,
                 stop_timestamp=end,
                 interval=0,
-                run_daily=False,
+                max_cycles=2,
+                run_cycles=True,
                 run_once=False,
-                on_stop_data="bye")
+                cycle_iteration=20,
+                on_stop_data={"value": False})
 
-print(jb.to_dict())
 jb2 = JobPayload.from_dict(jb.to_dict())
-print(jb2.id)
-j = JobPool(h, 1)
-
+j = JobPool(h, .5)
 j.add_job(jb)
 
 j.start()
