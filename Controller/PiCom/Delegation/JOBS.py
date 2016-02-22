@@ -22,7 +22,7 @@ start_timestamp     -   The starting time for the job.
 stop_timestamp      -   The stopping time for the job. (optional)
 interval            -   The time interval the job must run at. (optional)
 run_once            -   If the job is to run once and expire. (optional)
-run_daily           -   Prevents expiry and adds 24 hours. (optional)
+run_cycles          -   Prevents expiry and adds 24 hours(default). (optional)
 max_cycles          -   How many time the job is allowed to run (optional)
 cycle_iteration     -   The time (seconds) the job should be shifted (optional , default: 24hrs)
 
@@ -32,11 +32,11 @@ current :          :          :          :          :          :
  time  run        run        run        run        run        run
   >>>>>>|>>>>>>>>>>|>>>>>>>>>>|>>>>>>>>>>|>>>>>>>>>>|>>>>>>>>>>|...|.....EXPIRE
    |  start        :          :          :          :         stop |
-   |    |    10    :    10    :    10    :    10    :    10    |   |
+   |    |          :          :          :          :          |   |
    |    |----------|----------|----------|----------|----------|   |
    |    |      interval   interval   interval   interval       |   |
-   |    ^          ^          ^          ^          ^          ^   |
-   |    0....05....10...15....20...25....30...35....40...45....50  |
+   |    ________________________________________________________   |
+   |                                                               |
    |--------------->---------->---------->---------->---------->---|:START += cycle iteration
    |                            Daily                              |          (default: 24hrs)
    |---------------<----------<----------<----------<----------<---|:STOP  += cycle iteration
@@ -158,7 +158,7 @@ start_timestamp     -   The starting time for the job.
 stop_timestamp      -   The stopping time for the job. (optional)
 interval            -   The time interval the job must run at. (optional)
 run_once            -   If the job is to run once and expire (optional)
-run_daily           -   Prevents expiry and adds 24 hours (optional)
+run_cycles          -   Prevents expiry and adds 24 hours(default). (optional)
 max_cycles          -   How many time the job is allowed to run (optional)
 cycle_iteration     -   The time (seconds) the job should be shifted (optional , default: 24hrs
 
