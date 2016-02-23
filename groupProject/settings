@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<!-- Author: Lorna Costelloe -->
+<html>
+	<head>
+			<link rel="stylesheet" type="text/css" href="lockard.css">
+	</head>
+	<body>
+		<header>
+			<img alt="Logo" width = 150px; height = 150px; src="logo.png">
+		</header>
+		<div id ="navigation">
+			<ul>
+				<li><a href="Home.html">Home</a></li>
+				<li><a href="Testimonials.html">Reviews</a></li>
+				<li><a href="Purchase.html">Purchase</a></li>
+				<li><a href="Contact.html">Contact Us</a></li>
+			</ul>
+		</div>
+		<div id = "heatingSettings" >
+			<form>
+				<label for="Heating:">hgfh</label><br>
+						<input type="checkbox"><label for="checkbox">1am</label>
+						<input type="checkbox"><label for="checkbox">2am</label>
+						<input type="checkbox"><label for="checkbox">3am</label>
+						<input type="checkbox"><label for="checkbox">4am</label>
+						<input type="checkbox"><label for="checkbox">5am</label>
+						<input type="checkbox"><label for="checkbox">6am</label><br>
+						<input type="checkbox"><label for="checkbox">7am</label>
+						<input type="checkbox"><label for="checkbox">8am</label>
+						<input type="checkbox"><label for="checkbox">9am</label>
+						<input type="checkbox"><label for="checkbox">10am</label>
+						<input type="checkbox"><label for="checkbox">11am</label>
+						<input type="checkbox"><label for="checkbox">12am</label><br>
+						<input type="checkbox"><label for="checkbox">1pm</label>
+						<input type="checkbox"><label for="checkbox">2pm</label>
+						<input type="checkbox"><label for="checkbox">3pm</label>
+						<input type="checkbox"><label for="checkbox">4pm</label>
+						<input type="checkbox"><label for="checkbox">5pm</label>
+						<input type="checkbox"><label for="checkbox">6pm</label><br>
+						<input type="checkbox"><label for="checkbox">7pm</label>
+						<input type="checkbox"><label for="checkbox">8pm</label>
+						<input type="checkbox"><label for="checkbox">9pm</label>
+						<input type="checkbox"><label for="checkbox">10pm</label>
+						<input type="checkbox"><label for="checkbox">11pm</label>
+						<input type="checkbox"><label for="checkbox">12pm</label>
+							
+				 <div id="lower">
+			        <input type="submit" value="Apply">
+				</div><!--/ lower-->
+				</form>
+		</div>
+	</body>
+</html>
