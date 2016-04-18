@@ -2,25 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="be25554d-7ed9-48a5-96d0-66621e735c2c" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/PiComAPI/SocketConnection.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/PiComAPI/Client.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/PiComAPI/LANClientHandler.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/PiComAPI/RoutineHandler.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/PiComAPI/TCPTestClient.java" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/PiComAPI/ComUtils.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/PiComAPI/LANClientHandler.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/PiComAPI/TCPTestClient$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/PiComAPI/TCPTestClient.class" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/PiComAPI/Payload/PayloadIntr.class" afterPath="$PROJECT_DIR$/target/classes/PiComAPI/Payload/PayloadIntr.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/PiComAPI/TCPTestServer.class" afterPath="$PROJECT_DIR$/target/classes/PiComAPI/TCPTestServer.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/PiComAPI/ClientServer.java" afterPath="$PROJECT_DIR$/src/main/java/PiComAPI/ClientServer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/PiComAPI/ComUtils.java" afterPath="$PROJECT_DIR$/src/main/java/PiComAPI/ComUtils.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/PiComAPI/Handler.java" afterPath="$PROJECT_DIR$/src/main/java/PiComAPI/Handler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/PiComAPI/Payload/PayloadIntr.java" afterPath="$PROJECT_DIR$/src/main/java/PiComAPI/Payload/PayloadIntr.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/PiComAPI/Server.java" afterPath="$PROJECT_DIR$/src/main/java/PiComAPI/Server.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/PiComAPI/TCPTestServer.java" afterPath="$PROJECT_DIR$/src/main/java/PiComAPI/TCPTestServer.java" />
     </list>
     <ignored path="Lockard_PiComAPI.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -1018,7 +1003,7 @@
       <workItem from="1456064168963" duration="6000" />
       <workItem from="1460902520296" duration="28452000" />
       <workItem from="1460937004651" duration="948000" />
-      <workItem from="1460999534405" duration="18626000" />
+      <workItem from="1460999534405" duration="18639000" />
     </task>
     <task id="LOCAL-00001" summary="Partial Implementation of server-client">
       <created>1460961511161</created>
@@ -1027,11 +1012,18 @@
       <option name="project" value="LOCAL" />
       <updated>1460961511161</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Partial Implementation of server-client">
+      <created>1461022451443</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1461022451443</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="108663000" />
+    <option name="totallyTimeSpent" value="108676000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1280" y="26" width="1917" height="1054" extended-state="0" />
