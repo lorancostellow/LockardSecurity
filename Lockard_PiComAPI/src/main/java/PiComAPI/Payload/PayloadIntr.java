@@ -14,4 +14,8 @@ public interface PayloadIntr {
     PayloadType getPayloadType();
     PayloadEvent getPayloadEvent();
     String getRole();
+    void setPayloadType(PayloadType type);
+    void setPayloadEvent(PayloadEvent event);
+    void setData(Object data);
+    void setRole(String role);
 }

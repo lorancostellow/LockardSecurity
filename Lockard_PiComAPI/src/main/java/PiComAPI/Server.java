@@ -1,10 +1,13 @@
 package PiComAPI;
 
 import PiComAPI.Payload.Payload;
+import PiComAPI.Payload.PayloadIntr;
 
 import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketAddress;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -17,8 +20,7 @@ import java.util.List;
 
 public class Server extends Thread{
 
-    public static List<Socket> sockets =
-            Collections.synchronizedList(new LinkedList<Socket>());
+    public static List<Socket> sockets = Collections.synchronizedList(new LinkedList<Socket>());
     private ServerSocket serverSocket = null;
     private Socket connectingSocket = null;
     private int port;
@@ -33,7 +35,9 @@ public class Server extends Thread{
     public void run() {
         super.run();
         try {
-            serverSocket = new ServerSocket(port);
+            serverSocket = new ServerSocket();
+            serverSocket.setReuseAddress(true);
+            serverSocket.bind(new InetSocketAddress(port));
             while (true) {
                 connectingSocket = serverSocket.accept();
                 sockets.add(connectingSocket);
@@ -88,9 +92,18 @@ public class Server extends Thread{
 
         @Override
         public void run() {
-            Payload payload = ComUtils.receivePayload(clientSocket);
-            if (clientSocket.isConnected())
-                ComUtils.sendPayload(connectingSocket,handler.process(payload, this));
+            List<PayloadIntr> payloads = ComUtils.receivePayload(clientSocket);
+            if (clientSocket.isConnected()){
+                if (payloads.size() == 1)
+                    ComUtils.sendPayload(connectingSocket,handler.process(payloads.get(0), this));
+                else{
+                    List<PayloadIntr> processed = new LinkedList<>();
+                    for (PayloadIntr payload : payloads)
+                        processed.add(handler.process(payload, this));
+                    ComUtils.sendPayload(connectingSocket, processed);
+                }
+            }
+
         }
     }
 }
