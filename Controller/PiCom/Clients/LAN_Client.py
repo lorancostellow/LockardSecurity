@@ -17,16 +17,15 @@ class Client:
                  ignore_error: bool = False):
         print("[i] LAN Client %s:%s [timeout=%s] %s" %
               (host, port, (timeout if timeout is not None else "Infinite"),
-              ("Ignoring Errors" if ignore_error else "")))
+               ("Ignoring Errors" if ignore_error else "")))
+
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.sock.settimeout(timeout)
         self.is_connected = False
         self.handler = handler
         self.host = host
         self.port = port
-
         self.ignore_errors = ignore_error
-
         self.open_connection()
 
     def transfer(self, payload: Payload):
@@ -74,4 +73,3 @@ class Client:
             if not self.ignore_errors:
                 raise ConnectionError("\n[x] Lan Client was unable to connected to the server.\n"
                                       "\tClient: TCP on: %s:%s" % (self.host, self.port))
-

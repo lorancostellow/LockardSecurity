@@ -17,5 +17,5 @@ class Handler(SYS_Handler):
         return self.signal_success()
 
 
-lan = Servers.LANServer(Handler, delegator=True, execution_role="C", port=8000)
+lan = Servers.LANServer(Handler, delegator=True, execution_role="C", port=8005)
 lan.start()

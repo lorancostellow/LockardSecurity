@@ -58,8 +58,7 @@ public class ComUtils {
      */
     public static void sendPayload(Socket socket, PayloadIntr payload){
         try {
-            socket.getOutputStream().write(
-                    ComUtils.setSerializedObject(payload));
+           socket.getOutputStream().write(ComUtils.setSerializedObject(payload));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -71,15 +70,12 @@ public class ComUtils {
      * @return the received {@link Payload}
      */
     public static Payload receivePayload(Socket socket){
-
         try {
             char[] charBuffer = new char[BUFFER_LENGTH];
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             in.read(charBuffer);
             return new Payload(new String(charBuffer));
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (MalformedPayloadException e) {
+        } catch (IOException | MalformedPayloadException e) {
             e.printStackTrace();
         }
         return null;

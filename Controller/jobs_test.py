@@ -17,10 +17,10 @@ end = time.time() + 10
 jb = JobPayload("my_id", {"value": True}, "C", PayloadEvent.PANIC,
                 start_timestamp=start,
                 stop_timestamp=end,
-                interval=0,
+                interval=1,
                 max_cycles=2,
-                run_cycles=True,
-                run_once=False,
+                run_cycles=False,
+                run_once=True,
                 cycle_iteration=20,
                 on_stop_data={"value": False})
 

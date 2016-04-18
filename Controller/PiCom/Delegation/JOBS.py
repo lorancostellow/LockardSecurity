@@ -67,10 +67,8 @@ class JobConstraint:
         elif isinstance(interval, timedelta):
             self.interval = int(interval.total_seconds())
         self.has_interval = self.interval > 0
-
         self.start = start_timestamp
         self.stop = stop_timestamp
-
         self.cycles = 0
         self.maxed_cycles = False
         self.has_stop = stop_timestamp is not None
@@ -79,7 +77,6 @@ class JobConstraint:
         self.has_expired = False
         self.has_cycles = max_cycles is not None
         self.max_cycles = max_cycles
-
         self.reached_end = False
 
         if isinstance(self.start, timedelta):
@@ -90,9 +87,9 @@ class JobConstraint:
             self.stop = int(self.stop)
         self.start = int(self.start)
         self.iteration_time = self.start
-        # Will on allow run daily if the stop time is within 24 hours for the start time
+        # Will on allow run daily if the stop time is within the iteration for the start time
         if self.has_stop:
-            self.run_cycles = run_cycles if self.stop < self.start + 86400 else False
+            self.run_cycles = run_cycles if self.stop < self.start + self.cycle_iteration else False
         else:
             self.run_once = True
 
@@ -196,7 +193,6 @@ class JobPayload(JobConstraint, Payload):
         self.id = identifier
         self.data = data
         self.domain = get_event_domain(self.event)
-
         self.job = self.constraints_to_json()
 
     def to_dict(self):
@@ -204,7 +200,6 @@ class JobPayload(JobConstraint, Payload):
         self.job[ID_FIELD] = self.id
         self.job[NAME_FIELD] = self.name
         self.job[STOP_DATA_FIELD] = self.on_stop_data
-
         self.job[PayloadFields.PAYLOAD_DATA.value] = self.data
         self.job[PayloadFields.PAYLOAD_EVENT.value] = self.event.name
         self.job[PayloadFields.PAYLOAD_ROLE.value] = self.role
@@ -246,10 +241,10 @@ class JobPool(threading.Thread, Responder):
         super().__init__()
         self.role = role
         self.handler = handler
-        print("[i] Started Jobs [interval=%d second(s)]" % interval)
         self.interval = interval
         self.JOBS = []
         self.job_count = 0
+        print("[i] Started Jobs [interval=%d second(s)]" % interval)
 
     def run(self):
         while True:
@@ -268,7 +263,6 @@ class JobPool(threading.Thread, Responder):
                     if j.has_expired:
                         print("[i] Job Expired (%s) %s" % (j.id, j.name))
                         self.JOBS.remove(j)
-
             time.sleep(self.interval)
 
     def add_job(self, job: JobPayload):

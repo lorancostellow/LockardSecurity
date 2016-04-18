@@ -79,6 +79,22 @@ public class Payload implements PayloadIntr {
         return role;
     }
 
+    public void setPayloadType(PayloadType payloadType) {
+        this.payloadType = payloadType;
+    }
+
+    public void setPayloadEvent(PayloadEvent payloadEvent) {
+        this.payloadEvent = payloadEvent;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public void setData(Object data) {
+        this.data = data;
+    }
+
     @Override
     public String toString() {
         return "Payload{" +

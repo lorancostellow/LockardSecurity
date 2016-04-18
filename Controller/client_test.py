@@ -1,5 +1,10 @@
+import time
+
+from datetime import timedelta
+
 from PiCom.Clients import LANClientHandler, LANClient
 from PiCom.Data import Payload, print_payload, PayloadType, PayloadEvent
+from PiCom.Delegation.JOBS import JobPayload
 
 
 class Handler(LANClientHandler):
@@ -9,16 +14,21 @@ class Handler(LANClientHandler):
         pass
 
 
-L1 = LANClient("192.168.1.10", 8000, Handler, ignore_errors=False)
+L1 = LANClient("192.168.1.200", 8000, Handler, ignore_errors=False)
 #
-L1.send([
-    #Payload({"id": "alarm"}, PayloadEvent.REMOVE, PayloadType.JOB, role="C"),
-    # JobPayload("alarm", role="C", data={'value': True}, name="Turn on",
-    #         event=PayloadEvent.PANIC, start_timestamp=time.time(), interval=timedelta(seconds=2)),
-    #
-    # JobPayload("alarm", role="C", data={'value': False}, name="Turn off",
-    #         event=PayloadEvent.PANIC, start_timestamp=time.time(), interval=timedelta(seconds=4)),
+# L1.send([
+#     Payload({"id": "alarm"}, PayloadEvent.F_ALARM, PayloadType.REQ, role="C"),
+#     # JobPayload("alarm", role="C", data={'value': True}, name="Turn on",
+#     #          event=PayloadEvent.PANIC, start_timestamp=time.time(), interval=timedelta(seconds=2)),
+#     # #
+#     # JobPayload("alarm", role="C", data={'value': False}, name="Turn off",
+#     #         event=PayloadEvent.PANIC, start_timestamp=time.time(), interval=timedelta(seconds=4)),
+#
+#     #Payload({'value': False}, PayloadEvent.C_ALARM, PayloadType.REQ, role="C"),
+#
+# ])
 
-    Payload({'value': False}, PayloadEvent.C_ALARM, PayloadType.REQ, role="C"),
-
-])
+while 1:
+    time.sleep(1)
+    print(L1.is_connected)
+    pass

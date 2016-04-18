@@ -9,17 +9,17 @@ import java.util.List;
 /**
  * Author Dylan Coss <dylancoss1@gmail.com>
  *
- *     TCP Client to be used to control (talk) to the raspberry pi's
+ *     TCP Client to be used to control the raspberry pi's
  *     to the raspberry pi using the common data structures between the two.
  */
 
-public class LANClient {
+public class Client {
 
     private String host;
     private int port;
     private Socket socket;
 
-    public LANClient(String host, int port) {
+    public Client(String host, int port) {
         this.host = host;
         this.port = port;
         this.socket = new Socket();
@@ -55,7 +55,6 @@ public class LANClient {
         if (handler != null)
             handler.received(payload, p);
         return p;
-
     }
 
     /**
@@ -68,18 +67,19 @@ public class LANClient {
     }
 
     /**
-     * Opens a connection TCP Connection
+     * Opens a connection TCP Connection and returns the socket
+     * @return Socket to server
      */
-    public void openConnection(){
+    public Socket openConnection(){
         if (socket.isConnected())
-            return;
-
+            return socket;
         try {
             socket.setSoTimeout(ComUtils.TIMEOUT);
             socket.connect(new InetSocketAddress(host, port));
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return socket;
     }
 
     /**
@@ -103,5 +103,6 @@ public class LANClient {
     public boolean isOpen(){
         return socket.isConnected();
     }
+
 }
 
