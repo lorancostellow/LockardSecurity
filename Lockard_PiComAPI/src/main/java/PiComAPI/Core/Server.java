@@ -1,14 +1,11 @@
-package PiComAPI;
+package PiComAPI.Core;
 
-import PiComAPI.Payload.Payload;
 import PiComAPI.Payload.PayloadIntr;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketAddress;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -18,31 +15,35 @@ import java.util.List;
  * Source belongs to Lockard_PiComAPI
  */
 
-public class Server extends Thread{
+public class Server extends Thread {
 
-    public static List<Socket> sockets = Collections.synchronizedList(new LinkedList<Socket>());
+    public static List<Socket> sockets  = null;
     private ServerSocket serverSocket = null;
     private Socket connectingSocket = null;
     private int port;
     private Handler handler;
+
     public Server(Handler handler, int port) {
+        System.out.printf("Listening on port %d\n", port);
         this.port = port;
         this.handler = handler;
-        System.out.printf("Listening on port %d\n", port);
+        sockets = Collections.synchronizedList(new LinkedList<Socket>());
     }
 
     @Override
     public void run() {
-        super.run();
         try {
             serverSocket = new ServerSocket();
             serverSocket.setReuseAddress(true);
             serverSocket.bind(new InetSocketAddress(port));
             while (true) {
                 connectingSocket = serverSocket.accept();
-                sockets.add(connectingSocket);
-                new Thread(new ClientConnection(connectingSocket, handler)).start();
-                System.out.println("Current Connections: " + sockets.size());
+                PiNode node = ComUtils.interrogate(connectingSocket);
+                if (node != null){
+                    sockets.add(connectingSocket);
+                    new Thread(new ClientConnection(connectingSocket, handler)).start();
+                }
+
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -55,55 +56,49 @@ public class Server extends Thread{
         }
     }
 
-    public void cleanSockets(){
-        List<Socket> open = new LinkedList<>();
-        for (Socket socket : sockets)
-            if (socket.isConnected())
-                open.add(socket);
-        sockets = Collections.synchronizedList(open);
-    }
-
-    public ServerSocket getServerSocket() {
-        return serverSocket;
-    }
-
-    public int getPort() {
-        return port;
-    }
-
     public class ClientConnection implements Runnable {
 
         Socket clientSocket = null;
         Handler handler;
+        PiNode node;
 
         ClientConnection(Socket socket, Handler handler) {
+            System.out.println("New Connection");
             clientSocket = socket;
-            this.handler = handler;
-        }
-
-        public void close(){
-            if (clientSocket.isConnected())
-                sockets.remove(clientSocket);
-        }
-
-        public void setHandler(Handler handler) {
             this.handler = handler;
         }
 
         @Override
         public void run() {
-            List<PayloadIntr> payloads = ComUtils.receivePayload(clientSocket);
-            if (clientSocket.isConnected()){
-                if (payloads.size() == 1)
-                    ComUtils.sendPayload(connectingSocket,handler.process(payloads.get(0), this));
-                else{
+            // Keep Connection open from connected client
+            while (clientSocket.isConnected() &&
+                    !(clientSocket.isInputShutdown() || clientSocket.isOutputShutdown())) {
+                List<PayloadIntr> payloads = ComUtils.receivePayload(clientSocket);
+                if (payloads!=null && payloads.size() == 1)
+                    ComUtils.sendPayload(connectingSocket, handler.process(payloads.get(0), this));
+                else {
                     List<PayloadIntr> processed = new LinkedList<>();
                     for (PayloadIntr payload : payloads)
                         processed.add(handler.process(payload, this));
                     ComUtils.sendPayload(connectingSocket, processed);
                 }
             }
+            sockets.remove(clientSocket); // If the client is dead, its removed from sockets
+            System.out.println("Connection Lost");
+        }
 
+        public PiNode interrogate(){
+            return ComUtils.interrogate(clientSocket);
+        }
+
+        public void close() {
+            try {
+                clientSocket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                System.out.println("Connection Closed");
+            }
         }
     }
 }

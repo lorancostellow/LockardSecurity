@@ -1,9 +1,8 @@
-package PiComAPI;
+package PiComAPI.Core;
 import PiComAPI.Payload.*;
 import org.json.JSONObject;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+
+import java.io.*;
 import java.net.Socket;
 import java.util.LinkedList;
 import java.util.List;
@@ -16,7 +15,6 @@ import java.util.List;
  */
 public class ComUtils {
 
-    public static int BUFFER_LENGTH = 4096;
     public static int TIMEOUT = 2000;
     public static String PAYLOAD_KEY = "payloads";
 
@@ -72,9 +70,9 @@ public class ComUtils {
 
     public static void sendPayload(Socket socket, PayloadIntr payload){
         try {
-            String string = ComUtils.setSerializedObject(payload);
-            socket.setReceiveBufferSize(string.length() * 2);
-            socket.getOutputStream().write(string.getBytes());
+            System.out.println(payload);
+            DataOutputStream outputStream = new DataOutputStream(socket.getOutputStream());
+            outputStream.writeUTF(ComUtils.setSerializedObject(payload));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -82,9 +80,8 @@ public class ComUtils {
 
     public static void sendPayload(Socket socket, List<PayloadIntr> payloads){
         try {
-            String string = ComUtils.setSerializedObject(payloads);
-            socket.setReceiveBufferSize(string.length() * 2);
-            socket.getOutputStream().write(string.getBytes());
+            DataOutputStream outputStream = new DataOutputStream(socket.getOutputStream());
+            outputStream.writeUTF(ComUtils.setSerializedObject(payloads));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -92,15 +89,19 @@ public class ComUtils {
 
     public static List<PayloadIntr> receivePayload(Socket socket){
         try {
-            int buffSize = socket.getReceiveBufferSize();
-            char[] charBuffer = new char[(buffSize > 0) ? buffSize : BUFFER_LENGTH];
-            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            in.read(charBuffer);
-            return getDeserializedObject(new String(charBuffer));
+            DataInputStream inputStream = new DataInputStream(socket.getInputStream());
+            return getDeserializedObject(inputStream.readUTF());
         } catch (IOException | MalformedPayloadException e) {
             e.printStackTrace();
         }
         return null;
     }
 
+    public static PiNode interrogate(Socket clientSocket) {
+        // Auth and create PiNode
+        System.out.println("Interrogating " + clientSocket);
+        sendPayload(clientSocket, SystemPayload.NODE_PROBE);
+        System.out.println(receivePayload(clientSocket));
+        return null;
+    }
 }

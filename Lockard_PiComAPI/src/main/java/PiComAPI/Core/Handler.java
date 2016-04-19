@@ -1,6 +1,5 @@
-package PiComAPI;
+package PiComAPI.Core;
 
-import PiComAPI.Payload.Payload;
 import PiComAPI.Payload.PayloadIntr;
 
 /**
