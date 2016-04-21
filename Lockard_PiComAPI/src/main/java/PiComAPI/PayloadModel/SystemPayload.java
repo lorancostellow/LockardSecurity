@@ -15,7 +15,7 @@ public class SystemPayload {
     public static final String NODE_TOKEN_FIELD = "token";
     public static final String DEVICE_ALIAS_FIELD = "alias";
     public static final String DEVICE_TOKEN_FIELD = "token";
-    public static final String NODE_AUTH_FIELD = "Auth";
+    public static final String NODE_AUTH_FIELD = "auth";
     public static final String NODE_IS_DELEGATOR_FIELD = "isDelegator";
     // Scan Payloads
     public final static PayloadObject NODE_PROBE = new PayloadObject(
@@ -41,9 +41,9 @@ public class SystemPayload {
     public static PiNode NODE_PROBE_RSP(Payload payload)
             throws MalformedPayloadException {
         try {
-            if (payload.getPayloadEvent() == PayloadEvent.NODE
+            if (payload.getPayloadEvent() == PayloadEvent.CONNECT
                     && payload.getPayloadType() == PayloadType.RSP) {
-                JSONObject object = new JSONObject((String) payload.getData());
+                JSONObject object = new JSONObject(String.valueOf(payload.getData()));
                 return new PiNodeInst(
                         object.getString(NODE_TOKEN_FIELD),
                         object.getBoolean(NODE_IS_DELEGATOR_FIELD),

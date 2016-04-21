@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -17,15 +16,13 @@ import java.util.List;
  * Source belongs to Lockard_PiComAPI
  */
 public class Client implements LockardClient {
-    private static List<Socket> sockets = null;
+    private static Socket socket = null;
+    private final PiNodeEvent handler;
     private Configuration configuration;
 
-    public Client() {
-        sockets = Collections.synchronizedList(new LinkedList<Socket>());
-    }
-
-    public Client(Configuration configuration) {
+    public Client(Configuration configuration, PiNodeEvent handler) {
         this.configuration = configuration;
+        this.handler = handler;
     }
 
     /**
@@ -42,13 +39,23 @@ public class Client implements LockardClient {
             newSocket.setReuseAddress(true);
             newSocket.setSoTimeout(ComUtils.TIMEOUT);
             newSocket.connect(new InetSocketAddress(host, port));
-            sockets.add(newSocket);
+            if (isConnected())
+                socket.close();
+            socket = newSocket;
         } catch (IOException e) {
             e.printStackTrace();
         }
         return newSocket;
     }
 
+    private void close() {
+        if (isConnected())
+            try {
+                socket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+    }
     /**
      * Establishes a connection to the node
      *
@@ -56,37 +63,17 @@ public class Client implements LockardClient {
      * @param port node port
      * @return Established Connection to the node
      */
-    private Socket connect(String host, int port){
-        Socket socket = null;
-        for (Socket sock : sockets){
-            InetAddress address = new InetSocketAddress(host, port).getAddress();
-            if (sock.getInetAddress().equals(address)) {
-                socket = sock;
-                break;
+    private Socket initConnect(String host, int port) {
+        InetAddress address = new InetSocketAddress(host, port).getAddress();
+        if (isConnected() && !socket.getInetAddress().equals(address)) {
+            try {
+                socket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
-        socket = (socket == null) ? createSocket(host, port) : socket;
-        //****************  Connection Routine  *******************
-        System.out.println(ComUtils.connectionRoutine(socket, "EPIC_TOKEN", "Samsung Note 3"));
-
+        socket = (!isConnected()) ? createSocket(host, port) : socket;
         return socket;
-    }
-
-    /**
-     * Sends to local node
-     *
-     * @param payload data
-     * @param host    node ip
-     * @param port    node port
-     * @return response
-     * @throws PayloadSendFailed
-     * @throws MalformedPayloadException
-     */
-    private List<Payload> send(List<Payload> payload, String host, int port)
-            throws PayloadSendFailed, MalformedPayloadException {
-        Socket socket = connect(host, port);
-        ComUtils.sendPayload(socket, payload);
-        return ComUtils.receivePayload(socket);
     }
 
 
@@ -96,32 +83,49 @@ public class Client implements LockardClient {
 
     @Override
     public List<PiNode> getAllNodes() {
-        return null;
+        //TODO: Scan network if local
+        return new LinkedList<>();
     }
 
-    @Override
     public PiNode connect() {
-        return null;
+        String port = configuration.getSetting(Settings.PORT);
+        String host = configuration.getSetting(Settings.DELEGATOR_STATIC_IP);
+        PiNode node = null;
+        if (!port.isEmpty() && !host.isEmpty()) {
+            node = ComUtils.connectionRoutine(initConnect(
+                    host, Integer.valueOf(port)),
+                    configuration.getSetting(Settings.TOKEN),
+                    configuration.getSetting(Settings.ALIAS)
+            );
+            if (!node.isAuthenticated())
+                System.out.println("Not allowed to connect!");
+            close();
+        }
+        return node;
     }
 
     @Override
-    public void send(Payload payload) {
-
-    }
-
-    @Override
-    public void send(List<Payload> payloads) {
-
+    public void send(Payload payload) throws PayloadSendFailed {
+        ComUtils.sendPayload(socket, payload);
+        try {
+            System.out.println(ComUtils.receivePayload(socket));
+            handler.invoked(ComUtils.receivePayload(socket));
+        } catch (MalformedPayloadException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public Boolean isConnected() {
-        return null;
+        return (socket != null && socket.isConnected());
     }
 
     @Override
     public Boolean isLocal() {
-        return null;
+        //TODO Implement the method;
+        // wifi MAC
+        String wifiMAC = "C0:FF:EE:C0:FF:EE";
+        return (wifiMAC.equals(configuration.getSetting(Settings.ROUTER_MAC)));
     }
 
     @Override

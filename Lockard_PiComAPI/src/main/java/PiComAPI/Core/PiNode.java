@@ -8,7 +8,6 @@ public interface PiNode {
     Boolean isDelegator();
     String getRole();
     String getName();
-
     String getToken();
 
     Boolean isAuthenticated();

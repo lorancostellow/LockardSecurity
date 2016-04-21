@@ -1,5 +1,6 @@
 package PiComAPI;
 
+import PiComAPI.Core.PayloadSendFailed;
 import PiComAPI.Core.PiNode;
 import PiComAPI.Core.PiNodeEvent;
 import PiComAPI.PayloadModel.Payload;
@@ -30,14 +31,7 @@ public interface LockardClient {
      *
      * @param payload data
      */
-    void send(Payload payload);
-
-    /**
-     * Sends a list of payloads
-     *
-     * @param payloads payloads to send
-     */
-    void send(List<Payload> payloads);
+    void send(Payload payload) throws PayloadSendFailed;
 
     /**
      * Checks if the system is connected to the Lockard

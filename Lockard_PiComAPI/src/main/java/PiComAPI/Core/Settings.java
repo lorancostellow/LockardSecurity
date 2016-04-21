@@ -9,7 +9,8 @@ public enum Settings {
     ALIAS,
     LOCARD_SERVER_ADDR,
     DELEGATOR_STATIC_IP,
-    ROUTER_MAC
+    ROUTER_MAC,
+    PORT
 
-    // TODO: add settings her
+    // TODO: add settings here
 }

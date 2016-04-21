@@ -50,21 +50,27 @@ class TCPTestServer {
         Configuration configuration = new Configuration(Paths.get("/tmp/test.json"));
         configuration.setSetting(Settings.ALIAS, "Dylan Coss");
         configuration.setSetting(Settings.TOKEN, "A9BACD1FFC");
+        configuration.setSetting(Settings.PORT, "8000");
+        configuration.setSetting(Settings.DELEGATOR_STATIC_IP, "0.0.0.0");
         configuration.commit(); // Commit changes
 
-        // Create Client with configuration
-        LockardClient client = new Client(configuration);
-        // set handler
-        client.setEventHandler(new PiNodeEvent() {
+        PiNodeEvent event = new PiNodeEvent() {
             @Override
             public void invoked(Payload received) {
-
+                System.out.println("Received: " + received);
             }
-        });
-        // use client....
-
-
+        };
+        // Create Client with configuration
+        LockardClient client = new Client(configuration, event);
+        System.out.println(client.connect());
         System.out.println(client);
+
+        // use client..
+        while (true) {
+            //
+        }
+
+
 
 
     }
