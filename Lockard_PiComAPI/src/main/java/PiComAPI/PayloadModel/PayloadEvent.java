@@ -1,4 +1,4 @@
-package PiComAPI.Payload;
+package PiComAPI.PayloadModel;
 /**
  * Author Dylan Coss <dylancoss1@gmail.com>
  *
@@ -11,9 +11,9 @@ public enum PayloadEvent {
 
     // ------System management ------
     UNK("Unknown PayloadEvent"),
-    PANIC ("Panic Button"),
-    S_PROBE("Probe for Servers"),
-    D_PROBE ("User Device Probe"),
+
+    NODE("Node info response"),
+    CONNECT("Device Connection Request"),
     REGSTN ( "Device Registration"),
     SYSTEM ("System Message"),
     SERVER_ERROR ("Server Error"),
@@ -23,7 +23,7 @@ public enum PayloadEvent {
     FAILED_SIG ("Event was unsuccessful"),
 
     // ------System feature set ------
-
+    PANIC("Panic Button"),
     H_ALARM ("House Alarm"),
     F_ALARM ("Fire Alarm") ,
     C_ALARM ("Carbon Monoxide"),

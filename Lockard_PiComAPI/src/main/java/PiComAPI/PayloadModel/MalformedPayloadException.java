@@ -1,4 +1,4 @@
-package PiComAPI.Payload;
+package PiComAPI.PayloadModel;
 
 public class MalformedPayloadException extends Throwable {
     public MalformedPayloadException(String message) {

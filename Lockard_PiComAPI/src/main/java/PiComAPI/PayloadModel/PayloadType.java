@@ -1,4 +1,4 @@
-package PiComAPI.Payload;
+package PiComAPI.PayloadModel;
 
 public enum PayloadType {
     UNK("Unknown Type"),

@@ -1,9 +1,12 @@
 package PiComAPI;
 
-import PiComAPI.Core.Handler;
-import PiComAPI.Core.Server;
-import PiComAPI.Payload.*;
+import PiComAPI.Core.Client;
+import PiComAPI.Core.Configuration;
+import PiComAPI.Core.PiNodeEvent;
+import PiComAPI.Core.Settings;
+import PiComAPI.PayloadModel.*;
 
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,55 +14,58 @@ class TCPTestServer {
 
     public static void main(String[] args) throws Exception, MalformedPayloadException {
 
-        List<PayloadIntr> payloads = new ArrayList<>();
-        payloads.add(new Payload("1", "C", PayloadEvent.S_PROBE, PayloadType.REQ));
-//        payloads.add(new Payload("2", "C", PayloadEvent.S_PROBE, PayloadType.REQ));
-//        payloads.add(new Payload("3", "C", PayloadEvent.S_PROBE, PayloadType.REQ));
-//        payloads.add(new Payload("4", "C", PayloadEvent.S_PROBE, PayloadType.REQ));
-//        payloads.add(new Payload("5", "C", PayloadEvent.S_PROBE, PayloadType.REQ));
+        List<Payload> payloads = new ArrayList<>();
+        payloads.add(new PayloadObject("1", "C", PayloadEvent.NODE, PayloadType.REQ));
+//        payloads.add(new PayloadObject("2", "C", PayloadEvent.NODE, PayloadType.REQ));
+//        payloads.add(new PayloadObject("3", "C", PayloadEvent.NODE, PayloadType.REQ));
+//        payloads.add(new PayloadObject("4", "C", PayloadEvent.NODE, PayloadType.REQ));
+//        payloads.add(new PayloadObject("5", "C", PayloadEvent.NODE, PayloadType.REQ));
 //
-//        payloads.add(new Payload("6", "C", PayloadEvent.PANIC, PayloadType.REQ));
-//        payloads.add(new Payload("7", "C", PayloadEvent.H_ALARM, PayloadType.REQ));
-//        payloads.add(new Payload("8", "C", PayloadEvent.RSS_ALERT, PayloadType.REQ));
-//        payloads.add(new Payload("9", "C", PayloadEvent.S_PROBE, PayloadType.REQ));
-//        payloads.add(new Payload("10", "C", PayloadEvent.S_PROBE, PayloadType.REQ));
+//        payloads.add(new PayloadObject("6", "C", PayloadEvent.PANIC, PayloadType.REQ));
+//        payloads.add(new PayloadObject("7", "C", PayloadEvent.H_ALARM, PayloadType.REQ));
+//        payloads.add(new PayloadObject("8", "C", PayloadEvent.RSS_ALERT, PayloadType.REQ));
+//        payloads.add(new PayloadObject("9", "C", PayloadEvent.NODE, PayloadType.REQ));
+//        payloads.add(new PayloadObject("10", "C", PayloadEvent.NODE, PayloadType.REQ));
 //
-//        payloads.add(new Payload("11", "C", PayloadEvent.S_PROBE, PayloadType.REQ));
-//        payloads.add(new Payload("12", "C", PayloadEvent.S_PROBE, PayloadType.REQ));
-//        payloads.add(new Payload("13", "C", PayloadEvent.S_PROBE, PayloadType.REQ));
-//        payloads.add(new Payload("14", "C", PayloadEvent.S_PROBE, PayloadType.REQ));
-//        payloads.add(new Payload("15", "C", PayloadEvent.S_PROBE, PayloadType.REQ));
+//        payloads.add(new PayloadObject("11", "C", PayloadEvent.NODE, PayloadType.REQ));
+//        payloads.add(new PayloadObject("12", "C", PayloadEvent.NODE, PayloadType.REQ));
+//        payloads.add(new PayloadObject("13", "C", PayloadEvent.NODE, PayloadType.REQ));
+//        payloads.add(new PayloadObject("14", "C", PayloadEvent.NODE, PayloadType.REQ));
+//        payloads.add(new PayloadObject("15", "C", PayloadEvent.NODE, PayloadType.REQ));
 //
-//        payloads.add(new Payload("16", "C", PayloadEvent.S_PROBE, PayloadType.REQ));
-//        payloads.add(new Payload("17", "C", PayloadEvent.S_PROBE, PayloadType.REQ));
-//        payloads.add(new Payload("18", "C", PayloadEvent.S_PROBE, PayloadType.REQ));
-//        payloads.add(new Payload("19", "C", PayloadEvent.S_PROBE, PayloadType.REQ));
-//        payloads.add(new Payload("20", "C", PayloadEvent.S_PROBE, PayloadType.REQ));
+//        payloads.add(new PayloadObject("16", "C", PayloadEvent.NODE, PayloadType.REQ));
+//        payloads.add(new PayloadObject("17", "C", PayloadEvent.NODE, PayloadType.REQ));
+//        payloads.add(new PayloadObject("18", "C", PayloadEvent.NODE, PayloadType.REQ));
+//        payloads.add(new PayloadObject("19", "C", PayloadEvent.NODE, PayloadType.REQ));
+//        payloads.add(new PayloadObject("20", "C", PayloadEvent.NODE, PayloadType.REQ));
 //
-//        payloads.add(new Payload("21", "C", PayloadEvent.S_PROBE, PayloadType.REQ));
-//        payloads.add(new Payload("22", "C", PayloadEvent.S_PROBE, PayloadType.REQ));
-//        payloads.add(new Payload("23", "C", PayloadEvent.S_PROBE, PayloadType.REQ));
-//        payloads.add(new Payload("24", "C", PayloadEvent.S_PROBE, PayloadType.REQ));
-//        payloads.add(new Payload("25", "C", PayloadEvent.S_PROBE, PayloadType.REQ));
+//        payloads.add(new PayloadObject("21", "C", PayloadEvent.NODE, PayloadType.REQ));
+//        payloads.add(new PayloadObject("22", "C", PayloadEvent.NODE, PayloadType.REQ));
+//        payloads.add(new PayloadObject("23", "C", PayloadEvent.NODE, PayloadType.REQ));
+//        payloads.add(new PayloadObject("24", "C", PayloadEvent.NODE, PayloadType.REQ));
+//        payloads.add(new PayloadObject("25", "C", PayloadEvent.NODE, PayloadType.REQ));
 
 
+        // Setup Client
+        Configuration configuration = new Configuration(Paths.get("/tmp/test.json"));
+        configuration.setSetting(Settings.ALIAS, "Dylan Coss");
+        configuration.setSetting(Settings.TOKEN, "A9BACD1FFC");
+        configuration.commit(); // Commit changes
 
-
-        ClientServer clientServer = new ClientServer(new Handler() {
+        // Create Client with configuration
+        LockardClient client = new Client(configuration);
+        // set handler
+        client.setEventHandler(new PiNodeEvent() {
             @Override
-            public PayloadIntr process(PayloadIntr receivedPayload, Server.ClientConnection connection) {
-                System.out.print("Proccessing " + receivedPayload);
-                return receivedPayload;
+            public void invoked(Payload received) {
+
             }
-        }, 8000);
+        });
+        // use client....
 
-        clientServer.connect("192.168.1.200", 8000);
 
-//        for (int i = 0; i != 5; i++) {
-//            System.out.println(clientServer.send(payloads, "192.168.1.200", 8000));
-//            //Thread.sleep(1000);
-////
-//        }
+        System.out.println(client);
+
 
     }
 }

@@ -1,4 +1,4 @@
-package PiComAPI.Payload;
+package PiComAPI.PayloadModel;
 
 import org.json.JSONObject;
 
@@ -7,14 +7,14 @@ import org.json.JSONObject;
  * Raspberry Pi's
  */
 
-public class Payload implements PayloadIntr {
+public class PayloadObject implements Payload {
 
+    public static final String WILDCARD = "<ALL>";
+    public static final String BLANK_FIELD = "<BLANK>";
     private PayloadType payloadType ;
     private PayloadEvent payloadEvent;
     private String role;
     private Object data;
-    public static String WILDCARD = "<ALL>";
-    public static String BLANK_FIELD = "<BLANK>";
 
     /**
      * Define your own payload, this can be sent to the raspberry pi's
@@ -23,18 +23,18 @@ public class Payload implements PayloadIntr {
      * @param payloadEvent Describes the "Action" of the request being made.
      * @param role Identifies the server(s) you wish the command to be run on
      */
-    public Payload(Object data, String role, PayloadEvent payloadEvent, PayloadType payloadType){
+    public PayloadObject(Object data, String role, PayloadEvent payloadEvent, PayloadType payloadType) {
         this.data = data;
         this.payloadType = payloadType;
         this.payloadEvent = payloadEvent;
         this.role = role;
     }
 
-    public Payload(Object data, PayloadEvent payloadEvent, PayloadType payloadType){
+    public PayloadObject(Object data, PayloadEvent payloadEvent, PayloadType payloadType) {
         this(data, WILDCARD, payloadEvent, payloadType);
     }
 
-    public Payload(String payload) throws MalformedPayloadException {
+    public PayloadObject(String payload) throws MalformedPayloadException {
         JSONObject payloadFields = new JSONObject(payload);
         try {
             payloadType = PayloadType.valueOf((String) payloadFields.get(PAYLOAD_TYPE));
@@ -54,12 +54,20 @@ public class Payload implements PayloadIntr {
         return payloadType;
     }
 
+    public void setPayloadType(PayloadType payloadType) {
+        this.payloadType = payloadType;
+    }
+
     /**
      * Describes the "Action" of the request being made.
      * @return {@link PayloadEvent}
      */
     public PayloadEvent getPayloadEvent() {
         return payloadEvent;
+    }
+
+    public void setPayloadEvent(PayloadEvent payloadEvent) {
+        this.payloadEvent = payloadEvent;
     }
 
     /**
@@ -71,6 +79,10 @@ public class Payload implements PayloadIntr {
         return data;
     }
 
+    public void setData(Object data) {
+        this.data = data;
+    }
+
     /**
      * Identifier for the server to check before running/delegating
      * @return
@@ -79,25 +91,13 @@ public class Payload implements PayloadIntr {
         return role;
     }
 
-    public void setPayloadType(PayloadType payloadType) {
-        this.payloadType = payloadType;
-    }
-
-    public void setPayloadEvent(PayloadEvent payloadEvent) {
-        this.payloadEvent = payloadEvent;
-    }
-
     public void setRole(String role) {
         this.role = role;
     }
 
-    public void setData(Object data) {
-        this.data = data;
-    }
-
     @Override
     public String toString() {
-        return "Payload{" +
+        return "PayloadObject{" +
                 "payloadType=" + payloadType +
                 " (" + payloadType.description +
                 "), payloadEvent=" + payloadEvent +
@@ -112,12 +112,12 @@ public class Payload implements PayloadIntr {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Payload payload = (Payload) o;
+        PayloadObject payloadObject = (PayloadObject) o;
 
-        return payloadType == payload.payloadType
-                && payloadEvent == payload.payloadEvent
-                && (data != null ? data.equals(payload.data)
-                : payload.data == null);
+        return payloadType == payloadObject.payloadType
+                && payloadEvent == payloadObject.payloadEvent
+                && (data != null ? data.equals(payloadObject.data)
+                : payloadObject.data == null);
 
     }
 
