@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class Client implements LockardClient {
     private static Socket socket = null;
-    private final PiNodeEvent handler;
+    private PiNodeEvent handler;
     private Configuration configuration;
 
     public Client(Configuration configuration, PiNodeEvent handler) {
@@ -130,12 +130,12 @@ public class Client implements LockardClient {
 
     @Override
     public String getToken() {
-        return null;
+        return configuration.getSetting(Settings.TOKEN);
     }
 
     @Override
     public void setEventHandler(PiNodeEvent eventHandler) {
-
+        handler = eventHandler;
     }
 
     @Override
