@@ -23,6 +23,45 @@
 	        <li class="signin"><a href="/login.php">Log In</a></li>
 	      </ul>
 	    </div>
+	    
+	    <div id="page-wrap">
+
+		<img src = "/lockard_logo.png">
+		
+		<p>Ask for dimension so as to resize correctly.</p>
+		
+		<p>Please fill out the form below to contact us.</p>
+				
+		<div id="contact-area">
+			
+			<form method="post" action="contactengine.php">
+			
+				<label for "reason">Reason:</label>
+	             	<select id = "myList">
+		               <option value = "buy">I want to buy a product</option>
+		               <option value = "question">I have a question regarding a product.</option>
+		               <option value = "payment">I need to make a payment.</option>
+		               <option value = "details">I need to reset my password/log in.</option>
+	           	  </select>
+	           	  <br><br><br>
+				<label for="Name">Name:</label>
+				<input type="text" name="Name" id="Name" />
+	
+				<label for="Email">Email:</label>
+				<input type="text" name="Email" id="Email" />
+				
+				<label for="acnumber">Household A/C Number:</label>
+				<input type="text" name="acnumber" id="acnumber" />
+				
+				<label for="Message">Message:</label><br />
+				<textarea name="Message" rows="20" columns="20" id="Message"></textarea>
+
+				<input type="submit" name="submit" value="Submit" class="submit-button" />
+			</form>
+			
+			<div style="clear: both;"></div>
+		</div>
+	
 	  </header>
 	  
 	      

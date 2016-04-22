@@ -1,9 +1,12 @@
 
 body 
 {
+  width:100%;
   margin: 0;
   padding: 0;
-  background: black;
+  font-size: 62.5%;
+  font-family: Helvetica, sans-serif;
+  background: url(/stripe.png) repeat;
 }
  
 .nav ul 
@@ -66,24 +69,11 @@ body
   position: relative;
   margin: 0 auto;
   padding: 20px 20px 20px;
-  width: 250px;
-  height: 270px;
+  width: 310px;
   background: white;
   border-radius: 3px;
-  -webkit-box-shadow: 0 0 200px rgba(255, 255, 255, 0.5), 0 1px 2px rgba(0, 0, 0, 0.3);
-  box-shadow: 0 0 200px rgba(255, 255, 255, 0.5), 0 1px 2px rgba(0, 0, 0, 0.3);
 }
-.login:before {
-  content: '';
-  position: absolute;
-  top: -8px;
-  right: -8px;
-  bottom: -8px;
-  left: -8px;
-  z-index: -1;
-  background: rgba(0, 0, 0, 0.08);
-  border-radius: 4px;
-}
+
 .login h1 {
   margin: -20px -20px 21px;
   line-height: 40px;
@@ -108,9 +98,13 @@ body
 .login p:first-child {
   margin-top: 0;
 }
+.login input[type=text], .login input[type=password] {
+  width: 278px;
+}
 .login p.remember_me {
-  float: left;
-  line-height: 31px;
+  width:20%;
+  margin: 0 auto;
+  padding: 0px 0px 10px 0px;
 }
 .login p.remember_me label {
   font-size: 12px;
@@ -130,13 +124,12 @@ body
 .login-help {
   margin: 20px 0;
   font-size: 11px;
-  color: black;
+  color: white;
   text-align: center;
   text-shadow: 0 1px #2a85a1;
- 
 }
 .login-help a {
-  color: #grey;
+  color: #cce7fa;
   text-decoration: none;
 }
 .login-help a:hover {
@@ -201,22 +194,21 @@ input[type=submit] {
   -webkit-box-shadow: inset 0 1px white, 0 1px 2px rgba(0, 0, 0, 0.15);
   box-shadow: inset 0 1px white, 0 1px 2px rgba(0, 0, 0, 0.15);
 }
-input[type=submit]:active 
-{
+input[type=submit]:active {
   background: #cde5ef;
   border-color: #9eb9c2 #b3c0c8 #b4ccce;
   -webkit-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.2);
   box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.2);
 }
 
-.lt-ie9 input[type=text], .lt-ie9 input[type=password]
- {
+.lt-ie9 input[type=text], .lt-ie9 input[type=password] {
   line-height: 34px;
 }
 
 .account
 {
-	padding: 40px 240px 0px 0px;
+	width:30%;
+	padding: 80px 240px 0px 0px;
 	float:right;
 }
 
@@ -224,5 +216,56 @@ input[type=submit]:active
 {
     padding: 40px 0px 0px 240px;
 	float:left;
+}
+
+p {
+	font-size: 1.3em;
+	margin-bottom: 15px;
+}
+
+#page-wrap {
+	width: 660px;
+	background: white;
+	padding: 20px 50px 20px 50px;
+	margin: 20px auto;
+	min-height: 500px;
+	height: auto !important;
+	height: 500px;
+}
+
+#contact-area {
+	width: 600px;
+	margin-top: 25px;
+}
+
+#contact-area input, #contact-area textarea {
+	padding: 5px;
+	width: 471px;
+	font-family: Helvetica, sans-serif;
+	font-size: 1.4em;
+	margin: 0px 0px 10px 0px;
+	border: 2px solid #ccc;
+}
+
+#contact-area textarea {
+	height: 90px;
+}
+
+#contact-area textarea:focus, #contact-area input:focus {
+	border: 2px solid #900;
+}
+
+#contact-area input.submit-button {
+	width: 100px;
+	float: right;
+}
+
+label {
+	float: left;
+	text-align: right;
+	margin-right: 15px;
+	width: 100px;
+	padding-top: 5px;
+	font-size: 1.4em;
 }
 

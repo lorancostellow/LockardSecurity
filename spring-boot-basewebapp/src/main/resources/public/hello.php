@@ -26,7 +26,7 @@
 	  </header>
 
 	<div class ="images">
-		<img src="https://placeholdit.imgix.net/~text?txtsize=33&txt=600%C3%97300&w=600&h=300">
+		<img src="https://placeholdit.imgix.net/~text?txtsize=33&txt=500%C3%97300&w=500&h=300">
 	</div>
 
 	<div class="account">
@@ -34,17 +34,17 @@
      	 	<h1>Login to Lockard Security</h1>
       		<form method="post" action="settings.html">
         	<p><input type="text" name="login" value="" placeholder="Household account number:"></p>
-        	<p class="remember_me">
-          	<label>
-            <input type="checkbox" name="remember_me" id="remember_me">
-            Remember me on this computer
-          	</label><br>
-        	</p>
+      
         	<p class="submit"><input type="submit" name="commit" value="Login"></p>
     	  </form>
-		<div class="login-help">
-      		<p>Forgot your password? <a href="index.html">Click here to reset it</a>.</p>
-    	</div>
+		<p class="remember_me">
+          	<label>
+			<br><br>
+			Remember me on this computer
+            <input type="checkbox" name="remember_me" id="remember_me">
+            
+          	</label>
+        	</p>
     	</div>
 	</div>
 
