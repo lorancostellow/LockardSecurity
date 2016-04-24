@@ -6,7 +6,6 @@ from picom.Data.PayloadObj import\
     PayloadEventMessages,\
     Payload, \
     send_payload, to_string
-
 from picom.Data.Structure import\
     EventTypes,\
     PayloadType,\
@@ -15,10 +14,10 @@ from picom.Data.Structure import\
     WILDCARD,\
     EventDomain
 from picom.Delegation import PiDiscovery
-
 from picom.Servers.SystemControllerUtils import\
     Responder,\
     SYS_Handler
+from picom.Servers.WebConnect import ClientTask
 
 """
     :SERVER
@@ -233,9 +232,8 @@ def start_lan_server(handler: SYS_Handler, ip_address="0.0.0.0", port=8000, exec
     NAME = name
     IS_DELEGATOR = delegator
     if IS_DELEGATOR:
-        from picom.Delegation.jobs import JobPool
-        JOBS = JobPool(handler, job_poll_interval)
-        JOBS.start()
+        client  = ClientTask()
+        client.start()
 
     tcp_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     tcp_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)

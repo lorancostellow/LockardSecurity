@@ -4,12 +4,14 @@ import zmq
 
 #Author = william Barrett <william.barrett@mycit.ie>
 
+from picom.Data.PayloadObj import Payload
+
 context = zmq.Context()
 socket = context.socket(zmq.PAIR)
 socket.connect('tcp://autosafe.ddns.net:8009')
 
 def handle_message(message):
-    print(message + " - recieved at client")
+    Payload.from_dict(message)
 
 class ClientTask(threading.Thread):
     """ClientTask"""
@@ -21,9 +23,15 @@ class ClientTask(threading.Thread):
 
     def run(self):
         while True:
+            print("Web Listner Starting")
+            ############
+            #testing
+            message = "Request a payload"
+            socket.send(message.encode("UTF-8"))
+            ##############
             recieved = socket.recv()
-            handle_message(recieved.decode("UTF-8"))
+            handle_message(recieved)
 
 
-client  = ClientTask()
-client.start()
+#  = ClientTask()
+#client.start()
