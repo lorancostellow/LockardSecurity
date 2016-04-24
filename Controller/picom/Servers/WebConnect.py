@@ -2,6 +2,8 @@ import threading
 
 import zmq
 
+#Author = william Barrett <william.barrett@mycit.ie>
+
 context = zmq.Context()
 socket = context.socket(zmq.PAIR)
 socket.connect('tcp://autosafe.ddns.net:8009')
