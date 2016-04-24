@@ -1,10 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="be25554d-7ed9-48a5-96d0-66621e735c2c" name="Default" comment="Added Port setting, implemented connect and auth routine">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/PiComAPI/TCPTestServer.class" afterPath="$PROJECT_DIR$/target/classes/PiComAPI/TCPTestServer.class" />
+    <list default="true" id="be25554d-7ed9-48a5-96d0-66621e735c2c" name="Default" comment="Minor fix">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../Controller/PayloadTests.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../Controller/PiCom/Clients/LAN_Client.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../Controller/PiCom/Clients/__init__.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../Controller/PiCom/Data/Structure.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../Controller/PiCom/Data/__init__.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../Controller/PiCom/Delegation/JOBS.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../Controller/PiCom/Delegation/PiDiscovery.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../Controller/PiCom/Delegation/__init__.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../Controller/PiCom/Servers/LAN_Server.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../Controller/PiCom/Servers/SystemControllerUtils.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../Controller/PiCom/Servers/WSServer.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../Controller/PiCom/Servers/__init__.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../Controller/PiCom/__init__.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../Controller/client_test.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../Controller/electronic_Test.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../Controller/jobs_test.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../Controller/test.py" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Controller/setup.py" afterPath="$PROJECT_DIR$/../Controller/setup.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/PiComAPI/Core/Client.java" afterPath="$PROJECT_DIR$/src/main/java/PiComAPI/Core/Client.java" />
     </list>
     <ignored path="Lockard_PiComAPI.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -337,7 +353,9 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
+      <pane id="PackagesPane">
+        <subPane />
+      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1049,7 +1067,7 @@
       <workItem from="1456064168963" duration="6000" />
       <workItem from="1460902520296" duration="28452000" />
       <workItem from="1460937004651" duration="948000" />
-      <workItem from="1460999534405" duration="70142000" />
+      <workItem from="1460999534405" duration="71522000" />
     </task>
     <task id="LOCAL-00001" summary="Partial Implementation of server-client">
       <created>1460961511161</created>
@@ -1093,15 +1111,22 @@
       <option name="project" value="LOCAL" />
       <updated>1461282796125</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Minor fix">
+      <created>1461283415390</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1461283415390</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="160179000" />
+    <option name="totallyTimeSpent" value="161559000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1279" y="25" width="1922" height="1056" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1115,7 +1140,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20500532" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20500532" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24973376" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32762313" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1173,7 +1198,8 @@
     <MESSAGE value="Fixes to read error on socket reuse &amp; Added routines" />
     <MESSAGE value="Recoded for integration to app, removed server..added configuration api  &amp; client interface" />
     <MESSAGE value="Added Port setting, implemented connect and auth routine" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added Port setting, implemented connect and auth routine" />
+    <MESSAGE value="Minor fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="Minor fix" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
@@ -1541,9 +1567,9 @@
         <state relative-caret-position="430">
           <caret line="27" column="18" selection-start-line="27" selection-start-column="18" selection-end-line="27" selection-end-column="18" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#998#999#0" expanded="true" />
-            <element signature="e#1055#1056#0" expanded="true" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#998#999#0" expanded="false" />
+            <element signature="e#1055#1056#0" expanded="false" />
             <element signature="method#commit#0;class#Configuration#0" expanded="false" />
           </folding>
         </state>
