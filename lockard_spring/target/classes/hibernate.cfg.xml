@@ -4,11 +4,11 @@
     "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
   <session-factory>
-      <property name="hibernate.connection.url">jdbc:mysql://autosafe.ddns.net:3306/lockard</property>
+      <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/lockard</property>
       <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
       <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
       <property name="hibernate.connection.password">theateam</property>
-      <property name="hibernate.connection.username">root</property>
+      <!--<property name="hibernate.connection.username">root</property>-->
       <mapping class="ie.lockard.security.Domain.LockardEventsDAO"/>
       <mapping class="ie.lockard.security.Domain.LockardHousesDAO"/>
       <mapping class="ie.lockard.security.Domain.LockardResponseDAO"/>
