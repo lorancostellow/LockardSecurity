@@ -36,27 +36,39 @@
 			  <input type="checkbox" name="heating" value="On" /> Turn my heating on
 			  <br>
 			  <input type="checkbox" name="heating" value="updateYes" /> I want updates on this.
-			  <a href="#" class="submit">Apply Changes</a>
+			 <br><br>
+			 <p>Heating Time Settings</p>        
+		   	 	<input type="radio" name="hourSet" value="12"> 12 hour
+			 	<input type="radio" name="hourSet" value="24"> 24 hour
+			 <br><br>
+			 <form action="demo_form.asp">
+  				Keep house at <input type="number" name="temperature"> &deg; C at all times.<br>
+  			</form>
+  			<br><br>
+	   	    <a href="#" class="submit">Apply Changes</a>
 			</form>
 	   </div>
 	   
 	   <div id="H_ALARM" class="tab-content">
 	  		 <form action="" method="post">
 			  <input type="checkbox" name="H_ALARM" value="Halert" /> Alert me if my house alarm turns on
-			  <a href="#" class="submit">Apply Changes</a>
+			  <br><br>
+	   	    <a href="#" class="submit">Apply Changes</a>
 			</form>
 	    </div>
 	    
 	   <div id="F_ALARM" class="tab-content">
 	   		<form>
 	  		 <input type="checkbox" name="F_ALARM" value="Falert" /> Alert me if my fire alarm turns on
-	  		 <a href="#" class="submit">Apply Changes</a>
+	  		 <br><br>
+	   	    <a href="#" class="submit">Apply Changes</a>
 	  		</form>
 	   </div>
 	   
 	   <div id="C_ALARM" class="tab-content">
 	   	  <form>
 	   		<input type="checkbox" name="C_ALARM" value="Calert" /> Alert me if my Carbon Monoxide alarm turns on
+	   	    <br><br>
 	   	    <a href="#" class="submit">Apply Changes</a>
 	   	  </form>
 	   	</div>
