@@ -1,6 +1,6 @@
 package ie.lockard.security.Repository;
 
-import ie.lockard.security.Domain.LockardUsersDAO;
+import ie.lockard.security.Domain.LockardHousesDAO;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository;
  * Source belongs to Lockard
  */
 @Repository
-public interface UserRepository extends CrudRepository<LockardUsersDAO, Long>{}
+public interface HouseRepository extends CrudRepository<LockardHousesDAO, Integer> {
+}

@@ -27,12 +27,12 @@ public class UserService {
     //                               USER REPOSITORY
     //-----------------------------------------------------------------------------
 
-
-    public Boolean authticateByUser(LockardUsersDAO user, String password){
+    public Boolean authenticateByUser(LockardUsersDAO user, String password){
         LockardUsersDAO usersDAO = findByEmail(user.getEmail());
         return usersDAO != null && (DataUtils.checkHash(usersDAO.getPassword(),
                 DataUtils.getHash(password)));
     }
+
     public Iterable<LockardUsersDAO> findAllUsers() {
         return repository.findAll();
     }
@@ -67,11 +67,11 @@ public class UserService {
     }
 
     public boolean authenticateByEmail(String email, String password){
-        return authticateByUser(findByEmail(email), password);
+        return authenticateByUser(findByEmail(email), password);
     }
 
     public boolean authenticateByToken(String token, String password){
-        return authticateByUser(findByToken(token), password);
+        return authenticateByUser(findByToken(token), password);
     }
 
     public RegistrationStatus registerUser(String firstName,
