@@ -18,6 +18,7 @@ class PayloadFields(Enum):
     PAYLOAD_DATA = "data"
     PAYLOAD_TYPE = "type"
     PAYLOAD_EVENT = "event"
+    PAYLOAD_TOKEN = "token"
 
 
 """

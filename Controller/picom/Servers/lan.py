@@ -17,7 +17,7 @@ from picom.Delegation import PiDiscovery
 from picom.Servers.SystemControllerUtils import\
     Responder,\
     SYS_Handler
-from picom.Servers.WebConnect import ClientTask
+from picom.Servers.WebRouter import ClientTask
 
 """
     :SERVER
@@ -124,7 +124,7 @@ class ConnectedClient(threading.Thread, Responder):
 
     def process_payload(self, payload):
         res_payload = payload
-
+        res_payload.token = TOKEN
         # -----------------SYSTEM JOB HANDLING------------------
         if payload.type is PayloadType.JOB:
 
@@ -186,7 +186,6 @@ class ConnectedClient(threading.Thread, Responder):
         send_payload(self.request, E)
 
     def respond(self, payload: Payload):
-        print("RETURN: %s" % payload.to_dict())
         if payload is None:
             send_payload(self.request, PayloadEventMessages.ADDRESS_NOT_FOUND)
         else:

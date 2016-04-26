@@ -1,10 +1,9 @@
-import threading
 import socket
+import threading
 
 from picom.helpers import \
     decode_from_json, \
     encode_to_json
-
 from .Structure import \
     Enum, \
     PayloadEvent, \
@@ -28,11 +27,12 @@ class PayloadEncoder(object):
 
 
 class Payload(PayloadEncoder):
-    def __init__(self, data, event: PayloadEvent, requestype: PayloadType, role: str = None):
+    def __init__(self, data, event: PayloadEvent, requestype: PayloadType,token:str = BLANK_FIELD, role: str = None):
         assert isinstance(event, PayloadEvent) and isinstance(requestype, PayloadType)
         self.data = data
         self.event = event
         self.type = requestype
+        self.token = token
 
         if role is None:
             role = BLANK_FIELD
@@ -43,7 +43,8 @@ class Payload(PayloadEncoder):
         return {PayloadFields.PAYLOAD_DATA.value: self.data,
                 PayloadFields.PAYLOAD_ROLE.value: self.role,
                 PayloadFields.PAYLOAD_EVENT.value: self.event.name,
-                PayloadFields.PAYLOAD_TYPE.value: self.type.name}
+                PayloadFields.PAYLOAD_TYPE.value: self.type.name,
+                PayloadFields.PAYLOAD_TOKEN.value: self.token}
 
     @staticmethod
     def from_dict(data):
@@ -56,9 +57,8 @@ class Payload(PayloadEncoder):
         return Payload(data=data[PayloadFields.PAYLOAD_DATA.value],
                        event=PayloadEvent[data[PayloadFields.PAYLOAD_EVENT.value]],
                        requestype=PayloadType[data[PayloadFields.PAYLOAD_TYPE.value]],
-                       role=data[PayloadFields.PAYLOAD_ROLE.value])
-
-
+                       role=data[PayloadFields.PAYLOAD_ROLE.value],
+                       token = data[PayloadFields.PAYLOAD_TOKEN.value])
 class PayloadEventMessages(Enum):
     WRONG_NODE = Payload({'message': "Request was not intended for the unit"},
                          PayloadEvent.CLIENT_ERROR, PayloadType.RSP)
@@ -111,8 +111,9 @@ def receive_payload(sock: socket):
 def to_string(payload_data):
     if isinstance(payload_data, PayloadEncoder):
         payload_data = payload_data.to_dict()
-        return ("Payload: [ {0} | {1} | {2} | {3} ] ".format(payload_data[PayloadFields.PAYLOAD_DATA.value],
+        return ("Payload: [ {0} | {1} | {2} | {3} | {4} ] ".format(payload_data[PayloadFields.PAYLOAD_DATA.value],
                                                              payload_data[PayloadFields.PAYLOAD_ROLE.value],
                                                              payload_data[PayloadFields.PAYLOAD_EVENT.value],
-                                                             payload_data[PayloadFields.PAYLOAD_TYPE.value]))
+                                                             payload_data[PayloadFields.PAYLOAD_TYPE.value],
+                                                             payload_data[PayloadFields.PAYLOAD_TOKEN.value]))
     return payload_data
