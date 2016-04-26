@@ -12,7 +12,7 @@ import java.security.spec.InvalidKeySpecException;
  */
 public class DataUtils {
 
-    private static final int iterations = 20*1000;
+    private static final int iterations = 1*1000;
     private static final int saltLen = 32;
     private static final int desiredKeyLen = 256;
 
@@ -64,10 +64,13 @@ public class DataUtils {
                 .substring(0, 16);
     }
 
-//    public static void main(String[] args){
-//        if(checkHash(getHash("bannanna"),"bannanna"))
-//           System.out.println("yes");
-//        else
-//            System.out.println("no");
-//      }
+    public static void main(String[] args){
+        System.out.println(getHash("banana"));
+        System.out.println(getHash("banana"));
+        System.out.println(getHash("banana"));
+        if(checkHash(getHash("banana"),"banana"))
+           System.out.println("yes");
+        else
+            System.out.println("no");
+      }
 }
