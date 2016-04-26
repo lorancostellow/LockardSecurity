@@ -62,6 +62,7 @@ public class UserService {
     }
 
     public void upsert(LockardUsersDAO usersDAO){
+        //TODO Fix method..not adding the userID.. @William
         LockardAdminsDAO adminsDAO = new LockardAdminsDAO();
         adminsDAO.setUserid(usersDAO.getId());
         adminRepository.save(adminsDAO);
@@ -122,4 +123,6 @@ public class UserService {
 
         //--------------Registration End---------------
     }
+
+    //TODO: Add any necessary methods you think are needed @ALL
 }

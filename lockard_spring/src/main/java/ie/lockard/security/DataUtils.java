@@ -12,17 +12,16 @@ public class DataUtils {
 
 
     public static boolean checkHash(String hash, String password) {
-        //TODO Implement
+        //TODO Implement @William
         return true;
     }
 
     public static String getHash(String password) {
-        //TODO Implement
+        //TODO Implement @William
         return password + " - hash";
     }
 
     public static String getToken() {
-        //TODO: Implement better token generator
         byte[] byteToken = new byte[16];
         new SecureRandom().nextBytes(byteToken);
         return Base64.getEncoder()
