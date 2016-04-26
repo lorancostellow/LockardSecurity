@@ -1,5 +1,9 @@
 package ie.lockard.security;
 
+import java.security.SecureRandom;
+import java.util.Base64;
+import java.util.Random;
+
 /**
  * Created by dylan on 24/04/16.
  * Source belongs to Lockard
@@ -7,18 +11,22 @@ package ie.lockard.security;
 public class DataUtils {
 
 
-    public static boolean checkHash (String hash, String password) {
+    public static boolean checkHash(String hash, String password) {
         //TODO Implement
         return true;
     }
 
-    public static String getHash (String password) {
+    public static String getHash(String password) {
         //TODO Implement
         return password + " - hash";
     }
 
     public static String getToken() {
-        //TODO Implement
-        return "Some Token";
+        //TODO: Implement better token generator
+        byte[] byteToken = new byte[16];
+        new SecureRandom().nextBytes(byteToken);
+        return Base64.getEncoder()
+                .encodeToString(byteToken)
+                .substring(0,16);
     }
 }

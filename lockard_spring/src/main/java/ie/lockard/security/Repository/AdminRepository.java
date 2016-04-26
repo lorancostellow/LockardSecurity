@@ -1,14 +1,14 @@
 package ie.lockard.security.Repository;
 
-import ie.lockard.security.Domain.LockardUsersDAO;
+import ie.lockard.security.Domain.LockardAdminsDAO;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 /**
- * Created by dylan on 24/04/16.
+ * Created by dylan on 26/04/16.
  * Source belongs to Lockard
  */
-@Repository
-public interface UserRepository extends CrudRepository<LockardUsersDAO, Long>{
 
+@Repository
+public interface AdminRepository extends CrudRepository<LockardAdminsDAO, Long> {
 }

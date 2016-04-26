@@ -7,7 +7,7 @@ import javax.persistence.*;
  * Source belongs to Lockard
  */
 @Entity
-@Table(name = "houses", schema = "lockard", catalog = "")
+@Table(name = "houses", schema = "lockard")
 public class LockardHousesDAO {
     private int id;
     private String token;
@@ -89,5 +89,16 @@ public class LockardHousesDAO {
         result = 31 * result + (lon != null ? lon.hashCode() : 0);
         result = 31 * result + (lat != null ? lat.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "LockardHousesDAO{" +
+                "id=" + id +
+                ", token='" + token + '\'' +
+                ", name='" + name + '\'' +
+                ", lon='" + lon + '\'' +
+                ", lat='" + lat + '\'' +
+                '}';
     }
 }

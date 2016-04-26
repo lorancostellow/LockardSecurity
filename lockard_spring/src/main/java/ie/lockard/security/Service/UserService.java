@@ -1,7 +1,9 @@
 package ie.lockard.security.Service;
 
 import ie.lockard.security.DataUtils;
+import ie.lockard.security.Domain.LockardAdminsDAO;
 import ie.lockard.security.Domain.LockardUsersDAO;
+import ie.lockard.security.Repository.AdminRepository;
 import ie.lockard.security.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,10 +19,14 @@ import java.time.LocalDateTime;
 public class UserService {
 
     private UserRepository repository;
+    private AdminRepository adminRepository;
+
 
     @Autowired
-    public UserService(UserRepository repository) {
+    public UserService(UserRepository repository,
+                       AdminRepository adminRepository) {
         this.repository = repository;
+        this.adminRepository = adminRepository;
     }
 
     //-----------------------------------------------------------------------------
@@ -48,13 +54,6 @@ public class UserService {
         return null;
     }
 
-    public LockardUsersDAO findByUsername(String username){
-        for (LockardUsersDAO usersDAO : findAllUsers())
-            if (usersDAO.getUsername().equals(username))
-                return usersDAO;
-        return null;
-    }
-
     public LockardUsersDAO findByEmail(String email){
         for (LockardUsersDAO usersDAO : findAllUsers())
             if (usersDAO.getEmail().equals(email))
@@ -63,7 +62,21 @@ public class UserService {
     }
 
     public void upsert(LockardUsersDAO usersDAO){
+        LockardAdminsDAO adminsDAO = new LockardAdminsDAO();
+        adminsDAO.setUserid(usersDAO.getId());
+        adminRepository.save(adminsDAO);
         repository.save(usersDAO);
+    }
+
+    public void remove(LockardUsersDAO usersDAO){
+        remove(usersDAO.getId());
+    }
+
+    public void remove(Long userID){
+        repository.delete(userID);
+        for (LockardAdminsDAO admins : adminRepository.findAll())
+            if (admins.getUserid() == userID)
+                adminRepository.delete(admins.getId());
     }
 
     public boolean authenticateByEmail(String email, String password){
@@ -74,13 +87,13 @@ public class UserService {
         return authenticateByUser(findByToken(token), password);
     }
 
-    public RegistrationStatus registerUser(String firstName,
-                                           String lastName,
-                                           String username,
-                                           String email,
-                                           String password){
+    public DatabaseStatus registerUser(String firstName,
+                                       String lastName,
+                                       String username,
+                                       String email,
+                                       String password){
         if (findByEmail(email) != null)
-            return RegistrationStatus.EMAIL_USED;
+            return DatabaseStatus.EMAIL_USED;
 
         //--------------Create UserDAO----------------
         LockardUsersDAO usersDAO = new LockardUsersDAO();
@@ -98,14 +111,14 @@ public class UserService {
             upsert(usersDAO);
         } catch (Exception e){
             e.printStackTrace();
-            return RegistrationStatus.FAILED;
+            return DatabaseStatus.FAILED;
         }
 
 
         // Check if in database
         return (findByEmail(email)!=null) ?
-                RegistrationStatus.SUCCESSFULL:
-                RegistrationStatus.FAILED;
+                DatabaseStatus.SUCCESSFUL :
+                DatabaseStatus.FAILED;
 
         //--------------Registration End---------------
     }

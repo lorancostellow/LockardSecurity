@@ -8,7 +8,7 @@ import java.sql.Timestamp;
  * Source belongs to Lockard
  */
 @Entity
-@Table(name = "events", schema = "lockard", catalog = "")
+@Table(name = "events", schema = "lockard")
 public class LockardEventsDAO {
     private int id;
     private String ptoken;
@@ -75,7 +75,7 @@ public class LockardEventsDAO {
     }
 
     @Basic
-    @Column(name = "evenTtype", nullable = false)
+    @Column(name = "event_type", nullable = false)
     public int getEvenTtype() {
         return evenTtype;
     }
@@ -105,7 +105,7 @@ public class LockardEventsDAO {
     }
 
     @Basic
-    @Column(name = "executeAt", nullable = false)
+    @Column(name = "execute_at", nullable = false)
     public Timestamp getExecuteAt() {
         return executeAt;
     }
@@ -125,7 +125,7 @@ public class LockardEventsDAO {
     }
 
     @Basic
-    @Column(name = "lastExecute", nullable = false)
+    @Column(name = "last_execute", nullable = false)
     public Timestamp getLastExecute() {
         return lastExecute;
     }
@@ -135,7 +135,7 @@ public class LockardEventsDAO {
     }
 
     @Basic
-    @Column(name = "interval", nullable = false, length = 256)
+    @Column(name = "period", nullable = false, length = 256)
     public String getInterval() {
         return interval;
     }

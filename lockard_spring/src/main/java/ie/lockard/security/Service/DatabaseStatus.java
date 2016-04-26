@@ -4,8 +4,9 @@ package ie.lockard.security.Service;
  * Created by dylan on 24/04/16.
  * Source belongs to Lockard
  */
-public enum RegistrationStatus {
+public enum DatabaseStatus {
     EMAIL_USED,
-    SUCCESSFULL,
+    USER_EXISTS,
+    SUCCESSFUL,
     FAILED
 }

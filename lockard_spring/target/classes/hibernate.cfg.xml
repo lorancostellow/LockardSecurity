@@ -7,12 +7,11 @@
       <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/lockard</property>
       <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
       <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
-      <property name="hibernate.connection.password">theateam</property>
-      <!--<property name="hibernate.connection.username">root</property>-->
       <mapping class="ie.lockard.security.Domain.LockardEventsDAO"/>
       <mapping class="ie.lockard.security.Domain.LockardHousesDAO"/>
       <mapping class="ie.lockard.security.Domain.LockardResponseDAO"/>
       <mapping class="ie.lockard.security.Domain.LockardUsersDAO"/>
+      <mapping class="ie.lockard.security.Domain.LockardAdminsDAO"/>
 
       <!-- DB schema will be updated if needed -->
      <!--<property name="hbm2ddl.auto">update</property>-->

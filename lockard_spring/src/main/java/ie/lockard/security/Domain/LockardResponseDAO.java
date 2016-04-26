@@ -7,7 +7,7 @@ import javax.persistence.*;
  * Source belongs to Lockard
  */
 @Entity
-@Table(name = "response", schema = "lockard", catalog = "")
+@Table(name = "response", schema = "lockard")
 public class LockardResponseDAO {
     private int id;
     private String ptoken;
