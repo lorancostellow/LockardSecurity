@@ -64,7 +64,7 @@ public class DataUtils {
                 .substring(0, 16);
     }
 
-    public static void main(String[] args){
+ /*   public static void main(String[] args){
         System.out.println(getHash("banana"));
         System.out.println(getHash("banana"));
         System.out.println(getHash("banana"));
@@ -72,5 +72,5 @@ public class DataUtils {
            System.out.println("yes");
         else
             System.out.println("no");
-      }
+      }*/
 }
