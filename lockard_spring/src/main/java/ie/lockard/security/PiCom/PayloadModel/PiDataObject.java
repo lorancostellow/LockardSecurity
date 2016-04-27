@@ -46,13 +46,16 @@ public class PiDataObject implements PiData {
 
         PiDataObject that = (PiDataObject) o;
 
-        return sensorID != null ? sensorID.equals(that.sensorID) : that.sensorID == null;
+        if (sensorID != null ? !sensorID.equals(that.sensorID) : that.sensorID != null) return false;
+        return data != null ? data.equals(that.data) : that.data == null;
 
     }
 
     @Override
     public int hashCode() {
-        return sensorID != null ? sensorID.hashCode() : 0;
+        int result = sensorID != null ? sensorID.hashCode() : 0;
+        result = 31 * result + (data != null ? data.hashCode() : 0);
+        return result;
     }
 
     @Override

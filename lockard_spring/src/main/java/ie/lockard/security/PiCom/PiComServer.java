@@ -8,6 +8,8 @@ package ie.lockard.security.PiCom;
 import ie.lockard.security.PiCom.Core.ComUtils;
 import ie.lockard.security.PiCom.Core.PiNodeEvent;
 import ie.lockard.security.PiCom.PayloadModel.*;
+import ie.lockard.security.Service.ResponseService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.zeromq.ZMQ;
 
 public class PiComServer {
@@ -15,9 +17,12 @@ public class PiComServer {
     private int port;
     private Listener listener;
     private Thread lThreat;
-    PiComServer(PiNodeEvent nodeEvent, int port) {
+    private ResponseService responseService;
+
+    PiComServer(PiNodeEvent nodeEvent, int port, ResponseService responseService) {
         System.out.println("Listening for events on port: " + port);
         this.port = port;
+        this.responseService = responseService;
         listener = new Listener(nodeEvent, port);
     }
 
@@ -61,9 +66,14 @@ public class PiComServer {
             while (!Thread.currentThread().isInterrupted()) {
                 try {
                     String request = responder.recvStr();
-                    responder.send(ComUtils.setSerializedObject(
-                            event.invoked(ComUtils.getDeserializedObject(request))
-                    ),0);
+                    Payload received = new PayloadObject(request);
+                    Payload response = responseService.getResponse(received);
+                    if (response!=null)
+                        responder.send(ComUtils.setSerializedObject(response),0); // sends the
+                    else
+                        responder.send(ComUtils.setSerializedObject(
+                            event.invoked(received)
+                        ),0);
                 } catch (Exception | MalformedPayloadException e) {
                     e.printStackTrace();
                 }

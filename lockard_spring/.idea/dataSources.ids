@@ -129,91 +129,71 @@
         <data-type>int(11)</data-type>
         <sequence-identity>1</sequence-identity>
       </column>
-      <column id="32" parent="4" name="ptoken">
-        <mandatory>1</mandatory>
-        <data-type>varchar(16)</data-type>
-      </column>
-      <column id="33" parent="4" name="htoken">
-        <mandatory>1</mandatory>
-        <data-type>varchar(16)</data-type>
-      </column>
-      <column id="34" parent="4" name="sensor">
-        <mandatory>1</mandatory>
-        <data-type>varchar(16)</data-type>
-      </column>
-      <column id="35" parent="4" name="type">
-        <mandatory>1</mandatory>
-        <data-type>int(11)</data-type>
-      </column>
-      <column id="36" parent="4" name="event">
-        <mandatory>1</mandatory>
-        <data-type>int(11)</data-type>
-      </column>
-      <column id="37" parent="4" name="data">
+      <column id="32" parent="4" name="request">
         <mandatory>1</mandatory>
         <data-type>text</data-type>
       </column>
-      <column id="38" parent="4" name="payload">
+      <column id="33" parent="4" name="payload">
         <mandatory>1</mandatory>
         <data-type>text</data-type>
       </column>
-      <key id="39" parent="4" name="PRIMARY">
+      <key id="34" parent="4" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <column id="40" parent="5" name="id">
+      <column id="35" parent="5" name="id">
         <mandatory>1</mandatory>
         <data-type>bigint(11)</data-type>
         <sequence-identity>1</sequence-identity>
       </column>
-      <column id="41" parent="5" name="token">
+      <column id="36" parent="5" name="token">
         <mandatory>1</mandatory>
         <data-type>varchar(16)</data-type>
       </column>
-      <column id="42" parent="5" name="first_name">
+      <column id="37" parent="5" name="first_name">
         <mandatory>1</mandatory>
         <data-type>varchar(25)</data-type>
       </column>
-      <column id="43" parent="5" name="last_name">
+      <column id="38" parent="5" name="last_name">
         <mandatory>1</mandatory>
         <data-type>varchar(50)</data-type>
       </column>
-      <column id="44" parent="5" name="username">
+      <column id="39" parent="5" name="username">
         <mandatory>1</mandatory>
         <data-type>varchar(50)</data-type>
       </column>
-      <column id="45" parent="5" name="date">
+      <column id="40" parent="5" name="date">
         <mandatory>1</mandatory>
         <data-type>timestamp</data-type>
         <default-expression>&apos;CURRENT_TIMESTAMP&apos;</default-expression>
       </column>
-      <column id="46" parent="5" name="email">
+      <column id="41" parent="5" name="email">
         <mandatory>1</mandatory>
         <data-type>text</data-type>
       </column>
-      <column id="47" parent="5" name="password">
+      <column id="42" parent="5" name="password">
         <mandatory>1</mandatory>
         <data-type>varchar(16)</data-type>
       </column>
-      <key id="48" parent="5" name="PRIMARY">
+      <key id="43" parent="5" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <column id="49" parent="6" name="id">
+      <column id="44" parent="6" name="id">
         <mandatory>1</mandatory>
         <data-type>bigint(20)</data-type>
         <sequence-identity>1</sequence-identity>
       </column>
-      <column id="50" parent="6" name="userid">
+      <column id="45" parent="6" name="token">
         <mandatory>1</mandatory>
-        <data-type>bigint(20)</data-type>
+        <data-type>varchar(16)</data-type>
       </column>
-      <column id="51" parent="6" name="time">
+      <column id="46" parent="6" name="time">
         <mandatory>1</mandatory>
         <data-type>timestamp</data-type>
         <default-expression>&apos;CURRENT_TIMESTAMP&apos;</default-expression>
       </column>
-      <key id="52" parent="6" name="PRIMARY">
+      <key id="47" parent="6" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>

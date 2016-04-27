@@ -64,20 +64,23 @@ public class UserService {
     public void upsert(LockardUsersDAO usersDAO){
         //TODO Fix method..not adding the userID.. @William
         LockardAdminsDAO adminsDAO = new LockardAdminsDAO();
-        adminsDAO.setUserid(usersDAO.getId());
+        adminsDAO.setUserToken(usersDAO.getToken());
         adminRepository.save(adminsDAO);
         repository.save(usersDAO);
     }
 
     public void remove(LockardUsersDAO usersDAO){
-        remove(usersDAO.getId());
+        remove(usersDAO.getToken());
     }
 
-    public void remove(Long userID){
-        repository.delete(userID);
-        for (LockardAdminsDAO admins : adminRepository.findAll())
-            if (admins.getUserid() == userID)
-                adminRepository.delete(admins.getId());
+    public void remove(String userToken){
+        //TODO: Implement
+//        for (LockardUsersDAO usersDAO : repository.findAll())
+//            if (usersDAO.getToken().equals(userToken)){
+//                repository.delete(usersDAO);
+//                adminRepository.
+//            }
+
     }
 
     public boolean authenticateByEmail(String email, String password){

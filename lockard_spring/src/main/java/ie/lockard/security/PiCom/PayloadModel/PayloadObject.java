@@ -126,21 +126,23 @@ public class PayloadObject implements Payload {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        PayloadObject payloadObject = (PayloadObject) o;
+        PayloadObject that = (PayloadObject) o;
 
-        return payloadType == payloadObject.payloadType
-                && payloadEvent == payloadObject.payloadEvent
-                && (data != null ? data.equals(payloadObject.data)
-                : payloadObject.data == null);
+        if (payloadType != that.payloadType) return false;
+        if (payloadEvent != that.payloadEvent) return false;
+        if (role != null ? !role.equals(that.role) : that.role != null) return false;
+        if (data != null ? !data.equals(that.data) : that.data != null) return false;
+        return token != null ? token.equals(that.token) : that.token == null;
 
     }
 
     @Override
     public int hashCode() {
-        int result = payloadEvent != null ? payloadType.hashCode() : 0;
+        int result = payloadType != null ? payloadType.hashCode() : 0;
         result = 31 * result + (payloadEvent != null ? payloadEvent.hashCode() : 0);
+        result = 31 * result + (role != null ? role.hashCode() : 0);
         result = 31 * result + (data != null ? data.hashCode() : 0);
+        result = 31 * result + (token != null ? token.hashCode() : 0);
         return result;
     }
-
 }

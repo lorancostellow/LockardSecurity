@@ -1,10 +1,7 @@
 package ie.lockard.security.Controller;
 
-import ie.lockard.security.PiCom.Core.PiNodeEvent;
-import ie.lockard.security.PiCom.PayloadModel.Payload;
-import ie.lockard.security.PiCom.PayloadModel.PiDataObject;
-import ie.lockard.security.PiCom.PiComInstance;
-import ie.lockard.security.PiCom.PiComServer;
+import ie.lockard.security.PiCom.PiComInstanceHandler;
+import ie.lockard.security.Service.ResponseService;
 import ie.lockard.security.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,9 +16,9 @@ public class LockardControl {
 
 
     @Autowired
-    public LockardControl(UserService userService) {
+    public LockardControl(UserService userService, ResponseService responseService) {
         // Starts the listener
-        PiComInstance.getInstance();
+        PiComInstanceHandler piComInstanceHandler = new PiComInstanceHandler(responseService);
     }
 
     //----------------Handle Requests---------------

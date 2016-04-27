@@ -75,6 +75,7 @@
           <element id="library" level="project" name="Maven: org.springframework:spring-core:4.2.5.RELEASE" />
           <element id="library" level="project" name="Maven: org.zeromq:jeromq:0.3.5" />
           <element id="library" level="project" name="Maven: org.json:json:20151123" />
+          <element id="library" level="project" name="Maven: commons-codec:commons-codec:1.9" />
         </element>
       </element>
       <element id="directory" name="META-INF">

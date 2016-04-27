@@ -11,7 +11,7 @@ import java.sql.Timestamp;
 @Table(name = "admins", schema = "lockard")
 public class LockardAdminsDAO {
     private long id;
-    private long userid;
+    private String userToken;
     private Timestamp time;
 
     @Id
@@ -25,13 +25,13 @@ public class LockardAdminsDAO {
     }
 
     @Basic
-    @Column(name = "userid", nullable = false)
-    public long getUserid() {
-        return userid;
+    @Column(name = "token", nullable = false)
+    public String getUserToken() {
+        return userToken;
     }
 
-    public void setUserid(long userid) {
-        this.userid = userid;
+    public void setUserToken(String token) {
+        this.userToken = token;
     }
 
     @Basic
@@ -49,19 +49,18 @@ public class LockardAdminsDAO {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        LockardAdminsDAO that = (LockardAdminsDAO) o;
+        LockardAdminsDAO adminsDAO = (LockardAdminsDAO) o;
 
-        if (id != that.id) return false;
-        if (userid != that.userid) return false;
-        if (time != null ? !time.equals(that.time) : that.time != null) return false;
+        if (id != adminsDAO.id) return false;
+        if (userToken != null ? !userToken.equals(adminsDAO.userToken) : adminsDAO.userToken != null) return false;
+        return time != null ? time.equals(adminsDAO.time) : adminsDAO.time == null;
 
-        return true;
     }
 
     @Override
     public int hashCode() {
         int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + (int) (userid ^ (userid >>> 32));
+        result = 31 * result + (userToken != null ? userToken.hashCode() : 0);
         result = 31 * result + (time != null ? time.hashCode() : 0);
         return result;
     }
@@ -70,7 +69,7 @@ public class LockardAdminsDAO {
     public String toString() {
         return "LockardAdminsDAO{" +
                 "id=" + id +
-                ", userid=" + userid +
+                ", token=" + userToken +
                 ", time=" + time +
                 '}';
     }
