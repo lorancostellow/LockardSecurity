@@ -1,14 +1,19 @@
 import picom
-from picom.Data.PayloadObj import Payload
-from picom.Data.Structure import PayloadEvent, PayloadType, EventDomain
+from picom.Data.ComponentObj import ComponentObj
+from picom.Data.DataObj import DataObj
+from picom.Data.Structure import PayloadEvent, EventDomain
 from picom.Servers.SystemControllerUtils import SYS_Handler
 
+component = ComponentObj()
 
 class Handler(SYS_Handler):
     def instruction(self, data, event, domain, payload):
         if domain == EventDomain.GPIO:
             # stuff with the pins
-            pass
+            if (payload.event == PayloadEvent.HEATING) and (payload.data == DataObj(1, True)):
+                component.turnon(id)
+            elif (payload.event == PayloadEvent.HEATING) and (payload.data == DataObj(1, False)):
+                component.turnoff(id)
 
         elif domain == EventDomain.SOFT:
             # stuff with software

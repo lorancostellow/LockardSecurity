@@ -1,18 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="10358591">
+  <component name="DataSourceManagerImpl" format="xml" hash="2909086721">
     <data-source source="LOCAL" name="hibernate.cfg.xml/Hibernate" uuid="babaad8d-f041-40a4-968f-53772ae94e0e">
       <driver-ref>mysql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
-<<<<<<< HEAD
       <jdbc-url>jdbc:mysql://autosafe.ddns.net:3306/lockard</jdbc-url>
-      <explain-plan-config>
-        <provider>com.intellij.database.plan.ExplainPlanProvider.NullExplainPlanProvider</provider>
-      </explain-plan-config>
-=======
-      <jdbc-url>jdbc:mysql://localhost:3306/lockard</jdbc-url>
->>>>>>> 46ca8deadcfa6ea549db53ef6473739ca1f26af6
       <driver-properties>
         <property name="autoReconnect" value="true" />
         <property name="zeroDateTimeBehavior" value="convertToNull" />

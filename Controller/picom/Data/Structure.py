@@ -12,6 +12,9 @@ need to implement the following fields to interpret the payloads
 WILDCARD = '<ALL>'
 BLANK_FIELD = '<BLANK>'
 
+class PayloadDataFields(Enum):
+    PAYLOAD_SENSOR_ID = "sid",
+    PAYLOAD_DATA_FIELD = "pdata"
 
 class PayloadFields(Enum):
     PAYLOAD_ROLE = "role"

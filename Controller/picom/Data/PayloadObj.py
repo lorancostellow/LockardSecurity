@@ -1,6 +1,7 @@
 import socket
 import threading
 
+from picom.Data import DataObj
 from picom.helpers import \
     decode_from_json, \
     encode_to_json
@@ -27,7 +28,7 @@ class PayloadEncoder(object):
 
 
 class Payload(PayloadEncoder):
-    def __init__(self, data, event: PayloadEvent, requestype: PayloadType,token:str = BLANK_FIELD, role: str = None):
+    def __init__(self, data:DataObj, event: PayloadEvent, requestype: PayloadType,token:str = BLANK_FIELD, role: str = None):
         assert isinstance(event, PayloadEvent) and isinstance(requestype, PayloadType)
         self.data = data
         self.event = event
