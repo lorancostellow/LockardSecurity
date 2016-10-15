@@ -1,0 +1,34 @@
+<!doctype html>
+      <html>
+      <head>
+      <meta charset="utf-8">
+      <meta name="author" content="Ionko Gueorguiev">
+      <title>Simple Neato Tabs</title>
+  <link rel="stylesheet" type="text/css" href="css/style.css" />
+  <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+  </head>
+<body>
+<div class="tabs">
+   <ul>
+    <li class="current"><a href="#tab4">Tab 4</a></li>
+    <li><a href="#tab5">Tab 5</a></li>
+    <li><a href="#tab6">Tab 6</a></li>
+   </ul>
+  <div>
+   <div id="tab4" class="tab-content">Tab 4</div>
+   <div id="tab5" class="tab-content">Tab 5 </div>
+   <div id="tab6" class="tab-content">Tab 6 </div>
+  </div>
+ </div>
+  <script type="text/javascript">
+
+$(document).ready(function(){
+ $(".tabs li").click(function() {
+  $(this).parent().parent().find(".tab-content").hide();
+  var selected_tab = $(this).find("a").attr("href");
+  $(selected_tab).fadeIn();
+  $(this).parent().find("li").removeClass('current');
+  $(this).addClass("current");
+   return false;
+    });
+});</script>
